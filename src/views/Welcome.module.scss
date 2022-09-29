@@ -1,0 +1,60 @@
+.wrapper {
+  height: calc(100vh - var(--welcome-nav-height));
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(to bottom, var(--welcome-bg-start) 0%, var(--welcome-bg-end) 100%);
+  margin-bottom: var(--welcome-nav-height);
+  > header {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 66px;
+    color: #D4D4EE;
+    > svg {
+      width: 64px;
+      height: 69px;
+    }
+  }
+  > main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 16px 16px var(--welcome-nav-gap);
+  }
+  > footer {
+    flex-shrink: 0;
+  }
+}
+
+//为进入/离开的页面添加同样的动画，默认是不同的动画
+.slide_fade_enter_active,
+.slide_fade_leave_active {
+  position: absolute; //为了防止flex的自动折行叠加，需要添加绝对定位和相关属性
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s ease-out;
+}
+// .slide-fade-enter-active {  //为进入的页面添加默认过渡效果
+//   transition: all 0.3s ease-out;
+// }
+// .slide-fade-leave-active {  //为离开的页面添加默认过渡效果
+//   transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+// }
+
+//为进入/离开的动画设置不同的方向
+.slide_fade_enter_from {
+  transform: translateX(100vw);  //从屏幕右边100vw进入
+}
+.slide_fade_leave_to {
+  transform: translateX(-100vw);  //从屏幕左边100vw进入（负号为左）
+}
+// .slide-fade-enter-from, //enter from 进入；leave to 离开
+// .slide-fade-leave-to {  //进入/离开的动画方向
+//   transform: translateX(20px); //从屏幕右边20px进入/离开
+//   opacity: 0;
+// }

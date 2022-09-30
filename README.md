@@ -1,5 +1,15 @@
 # 我的 Vue 3 + TSX 项目
 
-## 开发阶段：
+## 编码规范
 
-mangosteen-demo-2 进行到welcome页面滑动动画
+### ref默认值
+
+推荐使用
+```tsx
+const div = ref<HTMLDivElement>()
+```
+
+不推荐使用
+```tsx
+const div = ref<HTMLDivElement|null>(null)
+```

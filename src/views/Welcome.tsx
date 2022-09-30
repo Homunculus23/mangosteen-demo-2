@@ -18,13 +18,13 @@ export const Welcome = defineComponent({
       'Welcome3': '/welcome/4',
       'Welcome4': '/start',
     }
-    const push = throttle(() => { //对滑动翻页截流，每500ms最多调用一次
+    const replace = throttle(() => { //对滑动翻页截流，每500ms最多调用一次
         const name = (route.name || 'Welcome1').toString()
-        router.push(pushMap[name])
+        router.replace(pushMap[name]) //将push改为replace，可以防止页面回退
     }, 500)
     watchEffect(()=>{
       if(swiping.value && direction.value === 'left'){
-        push()
+        replace() //将push改为replace，可以防止页面回退
       }
     }) //功能等同于React里的useEffect，当所在作用域任何变量发生变化时（此处为ref变化），执行watchEffect中的函数
     return () => <div class={s.wrapper}>

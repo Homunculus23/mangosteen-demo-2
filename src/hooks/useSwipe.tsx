@@ -26,7 +26,6 @@ export const useSwipe = (element: Ref<HTMLElement | undefined>, options:Options)
     }
   })
   const direction = computed(()=>{  //direction返回移动方向
-    if(!swiping) { return '' }
     if(!distance.value) { return '' }
     const {x, y} = distance.value
     if (Math.abs(x) > Math.abs(y)) {
@@ -43,7 +42,7 @@ export const useSwipe = (element: Ref<HTMLElement | undefined>, options:Options)
       x: e.touches[0].clientX,
       y: e.touches[0].clientY,
     }
-    options.afterStart?.(e)
+    options?.afterStart?.(e)
   }
   const onMove = (e: TouchEvent) => {
     options?.beforeMove?.(e)

@@ -1,0 +1,6 @@
+.button {
+    width: 100%;//当 width: 100%; 和 margin同时存在时，元素将会直接超出屏幕右侧。解决办法：加上一个容器，并将原本button拥有的外边距，改为该容器的内边距
+    &_wrapper { // & 在此处代表 .button ，在需要统一修改前半段相同的class时非常方便
+      padding: 16px 16px;
+    }
+}

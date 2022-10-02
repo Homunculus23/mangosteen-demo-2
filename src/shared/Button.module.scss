@@ -1,0 +1,13 @@
+//注意：button元素里的文字默认样式是居中的，所以不要担心。但a元素默认靠左，需要手动加居中。
+//在少数业务场景里，button标签有可能被改成a标签，如保险起见， .button 里的样式需要加居中（这里就算了）
+.button{
+    border: 1px solid var(--button-bg); //border的宽如果不与hover宽度一致，将会出现闪烁的问题，所以预留1px与bg颜色相同的border，以后加hover只改颜色就不会出问题
+    padding: 8px 16px;
+    background: var(--button-bg);
+    color: var(--button-text);
+    font-size: var(--button-font-size);
+    border-radius: var(--button-radius);
+    height: var(--button-height);   //设计稿里有需要与input对齐的情况（输验证码页面），height不得不写死
+    //display和margin属性需要随机应变，写在相应的页面CSS中即可
+    //&:hover{border: red;}
+}

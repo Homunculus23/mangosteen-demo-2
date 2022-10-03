@@ -13,5 +13,5 @@
   --button-radius: 8px;
   --button-height: 48px;
   --float-button-text: white;
-  --float-button-bg: var(--button-bg);
+  --float-button-bg: var(--button-bg);//使浮动按钮与button的颜色一致，也可视情况单独设置
 }

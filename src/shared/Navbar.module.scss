@@ -1,0 +1,23 @@
+.navbar{
+    background-image: linear-gradient(to bottom, var(--navbar-bg-start) 0%, var(--navbar-bg-end) 100%);color: var(--navbar-text);
+    fill: var(--navbar-text);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px 16px 12px; //Navbar文字和图标的上下左边距
+}
+.title_wrapper{
+    font-size: 24px;
+    margin-left: 12px;
+}
+.icon_wrapper{
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > * {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}

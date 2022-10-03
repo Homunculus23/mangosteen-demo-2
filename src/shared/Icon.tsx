@@ -1,7 +1,7 @@
 import { defineComponent, defineProps, PropType } from 'vue';
 import s from './Icon.module.scss';
 
-export type IconName = 'add' | 'chart' | 'clock' | 'cloud' | 'mangosteen' | 'pig'
+export type IconName = 'add' | 'chart' | 'clock' | 'cloud' | 'mangosteen' | 'pig' | 'menu'
 //列出所有用到的Icon，可以保证准确率，不会出错；导出是为了给FloatButton的props使用
 
 export const Icon = defineComponent({

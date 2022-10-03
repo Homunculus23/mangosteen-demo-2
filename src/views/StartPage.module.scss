@@ -4,3 +4,20 @@
       padding: 16px 16px;
     }
 }
+
+.pig{
+  width: 128px;
+  height: 128px;
+  &_wrapper{
+    //由于左右是居中的，因此Center的padding只需要加上下高度
+    //注：有时间想办法在StartPage最下面再加一个Center组件，并取消这个padding，使Button组件能灵活居中
+    padding: 120px 0;
+  }
+}
+
+.navIcon{
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: 2px; //因icon下面留白略多，给一个top使三横杠在视觉上居中
+}

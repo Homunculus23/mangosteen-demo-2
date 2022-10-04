@@ -2,7 +2,7 @@ import { defineComponent } from "vue";
 import s from './Button.module.scss'
 
 interface Props{
-    onClick: (e: MouseEvent) => void
+    onClick?: (e: MouseEvent) => void   //如果onClick后面不加问号，调用Button就必须传onClick
 }
 
 export const Button = defineComponent<Props>({

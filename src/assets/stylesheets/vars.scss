@@ -5,7 +5,9 @@
   --welcome-bg-end: #8f4cd7;
   --welcome-nav-height: 64px;
   --welcome-nav-gap: 8px;
-  --z-index-bottom-nav: 10; 
+  //浮层分级最好采用八进制整数，留下拓展空间
+  --z-index-bottom-nav: 8; 
+  --z-index-overlay: 16;
   --transition-duration: 0.5s;
   --button-bg: #5C33BE; //Button组件背景色
   --button-text: white;
@@ -17,4 +19,9 @@
   --navbar-bg-start:var(--welcome-bg-start);
   --navbar-bg-end:var(--welcome-bg-end);
   --navbar-text:white;
+  --overlay-mask-bg: rgba(0, 0, 0, 0.5);//浮动菜单右边的半透明黑
+  --overlay-bg: white;
+  --overlay-user-bg: #5C33BE;
+  --overlay-user-text: white;
+  --top-safe-area-height: 24px;//手机留海预留高度
 }

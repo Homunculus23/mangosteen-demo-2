@@ -1,0 +1,22 @@
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--button-border-color);
+    >button {
+        border: none;
+        border-right: 1px solid var(--button-border-color);
+        border-bottom: 1px solid var(--button-border-color);
+        width: 25%;
+        height: 48px;
+        //button有默认背景色，我们改为透明
+        background: transparent;
+        //删除每行第四个按键的右侧边框，保持其与手机边缘齐平
+        &:nth-child(4n){
+            border-right: none;
+        }
+        //删除每列第四个按键的右侧边框，保持其与手机边缘齐平
+        &:nth-child(13),&:nth-child(14),&:nth-child(15),&:nth-child(16){
+            border-bottom: none;
+        }
+    }
+}

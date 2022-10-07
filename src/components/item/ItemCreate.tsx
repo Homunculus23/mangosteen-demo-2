@@ -2,6 +2,7 @@ import { defineComponent, PropType, ref } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
 import { Icon } from "../../shared/Icon";
 import { Tabs, Tab } from "../../shared/Tabs";
+import { InputPad } from "./InputPad";
 import s from './ItemCreate.module.scss';
 export const ItemCreate = defineComponent({
     props:{
@@ -29,6 +30,11 @@ export const ItemCreate = defineComponent({
                                 收入
                             </Tab>
                         </Tabs>
+                        {/* 用div为InputPad作定位 */}
+                        <div class={s.inputPad_wrapper}>
+                            <InputPad></InputPad>
+                        </div>
+                        
                     </>
                 }
             }</MainLayout>

@@ -29,5 +29,7 @@
   //手机留海预留高度
   --top-safe-area-height: 24px;
   //Tab被选中时，给一个半透明白的底边效果
-  --tabs-indicator-bg: rgba(255, 255, 255, 0.5)
+  --tabs-indicator-bg: rgba(255, 255, 255, 0.5);
+  //数字按钮边框
+  --button-border-color: #ddd;
 }

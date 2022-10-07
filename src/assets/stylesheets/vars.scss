@@ -9,19 +9,25 @@
   --z-index-bottom-nav: 8; 
   --z-index-overlay: 16;
   --transition-duration: 0.5s;
-  --button-bg: #5C33BE; //Button组件背景色
+  //Button组件背景色
+  --button-bg: #5C33BE;
   --button-text: white;
   --button-font-size: 18px;
   --button-radius: 8px;
   --button-height: 48px;
   --float-button-text: white;
-  --float-button-bg: var(--button-bg);//使浮动按钮与button的颜色一致，也可视情况单独设置
+  //使浮动按钮与button的颜色一致，也可视情况单独设置
+  --float-button-bg: var(--button-bg);
   --navbar-bg-start:var(--welcome-bg-start);
   --navbar-bg-end:var(--welcome-bg-end);
   --navbar-text:white;
-  --overlay-mask-bg: rgba(0, 0, 0, 0.5);//浮动菜单右边的半透明黑
+  //浮动菜单右边的半透明黑
+  --overlay-mask-bg: rgba(0, 0, 0, 0.5);
   --overlay-bg: white;
   --overlay-user-bg: #5C33BE;
   --overlay-user-text: white;
-  --top-safe-area-height: 24px;//手机留海预留高度
+  //手机留海预留高度
+  --top-safe-area-height: 24px;
+  //Tab被选中时，给一个半透明白的底边效果
+  --tabs-indicator-bg: rgba(255, 255, 255, 0.5)
 }

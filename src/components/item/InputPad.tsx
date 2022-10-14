@@ -12,6 +12,7 @@ export const InputPad = defineComponent({
     setup: (props, context) => {
         const now = new Date()
     const refDate = ref<Date>(now)
+    //对用户输入的数字进行检查，符合要求者追加到refAmount中
     const appendText = (n: number | string) => {
       const nString = n.toString()
       const dotIndex = refAmount.value.indexOf('.')
@@ -57,6 +58,7 @@ export const InputPad = defineComponent({
     const showDatePicker = () => refDatePickerVisible.value = true
     const hideDatePicker = () => refDatePickerVisible.value = false
     const setDate = (date: Date) => { refDate.value = date; hideDatePicker() }
+    //refAmount作为展示用户输入数字的容器
     const refAmount = ref('0')
     return () => <>
       <div class={s.dateAndAmount}>
@@ -77,6 +79,7 @@ export const InputPad = defineComponent({
         <span class={s.amount}>{refAmount.value}</span>
       </div>
       <div class={s.buttons}>
+        {/* buttons采取grid布局 */}
         {buttons.map(button =>
           <button onClick={button.onClick}>{button.text}</button>
         )}

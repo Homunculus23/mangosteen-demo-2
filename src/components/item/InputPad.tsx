@@ -12,28 +12,28 @@ export const InputPad = defineComponent({
     setup: (props, context) => {
         const now = new Date()
     const refDate = ref<Date>(now)
-    //对用户输入的数字进行检查，符合要求者追加到refAmount中
+    //对用户输入的数字进行检查，符合要求者追加到refAmount中。注：如果运行速度到了瓶颈，可以统计用户使用时各个判断的触发频率，将触发频率高的放在前面以进行优化（热门APP才需要）。
     const appendText = (n: number | string) => {
-      const nString = n.toString()
-      const dotIndex = refAmount.value.indexOf('.')
-      if (refAmount.value.length >= 13) {
+      const nString = n.toString()  //当前输入
+      const dotIndex = refAmount.value.indexOf('.') //小数点下标
+      if (refAmount.value.length >= 13) { //位数上限13
         return
       }
-      if (dotIndex >= 0 && refAmount.value.length - dotIndex > 2) {
+      if (dotIndex >= 0 && refAmount.value.length - dotIndex > 2) { //小数上限2
         return
       }
       if (nString === '.') {
         if (dotIndex >= 0) { // 已经有小数点了
           return
         }
-      } else if (nString === '0') {
-        if (dotIndex === -1) { // 没有小数点
-          if (refAmount.value === '0') { // 没小数点，但是有0
+      } else if (nString === '0') {//输入值为0
+        if (dotIndex === -1) { //没有小数点
+          if (refAmount.value === '0') { //没小数点，且只有单独的0
             return
           }
         }
       } else {
-        if (refAmount.value === '0') {
+        if (refAmount.value === '0') {  //输入第一个数字时，干掉默认占位的0
           refAmount.value = ''
         }
       }

@@ -1,18 +1,17 @@
 .floatButton {
-    background: var(--float-button-bg);
-    width: 56px;
-    height: 56px;
-    border-radius: 50%; //50% 也可以写成 math.div(56px, 2)
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
-    
-    .icon {
-      width: 30px;  //此时svg里面的use标签宽高约为24px
-      height: 30px;
-      fill: var(--float-button-text);   //svg图片的颜色由fill控制
-    }
+  background: var(--float-button-bg);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%; //50% 也可以写成 math.div(56px, 2)
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  .icon {
+    width: 30px;  //此时svg里面的use标签宽高约为24px
+    height: 30px;
+    fill: var(--float-button-text);   //svg图片的颜色由fill控制
   }
+}

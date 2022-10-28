@@ -28,6 +28,8 @@
   --number-button-bg-important: #5c33be;
   --number-button-bg: white;
   --number-button-text-important: white;
+  //记一笔 icon 和选中边框的颜色
+  --main: #5c33be;
   --overlay-bg: white;
   //浮动菜单右边的半透明黑
   --overlay-mask-bg: rgba(0, 0, 0, 0.5);
@@ -35,6 +37,8 @@
   --overlay-user-text: white;
   //Tab被选中时，给一个半透明白的底边效果
   --tabs-indicator-bg: rgba(255, 255, 255, 0.5);
+  //记一笔 icon 背景色
+  --tag-bg: #EFEFEF;
   //手机留海预留高度
   --top-safe-area-height: 24px;
   --transition-duration: 0.5s;

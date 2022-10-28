@@ -1,4 +1,5 @@
 .tabs {
+    position: relative;
     &_nav {
         display: flex;
         justify-content: space-between;
@@ -6,6 +7,9 @@
         text-align: center;
         //以后可能要做黑暗模式，字体颜色统一
         color: var(--navbar-text);
+        position: sticky;
+        z-index: 1;
+        top: 0;
         > li {
             flex-grow: 1;
             flex-shrink: 0;

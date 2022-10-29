@@ -41,7 +41,7 @@ export const routes: RouteRecordRaw[] = [
     path: '/tags', component: TagPage,
     children: [
       {path: 'create', component: TagCreate},
-      {path: ':id', component: TagEdit},//':id'可以代表任意数字
+      {path: ':id/edit', component: TagEdit},//':id'代表任意标签数字
     ]
   }
 ]

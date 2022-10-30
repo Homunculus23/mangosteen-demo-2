@@ -10,11 +10,11 @@
         position: sticky;
         z-index: 1;
         top: 0;
+        background: var(--navbar-bg-end);
         > li {
             flex-grow: 1;
             flex-shrink: 0;
             padding: 12px 0;
-            background: var(--navbar-bg-end);
             &.selected {
                 //使class为selected的元素的::after绝对定位
                 position: relative;

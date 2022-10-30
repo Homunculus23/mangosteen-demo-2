@@ -11,3 +11,14 @@ body{
 ::webkit-scrollbar {
   visibility: hidden;
 }
+
+//ItemList.tsx里Tabs的自定义样式
+.customTabs_tabs_nav{
+  justify-content: flex-start;
+  //&>& 以覆盖样式优先级
+  & > &_item{
+    flex-grow: 0;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

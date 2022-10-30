@@ -3,8 +3,15 @@ import s from './Tabs.module.scss';
 let a = 0
 export const Tabs = defineComponent({
   props: {
+    classPrefix: {
+      type: String
+    },
     selected: {
       type: String as PropType<string>,
+      required: false,
+    },
+    onUpdateSelected: {
+      type: Function as PropType<(name: string) => void>,
       required: false,
     }
   },
@@ -17,16 +24,21 @@ export const Tabs = defineComponent({
         //检查tabs[i]是否均为Tab组件，如果不是则报错
         for (let i = 0; i < tabs.length; i++) {
             if (tabs[i].type !== Tab) {
-            throw new Error('<Tabs> only accepts <Tab> as children')
+              throw new Error('<Tabs> only accepts <Tab> as children')
             }
         }
-        return <div class={s.tabs}>
-            <ol class={s.tabs_nav}>
+        const cp = props.classPrefix
+        //利用 classPrefix 为 Tabs 自定义样式，只能写在 App.scss 做全局样式，慎用
+        return <div class={[s.tabs, cp + '_tabs']}>
+            <ol class={[s.tabs_nav, cp + '_tabs_nav']}>
                 {
                     //map遍历tabs，渲染显示所有Tab的name
                     tabs.map(item =>
                         <li //获取item的name，如果与selected相同，使class为s.selected，否则为空
-                            class={item.props?.name === props.selected ? s.selected : ''}
+                            class={[
+                              item.props?.name === props.selected ? [s.selected, cp + '_selected'] : '',
+                              cp + '_tabs_nav_item'
+                            ]}
                             //声明onClick事件，事件触发时将自身的name作为回调参数
                             onClick={() => context.emit('update:selected', item.props?.name)}
                         >

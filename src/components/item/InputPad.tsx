@@ -1,6 +1,6 @@
 import { defineComponent, PropType, ref } from 'vue';
 import { Icon } from '../../shared/Icon';
-import { time } from '../../shared/time';
+import { Time } from '../../shared/time';
 import s from './InputPad.module.scss';
 import { DatetimePicker, NumberKeyboard, Popup } from 'vant';
 export const InputPad = defineComponent({
@@ -66,7 +66,7 @@ export const InputPad = defineComponent({
           <Icon name="date" class={s.icon} />
           <span>
             {/* onClick触发展示Popup浮层，并接收在DatetimePicker中选择的时间 */}
-            <span onClick={showDatePicker}>{time(refDate.value).format()}</span>
+            <span onClick={showDatePicker}>{new Time(refDate.value).format()}</span>
             {/* Popup浮层，用于包裹DatetimePicker */}
             <Popup position='bottom' v-model:show={refDatePickerVisible.value}>
                 {/* refDate.value用于将用户选择的时间传给span。当用户点击确认时，触发onConfirm，保存同时关闭Popup浮层；用户点击取消时，触发onCancel，不保存直接关闭Popup */}

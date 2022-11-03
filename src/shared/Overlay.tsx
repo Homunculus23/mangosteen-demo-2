@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { Icon } from './Icon';
 import s from './Overlay.module.scss';
@@ -48,5 +48,22 @@ export const Overlay = defineComponent({
         </nav>
       </div>
     </>
+  }
+})
+
+export const OverlayIcon = defineComponent({
+  setup: (props, context) => {
+    //!!!想获取refOverlayVisible的ref属性一定要记得写value!
+    const refOverlayVisible = ref(false)
+    const onClickMenu = () => {
+      //使refOverlayVisible取反(ref(true))
+      refOverlayVisible.value = !refOverlayVisible.value
+    }
+    return () => (<>
+      <Icon name="menu" class={s.icon} onClick={onClickMenu} />
+      {refOverlayVisible.value &&
+        <Overlay onClose={() => refOverlayVisible.value = false} />
+      }
+    </>);
   }
 })

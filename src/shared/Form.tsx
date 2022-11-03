@@ -33,6 +33,7 @@ export const FormItem = defineComponent({
       type: String
     }
   },
+  emits:['update:modelValue'],
   setup: (props, context) => {
     const refDateVisible = ref(false)
     //content就是最终展示出来的内容

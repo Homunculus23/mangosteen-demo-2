@@ -5,6 +5,9 @@ export const EmojiSelect = defineComponent({
   props: {
     modelValue: {
       type: String  //required不写默认为false
+    },
+    onUpdateModelValue: {
+      type: Function as PropType<(emoji: string) => void>
     }
   },
   setup: (props, context) => {
@@ -35,7 +38,11 @@ export const EmojiSelect = defineComponent({
       refSelected.value = index
     }
     const onClickEmoji = (emoji: string) => {
-      context.emit('update:modelValue', emoji)
+      if (props.onUpdateModelValue) {
+        props.onUpdateModelValue(emoji)
+      } else {
+        context.emit('update:modelValue', emoji)
+      }
     }
     //用 computed 类型提取的函数，在重新渲染页面时，依赖的值不变化就不会执行，比双重或多重 return 性能更好
     const emojis = computed(() => {

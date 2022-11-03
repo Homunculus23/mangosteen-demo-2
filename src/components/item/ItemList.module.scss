@@ -25,6 +25,7 @@
         border: none;
         background: transparent;
         padding: 8px 16px;
+        // &+& 在这里将两个相邻的 button 视为一个整体
         & + & {
             margin-left: 16px;
         }

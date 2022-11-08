@@ -28,12 +28,13 @@ export const FormItem = defineComponent({
       type: [String, Number]
     },
     type: {
-      type: String as PropType<'text' | 'emojiSelect' | 'date' | 'validationCode'>,
+      type: String as PropType<'text' | 'emojiSelect' | 'date' | 'validationCode' | 'select'>,
     },
     error: {
       type: String
     },
-    placeholder: String
+    placeholder: String,
+    options: Array as PropType<Array<{value: string, text: string}>>,
   },
   emits:['update:modelValue'],
   setup: (props, context) => {
@@ -71,6 +72,15 @@ export const FormItem = defineComponent({
               <input class={[s.formItem, s.input, s.validationCodeInput]} placeholder={props.placeholder}/>
               <Button class={[s.formItem, s.button, s.validationCodeButton]}>发送验证码</Button>
             </>
+        case 'select':
+            //监听 onChange 事件
+            return <select class={[s.formItem, s.select]} value={props.modelValue} onChange={(e: any) => {context.emit('update:modelValue', e.target.value)}}>
+                {/* 遍历props.options，显示传过来的value为props.modelValue的option.text */}
+                {props.options?.map(option =>
+                  <option value={option.value}>{option.text}</option>  
+                )}
+                <option></option>
+            </select>
         case undefined:
             //没有写属性，直接展示插槽
             return context.slots.default?.()

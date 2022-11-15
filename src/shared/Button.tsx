@@ -21,7 +21,7 @@ export const Button = defineComponent({
     setup: (props, context) => {
         return () => (
             //props.level有'important'、'normal'、'danger'三个变量
-            <button class={[s.button, s[props.level]]}>
+            <button class={[s.button, s[props.level]]} onClick={props.onClick}>
                 {context.slots.default?.()}
             </button>
         );

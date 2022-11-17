@@ -14,6 +14,10 @@ export const Button = defineComponent({
             //不同的按钮建议用不同的默认颜色
             type: String as PropType<'important' | 'normal' | 'danger'>,
             default: 'important'
+        },
+        type: {
+            type: String as PropType<'submit' | 'button'>,
+            default: 'button'
         }
     },
     //如果不想让button自动继承调用者的class和onClick，而是在Button页面完成功能，可以采用以下代码：
@@ -21,7 +25,7 @@ export const Button = defineComponent({
     setup: (props, context) => {
         return () => (
             //props.level有'important'、'normal'、'danger'三个变量
-            <button class={[s.button, s[props.level]]} onClick={props.onClick}>
+            <button type={props.type} class={[s.button, s[props.level]]} onClick={props.onClick}>
                 {context.slots.default?.()}
             </button>
         );

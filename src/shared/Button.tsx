@@ -18,6 +18,10 @@ export const Button = defineComponent({
         type: {
             type: String as PropType<'submit' | 'button'>,
             default: 'button'
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     //如果不想让button自动继承调用者的class和onClick，而是在Button页面完成功能，可以采用以下代码：
@@ -25,7 +29,7 @@ export const Button = defineComponent({
     setup: (props, context) => {
         return () => (
             //props.level有'important'、'normal'、'danger'三个变量
-            <button type={props.type} class={[s.button, s[props.level]]} onClick={props.onClick}>
+            <button disabled={props.disabled} type={props.type} class={[s.button, s[props.level]]} onClick={props.onClick}>
                 {context.slots.default?.()}
             </button>
         );

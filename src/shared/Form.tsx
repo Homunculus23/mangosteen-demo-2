@@ -1,3 +1,4 @@
+import { number } from 'echarts';
 import { DatetimePicker, Popup } from 'vant';
 import { computed, defineComponent, PropType, ref, VNode } from 'vue';
 import { Button } from './Button';
@@ -35,11 +36,36 @@ export const FormItem = defineComponent({
     },
     placeholder: String,
     options: Array as PropType<Array<{value: string, text: string}>>,
-    onClick: Function as PropType<() => void>
+    onClick: Function as PropType<() => void>,
+    countFrom: {
+      type: Number,
+      default: 60,
+    }
   },
   emits:['update:modelValue'],
   setup: (props, context) => {
     const refDateVisible = ref(false)
+    //浏览器的 setTimeout 和setInterval 返回值为 number，初始为 undefined
+    const timer = ref<number>()
+    //初始值不能直接写60，需要在 props 中写一个配置项
+    const count = ref<number>(props.countFrom)
+    //判断是否在倒计时状态
+    const isCounting = computed(() =>
+      !!timer.value //bool值与timer.value的状态一致
+    )
+    const onClickSendValidationCode = () => {
+      props.onClick?.()
+      timer.value = setInterval(() =>{
+        count.value--
+        if(count.value === 0){
+          //倒计时为0时清空计时器
+          clearInterval(timer.value)
+          //重置
+          timer.value = undefined
+          count.value = props.countFrom
+        }
+      },1000)
+    }
     //content就是最终展示出来的内容
     const content = computed(() => {
       switch (props.type) {
@@ -71,7 +97,9 @@ export const FormItem = defineComponent({
         case 'validationCode':
             return <>
               <input class={[s.formItem, s.input, s.validationCodeInput]} placeholder={props.placeholder}/>
-              <Button onClick={props.onClick} class={[s.formItem, s.button, s.validationCodeButton]}>发送验证码</Button>
+              <Button disabled={isCounting.value} onClick={onClickSendValidationCode} class={[s.formItem, s.button, s.validationCodeButton]}>
+                {isCounting.value ? `${count.value}秒后可再次发送` : '发送验证码'}
+              </Button>
             </>
         case 'select':
             //监听 onChange 事件

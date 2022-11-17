@@ -18,7 +18,6 @@ export const SignInPage = defineComponent({
         })
         //验证表单
         const onSubmit = (e: Event) => {
-            console.log('提交')
             e.preventDefault()
             //清空errors信息
             Object.assign(errors, {
@@ -30,9 +29,9 @@ export const SignInPage = defineComponent({
                 { key: 'code', type: 'required', message: "必填"},
             ]))
         }
-        const onClickSendValidationCode = async () =>{
-            console.log('发送验证码')
-            const response = await axios.post('/api/v1/validation_codes', { email: formData.email })
+        const onClickSendValidationCode = async () =>{ 
+            // const response = await axios.post('/api/v1/validation_codes', { email: formData.email })
+            // console.log(response)
         }
         return () => (
             <MainLayout>{{

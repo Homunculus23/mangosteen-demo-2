@@ -8,6 +8,10 @@
     color: var(--button-text);
     font-size: var(--button-font-size);
     height: var(--button-height);   //设计稿里有需要与input对齐的情况（输验证码页面），height不得不写死
+    &[disabled]{
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
     //display和margin属性需要随机应变，写在相应的页面CSS中即可
     //&:hover{border: red;}
     // &.normal{}

@@ -6,7 +6,7 @@ import { Button } from "../shared/Button";
 import { Form, FormItem } from "../shared/Form";
 import { http } from "../shared/Http";
 import { Icon } from "../shared/Icon";
-import { validate } from "../shared/validate";
+import { hasError, validate } from "../shared/validate";
 import s from './SignInPage.module.scss';
 export const SignInPage = defineComponent({
     setup: (props, context) => {
@@ -22,7 +22,7 @@ export const SignInPage = defineComponent({
         // disable默认为false
         const {ref: refDisabled, toggle, on, off} = useBool(false)
         //验证表单
-        const onSubmit = (e: Event) => {
+        const onSubmit = async (e: Event) => {
             e.preventDefault()
             //清空errors信息
             Object.assign(errors, {
@@ -33,6 +33,10 @@ export const SignInPage = defineComponent({
                 { key: 'email', type: 'pattern', regex: /.+@.+/, message: "必须是邮箱地址"},//验证是否为邮箱
                 { key: 'code', type: 'required', message: "必填"},
             ]))
+            // 没有 error 才发请求
+            if(!hasError(errors)){
+                const response = await http.post('/session', formData)
+            }
         }
         const onError = (error:any) => {
             if (error.response.status === 422) {
@@ -44,6 +48,14 @@ export const SignInPage = defineComponent({
         const onClickSendValidationCode = async () =>{
             // 请求开始时，将 disable 改为 true
             on()
+            Object.assign(errors, {
+                email: [], code: []
+            })
+            Object.assign(errors, validate(formData, [
+                { key: 'email', type: 'required', message: "必填"},//验证是否为空
+                { key: 'email', type: 'pattern', regex: /.+@.+/, message: "必须是邮箱地址"},//验证是否为邮箱
+                { key: 'code', type: 'required', message: "必填"},
+            ]))
             const response = await http.post('/validation_codes', { email: formData.email })
                 // 401：检查路径是否错误；429：请求过于频繁；暂时将email语法错误归并到请求频繁
                 .catch(onError)
@@ -64,9 +76,9 @@ export const SignInPage = defineComponent({
                         </div>
                         <Form onSubmit={onSubmit}> 
                             <FormItem label="邮箱地址" type="text" v-model={formData.email} error={errors.email?.[0]} placeholder="请输入邮箱，然后点击发送验证码"/>
-                            <FormItem countFrom={1} ref={refValidationCode} label="验证码" type="validationCode" placeholder="请输入六位数字" disabled={refDisabled.value} onClick={onClickSendValidationCode} v-model={formData.code} error={errors.code?.[0]}/>
+                            <FormItem countFrom={3} ref={refValidationCode} label="验证码" type="validationCode" placeholder="请输入六位数字" disabled={refDisabled.value} onClick={onClickSendValidationCode} v-model={formData.code} error={errors.code?.[0]}/>
                             <FormItem style={{paddingTop: '96px'}}>
-                                <Button>登录</Button>
+                                <Button type="submit">登录</Button>
                             </FormItem>
                         </Form>
                     </div>

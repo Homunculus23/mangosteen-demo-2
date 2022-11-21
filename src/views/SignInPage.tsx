@@ -1,5 +1,6 @@
 import axios from "axios";
 import { defineComponent, PropType, reactive, ref } from "vue";
+import { routerKey, useRoute, useRouter } from "vue-router";
 import { useBool } from "../hooks/useBool";
 import { MainLayout } from "../layouts/MainLayout";
 import { Button } from "../shared/Button";
@@ -22,6 +23,9 @@ export const SignInPage = defineComponent({
         const refValidationCode = ref<any>()
         // disable默认为false
         const {ref: refDisabled, toggle, on, off} = useBool(false)
+        // router 是路由器，包含一个 .push() 方法用于改变路由；route 是路由信息，里面只包含信息
+        const router = useRouter()
+        const route = useRoute()
         // 验证表单：登录
         const onSubmit = async (e: Event) => {
             e.preventDefault()
@@ -36,20 +40,32 @@ export const SignInPage = defineComponent({
             ]))
             // 没有 error 才发请求
             if(!hasError(errors)){
-                // 发送请求，获取 jwt
+                // 用 http 发送请求；获取 jwt
                 const response = await http.post<{jwt:string}>('/session', formData)
-                // 将 jwt 缓存
+                    // 展示后端报错信息（如果有）
+                    .catch(onError)
+                // 将后端返回的 jwt 缓存
                 localStorage.setItem('jwt', response.data.jwt)
-                // 登陆时要注意一点，用户登录的场景可能有：初次登录；再次登录；正在操作过程中登录过期（需要返回原页面）
-                // 暂时直接跳到首页
-                history.push('/')
+                // 登陆时要注意一点，用户登录的场景可能有：初次登录；再次登录；正在操作过程中登录过期（需要返回原页面，原页面用 returnTo 存储）
+                // 保存/获取原页面可以使用 localStorage，也可以利用 useRoute().query.return_to，这里使用后者
+                // router.push('/sign_in?return_to=' + encodeURIComponent(route.fullPath))
+                const returnTo = route.query.return_to?.toString()
+                // 登录成功优先跳转原页面，原页面为空则跳转到首页 '/'
+                router.push(returnTo || '/')
             }
         }
+        // 如果前后端合作有缺憾，最好再写一个独立的 onSubmitError ，提供给 onSubmit -> response 里的 catch()
         const onError = (error:any) => {
             if (error.response.status === 422) {
                 Object.assign(errors, error.response.data.errors)
             }
             //如果这里不抛出错误，下面的 .catch 会以为错误已经被解决，开始下一步的倒计时
+            throw error
+        }
+        const onSubmitError = (error: any) => {
+            if (error.response.status === 422) {
+                Object.assign(errors, error.response.data.errors)
+            }
             throw error
         }
         // 请求发送验证码

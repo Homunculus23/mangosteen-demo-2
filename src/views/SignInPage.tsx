@@ -4,6 +4,7 @@ import { useBool } from "../hooks/useBool";
 import { MainLayout } from "../layouts/MainLayout";
 import { Button } from "../shared/Button";
 import { Form, FormItem } from "../shared/Form";
+import { history } from "../shared/history";
 import { http } from "../shared/Http";
 import { Icon } from "../shared/Icon";
 import { hasError, validate } from "../shared/validate";
@@ -21,7 +22,7 @@ export const SignInPage = defineComponent({
         const refValidationCode = ref<any>()
         // disable默认为false
         const {ref: refDisabled, toggle, on, off} = useBool(false)
-        //验证表单
+        // 验证表单：登录
         const onSubmit = async (e: Event) => {
             e.preventDefault()
             //清空errors信息
@@ -35,7 +36,13 @@ export const SignInPage = defineComponent({
             ]))
             // 没有 error 才发请求
             if(!hasError(errors)){
-                const response = await http.post('/session', formData)
+                // 发送请求，获取 jwt
+                const response = await http.post<{jwt:string}>('/session', formData)
+                // 将 jwt 缓存
+                localStorage.setItem('jwt', response.data.jwt)
+                // 登陆时要注意一点，用户登录的场景可能有：初次登录；再次登录；正在操作过程中登录过期（需要返回原页面）
+                // 暂时直接跳到首页
+                history.push('/')
             }
         }
         const onError = (error:any) => {
@@ -45,6 +52,7 @@ export const SignInPage = defineComponent({
             //如果这里不抛出错误，下面的 .catch 会以为错误已经被解决，开始下一步的倒计时
             throw error
         }
+        // 请求发送验证码
         const onClickSendValidationCode = async () =>{
             // 请求开始时，将 disable 改为 true
             on()

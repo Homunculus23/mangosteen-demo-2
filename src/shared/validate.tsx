@@ -54,4 +54,7 @@ export function hasError(errors: Record<string, string[]>){
         }
     }
     return result
+    // 不用 let 的写法，思路是对 errors.value 进行遍历，获得其 value 之和，结果大于0说明有错误
+    // return Object.values(errors).reduce((result, value) => result + value.length, 0) > 0
+    // 上行代码有2个问题：1.对于新手来说可读性较差；2.它一定会遍历每一项，导致性能不如上面的代码（errors其实没多大，省不了几个性能），想规避这个问题可用 some 代替 reduce 进行遍历。
 }

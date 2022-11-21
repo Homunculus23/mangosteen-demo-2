@@ -45,12 +45,10 @@ export class Http{
 export const http = new Http('/api/v1')
 // interceptors：拦截器，相关文档搜文章 Axios作弊表 。
 http.instance.interceptors.response.use(response =>{
-    console.log('response')
     // 成功返回 response
     return response
 }, (error) =>{
     //共有错误，业务错误在 SingInPage.tsx
-    console.log('error')
     // error 存在 response 属性就是一个请求错误
     if(error.response){
         // 断言

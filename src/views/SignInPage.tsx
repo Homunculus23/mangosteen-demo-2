@@ -1,5 +1,6 @@
 import axios from "axios";
 import { defineComponent, PropType, reactive, ref } from "vue";
+import { useBool } from "../hooks/useBool";
 import { MainLayout } from "../layouts/MainLayout";
 import { Button } from "../shared/Button";
 import { Form, FormItem } from "../shared/Form";
@@ -18,6 +19,8 @@ export const SignInPage = defineComponent({
             code:[]
         })
         const refValidationCode = ref<any>()
+        // disable默认为false
+        const {ref: refDisabled, toggle, on, off} = useBool(false)
         //验证表单
         const onSubmit = (e: Event) => {
             e.preventDefault()
@@ -39,9 +42,13 @@ export const SignInPage = defineComponent({
             throw error
         }
         const onClickSendValidationCode = async () =>{
+            // 请求开始时，将 disable 改为 true
+            on()
             const response = await http.post('/validation_codes', { email: formData.email })
                 // 401：检查路径是否错误；429：请求过于频繁；暂时将email语法错误归并到请求频繁
                 .catch(onError)
+                // 请求结束时，无论成败，将 disable 改为 false
+                .finally(off)
             //成功
             refValidationCode.value.startCount()
         }
@@ -57,7 +64,7 @@ export const SignInPage = defineComponent({
                         </div>
                         <Form onSubmit={onSubmit}> 
                             <FormItem label="邮箱地址" type="text" v-model={formData.email} error={errors.email?.[0]} placeholder="请输入邮箱，然后点击发送验证码"/>
-                            <FormItem countFrom={1} ref={refValidationCode} label="验证码" type="validationCode" placeholder="请输入六位数字" onClick={onClickSendValidationCode} v-model={formData.code} error={errors.code?.[0]}/>
+                            <FormItem countFrom={1} ref={refValidationCode} label="验证码" type="validationCode" placeholder="请输入六位数字" disabled={refDisabled.value} onClick={onClickSendValidationCode} v-model={formData.code} error={errors.code?.[0]}/>
                             <FormItem style={{paddingTop: '96px'}}>
                                 <Button>登录</Button>
                             </FormItem>

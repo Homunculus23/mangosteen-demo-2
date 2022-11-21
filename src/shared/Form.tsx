@@ -41,7 +41,8 @@ export const FormItem = defineComponent({
     countFrom: {
       type: Number,
       default: 60,
-    }
+    },
+    disabled: Boolean,
   },
   emits:['update:modelValue'],
   setup: (props, context) => {
@@ -70,61 +71,61 @@ export const FormItem = defineComponent({
     const content = computed(() => {
       switch (props.type) {
         case 'text':
-            return <input
-                value={props.modelValue}
-                placeholder={props.placeholder}
-                onInput={(e: any) => context.emit('update:modelValue', e.target.value)}
-                class={[s.formItem, s.input]} />
+          return <input
+            value={props.modelValue}
+            placeholder={props.placeholder}
+            onInput={(e: any) => context.emit('update:modelValue', e.target.value)}
+            class={[s.formItem, s.input]} />
         case 'emojiSelect':
-            return <EmojiSelect
-                modelValue={props.modelValue?.toString()}
-                onUpdateModelValue={value => context.emit('update:modelValue', value)}
-                class={[s.formItem, s.emojiList, s.error]} />
+          return <EmojiSelect
+            modelValue={props.modelValue?.toString()}
+            onUpdateModelValue={value => context.emit('update:modelValue', value)}
+            class={[s.formItem, s.emojiList, s.error]} />
         case 'date':
-            return <>
-                <input readonly={true} value={props.modelValue}
-                  placeholder={props.placeholder}
-                  onClick={() => { refDateVisible.value = true }}
-                  class={[s.formItem, s.input]} />
-                <Popup position='bottom' v-model:show={refDateVisible.value}>
-                  <DatetimePicker value={props.modelValue} type="date" title="选择年月日"
-                    onConfirm={(date: Date) => {
-                      context.emit('update:modelValue', new Time(date).format())
-                      refDateVisible.value = false
-                    }}
-                    onCancel={() => refDateVisible.value = false} />
-                </Popup></>
+          return <>
+            <input readonly={true} value={props.modelValue}
+              placeholder={props.placeholder}
+              onClick={() => { refDateVisible.value = true }}
+              class={[s.formItem, s.input]} />
+            <Popup position='bottom' v-model:show={refDateVisible.value}>
+              <DatetimePicker value={props.modelValue} type="date" title="选择年月日"
+                onConfirm={(date: Date) => {
+                  context.emit('update:modelValue', new Time(date).format())
+                  refDateVisible.value = false
+                }}
+                onCancel={() => refDateVisible.value = false} />
+            </Popup></>
         case 'validationCode':
-            return <>
-              <input class={[s.formItem, s.input, s.validationCodeInput]} placeholder={props.placeholder}/>
-              <Button disabled={isCounting.value} onClick={props.onClick} class={[s.formItem, s.button, s.validationCodeButton]}>
-                {isCounting.value ? `${count.value}秒后重置` : '发送验证码'}
-              </Button>
-            </>
+          return <>
+            <input class={[s.formItem, s.input, s.validationCodeInput]} placeholder={props.placeholder}/>
+            <Button disabled={isCounting.value || props.disabled} onClick={props.onClick} class={[s.formItem, s.button, s.validationCodeButton]}>
+              {isCounting.value ? `${count.value}秒后重置` : '发送验证码'}
+            </Button>
+          </>
         case 'select':
-            //监听 onChange 事件
-            return <select class={[s.formItem, s.select]} value={props.modelValue} onChange={(e: any) => {context.emit('update:modelValue', e.target.value)}}>
-                {/* 遍历props.options，显示传过来的value为props.modelValue的option.text */}
-                {props.options?.map(option =>
-                  <option value={option.value}>{option.text}</option>  
-                )}
-                <option></option>
-            </select>
+          //监听 onChange 事件
+          return <select class={[s.formItem, s.select]} value={props.modelValue} onChange={(e: any) => {context.emit('update:modelValue', e.target.value)}}>
+            {/* 遍历props.options，显示传过来的value为props.modelValue的option.text */}
+            {props.options?.map(option =>
+              <option value={option.value}>{option.text}</option>  
+            )}
+            <option></option>
+          </select>
         case undefined:
-            //没有写属性，直接展示插槽
-            return context.slots.default?.()
+          //没有写属性，直接展示插槽
+          return context.slots.default?.()
       }
     })
     return () => {
       return <div class={s.formRow}>
         <label class={s.formLabel}>
-            {props.label && <span class={s.formItem_name}>{props.label}</span>}
-            <div class={s.formItem_value}>
-                {content.value}
-            </div>
-              <div class={s.formItem_errorHint}>
-                  <span>{props.error ? getFriendlyError(props.error) : '\u3000'}</span>
-              </div>
+          {props.label && <span class={s.formItem_name}>{props.label}</span>}
+          <div class={s.formItem_value}>
+              {content.value}
+          </div>
+          <div class={s.formItem_errorHint}>
+              <span>{props.error ? getFriendlyError(props.error) : '\u3000'}</span>
+          </div>
         </label>
       </div>
     }

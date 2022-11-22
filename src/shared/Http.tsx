@@ -22,7 +22,7 @@ export class Http{
             ...config,
             url: url,
             params: query,
-            method: 'post'
+            method: 'get'
         })
     }
     // create

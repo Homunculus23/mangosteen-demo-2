@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders } from "axios";
 type JSONValue = string | number | null | boolean | JSONValue[] | { [key: string]: JSONValue };
 
 export class Http{
@@ -43,6 +43,17 @@ export class Http{
 }
 // 导出的默认实例
 export const http = new Http('/api/v1')
+
+// 将获取的 jwt 放进请求头，这里的 jwt 就是 token
+http.instance.interceptors.request.use(config => {
+  const jwt = localStorage.getItem('jwt')
+  if (jwt) {
+    // 这里报错，可以告知类型： (config.headers as AxiosRequestHeaders) ；也可以在 config.headers 后面加 ! 断言，加 ! 是告诉ts语法检测，它一定不会为空。
+    (config.headers as AxiosRequestHeaders).Authorization = `Bearer ${jwt}`
+  }
+  return config
+})
+
 // interceptors：拦截器，相关文档搜文章 Axios作弊表 。
 http.instance.interceptors.response.use(response =>{
     // 成功返回 response

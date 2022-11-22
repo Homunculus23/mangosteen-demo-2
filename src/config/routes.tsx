@@ -23,6 +23,11 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/welcome',
     component: Welcome,
+    // 进入任意welcome前，检查localStorage中是否已经有 ('skipFeatures', 'yes')，有则直接跳转 start
+    // 实际开发中，最好把每一次看广告的时间记下来，保证每次新广告用户都能看到
+    beforeEnter: (to, from, next) => {
+      localStorage.getItem('skipFeatures') === 'yes' ? next('/start') : next()
+    },
     children: [
       { path: '', redirect: '/welcome/1'},
       { path: '1', name:"Welcome1", components: { main: First, footer: FirstActions }, },//为了实现动画效果，需要扩展一个footer，对应Welcome.tsx里name为footer的RouterView

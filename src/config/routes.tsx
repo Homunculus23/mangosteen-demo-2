@@ -41,13 +41,6 @@ export const routes: RouteRecordRaw[] = [
   {path:'/start', component:StartPage},
   {
     path:'/items', component: ItemPage,
-    beforeEnter: async(to, from, next) => {
-      // 请求当前用户信息，如果成功就进入 ItemList/ItemCreate，否则进入登录页面
-      await http.get('/me').catch(() =>{
-        next('/sign_in?return_to=' + to.path)
-      })
-      next()
-    },
     children:[
       { path:'',component: ItemList },
       { path:'create',component: ItemCreate },

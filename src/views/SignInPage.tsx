@@ -8,6 +8,7 @@ import { Form, FormItem } from "../shared/Form";
 import { history } from "../shared/history";
 import { http } from "../shared/Http";
 import { Icon } from "../shared/Icon";
+import { meRefresh } from "../shared/me";
 import { hasError, validate } from "../shared/validate";
 import s from './SignInPage.module.scss';
 export const SignInPage = defineComponent({
@@ -50,8 +51,13 @@ export const SignInPage = defineComponent({
                 // 保存/获取原页面可以使用 localStorage，也可以利用 useRoute().query.return_to，这里使用后者
                 // router.push('/sign_in?return_to=' + encodeURIComponent(route.fullPath))
                 const returnTo = route.query.return_to?.toString()
-                // 登录成功优先跳转原页面，原页面为空则跳转到首页 '/'
-                router.push(returnTo || '/')
+                // 更新登录状态，跳转操作必须在请求结束后
+                meRefresh().then(() =>{
+                    // 登录请求成功优先跳转原页面，原页面为空则跳转到首页 '/'
+                    router.push(returnTo || '/')
+                }, () =>{
+                    window.alert('登陆失败')
+                })
             }
         }
         // 如果前后端合作有缺憾，最好再写一个独立的 onSubmitError ，提供给 onSubmit -> response 里的 catch()

@@ -14,7 +14,7 @@ import s from './SignInPage.module.scss';
 export const SignInPage = defineComponent({
     setup: (props, context) => {
         const formData = reactive({
-            email: 'fpatr@qq.com',
+            email: '',
             code: ''
         })
         const errors = reactive({
@@ -42,9 +42,11 @@ export const SignInPage = defineComponent({
             // 没有 error 才发请求
             if(!hasError(errors)){
                 // 用 http 发送请求；获取 jwt
-                const response = await http.post<{jwt:string}>('/session', formData)
-                    // 展示后端报错信息（如果有）
-                    .catch(onError)
+                const response = await http.post<{jwt:string}>('/session', formData, {
+                    // 用于mock
+                    params: { _mock: 'session'}
+                }).catch(onError)// 展示后端报错信息（如果有）
+                console.log(response)
                 // 将后端返回的 jwt 缓存
                 localStorage.setItem('jwt', response.data.jwt)
                 // 登陆时要注意一点，用户登录的场景可能有：初次登录；再次登录；正在操作过程中登录过期（需要返回原页面，原页面用 returnTo 存储）
@@ -52,12 +54,9 @@ export const SignInPage = defineComponent({
                 // router.push('/sign_in?return_to=' + encodeURIComponent(route.fullPath))
                 const returnTo = route.query.return_to?.toString()
                 // 更新登录状态，跳转操作必须在请求结束后
-                meRefresh().then(() =>{
-                    // 登录请求成功优先跳转原页面，原页面为空则跳转到首页 '/'
-                    router.push(returnTo || '/')
-                }, () =>{
-                    window.alert('登陆失败')
-                })
+                meRefresh()
+                // 登录请求成功优先跳转原页面，原页面为空则跳转到首页 '/'
+                router.push(returnTo || '/')
             }
         }
         // 如果前后端合作有缺憾，最好再写一个独立的 onSubmitError ，提供给 onSubmit -> response 里的 catch()

@@ -2,6 +2,7 @@
 import { faker } from '@faker-js/faker'
 import { AxiosRequestConfig } from 'axios';
 
+// 根据实际业务需求，Mock 可能多达几百几千行，后面可能需要拆分，因此单独做一个文件夹
 type Mock = (config: AxiosRequestConfig) => [number, any]
 
 faker.setLocale('zh_CN');

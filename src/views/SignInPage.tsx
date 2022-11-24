@@ -42,10 +42,8 @@ export const SignInPage = defineComponent({
             // 没有 error 才发请求
             if(!hasError(errors)){
                 // 用 http 发送请求；获取 jwt
-                const response = await http.post<{jwt:string}>('/session', formData, {
-                    // 用于mock
-                    params: { _mock: 'session'}
-                }).catch(onError)// 展示后端报错信息（如果有）
+                const response = await http.post<{jwt:string}>('/session', formData,)
+                    .catch(onError)// 展示后端报错信息（如果有）
                 console.log(response)
                 // 将后端返回的 jwt 缓存
                 localStorage.setItem('jwt', response.data.jwt)

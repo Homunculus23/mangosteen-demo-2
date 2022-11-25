@@ -4,6 +4,7 @@ import { Button } from "../../shared/Button";
 import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
 import { Tabs, Tab } from "../../shared/Tabs";
+import { useTags } from "../../shared/useTags";
 import { InputPad } from "./InputPad";
 import s from './ItemCreate.module.scss';
 export const ItemCreate = defineComponent({
@@ -15,25 +16,27 @@ export const ItemCreate = defineComponent({
     setup: (props, context) => {
         // Tab的默认值是‘支出’
         const refKind = ref('支出')
-        const refPage = ref(0)
-        const refHasMore = ref(false)
-        // 发请求
-        onMounted(async () =>{
-            // Resources 是全局变量
-            const response = await http.get<Resources<Tag>>('/tags', {
+        const { tags: expensesTags, hasMore, fetchTags } = useTags((page) =>{
+            return http.get<Resources<Tag>>('/tags', {
                 kind: 'expenses',
+                page: page + 1,
                 _mock: 'tagIndex',
             })
-            const {resources, pager} = response.data
-            // 由于代码异步执行，这里的 refExpensesTags 赋值必然晚于声明
-            refExpensesTags.value = resources
-            // 分页
-            refHasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
-            console.log(refHasMore.value)
         })
-        // 本页面的接口，即使后端做出来了也不会有数据，我们终究要 Mock 一波假数据
-        //.type 在JS以外的语言里通常是API，尽可能不要用 type 做key。最好用 kind 。 Tag 全局引用于 env.d.ts
-        const refExpensesTags = ref<Tag[]>([])
+        const { tags: incomeTags, 
+            hasMore: hasMore2, 
+            fetchTags: fetchTags2 
+        } = useTags((page) =>{
+            return http.get<Resources<Tag>>('/tags', {
+                kind: 'income',
+                page: page + 1,
+                _mock: 'tagIndex',
+            })
+        })
+
+        
+
+        // 本页面的接口，即使后端做出来了也不会马上有数据，我们终究要 Mock 一波假数据
         onMounted(async () =>{
             const response = await http.get<{resources: Tag[]}>('/tags', {
                 kind: 'income',
@@ -62,7 +65,7 @@ export const ItemCreate = defineComponent({
                                             新增
                                         </div>
                                     </div>
-                                    {refExpensesTags.value.map(tag =>
+                                    {expensesTags.value.map(tag =>
                                         <div class={[s.tag, s.selected]}>
                                             <div class={s.sign}>
                                                 {tag.sign}
@@ -74,8 +77,8 @@ export const ItemCreate = defineComponent({
                                     )}
                                 </div>
                                 <div class={s.more}>
-                                    { refHasMore.value?
-                                        <Button class={s.loadMore}>加载更多</Button> :
+                                    { hasMore.value?
+                                        <Button class={s.loadMore} onClick={fetchTags}>加载更多</Button> :
                                         <span class={s.noMore}>没有更多</span>
                                     }
                                 </div>
@@ -90,7 +93,7 @@ export const ItemCreate = defineComponent({
                                             新增
                                         </div>
                                     </div>
-                                    {refIncomeTags.value.map(tag =>
+                                    {incomeTags.value.map(tag =>
                                         <div class={[s.tag, s.selected]}>
                                             <div class={s.sign}>
                                                 {tag.sign}
@@ -102,8 +105,8 @@ export const ItemCreate = defineComponent({
                                     )}
                                 </div>
                                 <div class={s.more}>
-                                    { refHasMore.value?
-                                        <Button class={s.loadMore}>加载更多</Button> :
+                                    { hasMore2.value?
+                                        <Button class={s.loadMore} onClick={fetchTags2}>加载更多</Button> :
                                         <span class={s.noMore}>没有更多</span>
                                     }
                                 </div>

@@ -32,6 +32,7 @@ export const mockTagIndex: Mock = (config) => {
       id: createId(),
       name: faker.lorem.word(),
       sign: faker.internet.emoji(),
+      //.type 在JS以外的语言里通常是API，尽可能不要用 type 做key。最好用 kind 。
       kind: config.params.kind,
       ...attrs
     }))

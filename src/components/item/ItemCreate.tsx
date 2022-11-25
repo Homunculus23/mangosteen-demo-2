@@ -1,5 +1,6 @@
 import { defineComponent, onMounted, PropType, ref } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
+import { Button } from "../../shared/Button";
 import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
 import { Tabs, Tab } from "../../shared/Tabs";
@@ -14,14 +15,21 @@ export const ItemCreate = defineComponent({
     setup: (props, context) => {
         // Tab的默认值是‘支出’
         const refKind = ref('支出')
+        const refPage = ref(0)
+        const refHasMore = ref(false)
         // 发请求
         onMounted(async () =>{
-            const response = await http.get<{resources: Tag[]}>('/tags', {
+            // Resources 是全局变量
+            const response = await http.get<Resources<Tag>>('/tags', {
                 kind: 'expenses',
-                _mock: 'tagIndex'
+                _mock: 'tagIndex',
             })
+            const {resources, pager} = response.data
             // 由于代码异步执行，这里的 refExpensesTags 赋值必然晚于声明
-            refExpensesTags.value = response.data.resources
+            refExpensesTags.value = resources
+            // 分页
+            refHasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
+            console.log(refHasMore.value)
         })
         // 本页面的接口，即使后端做出来了也不会有数据，我们终究要 Mock 一波假数据
         //.type 在JS以外的语言里通常是API，尽可能不要用 type 做key。最好用 kind 。 Tag 全局引用于 env.d.ts
@@ -44,45 +52,61 @@ export const ItemCreate = defineComponent({
                         {/* 网页第一次渲染时就将refKind.value赋予 update: 的 selected。
                         双向绑定事件，当回调参数与refKind.value不同时，将获取的回调参数赋予refKind.value，并将refKind.value赋予 update: 的 selected，该行为将使Tabs重新渲染。 */}
                         <Tabs v-model:selected={refKind.value} class={s.tabs} >
-                            <Tab name="支出" class={s.tags_wrapper}>
-                            <div class={s.tag}>
-                                <div class={s.sign}>
-                                    <Icon name="add" class={s.createTag} />
-                                </div>
-                                <div class={s.name}>
-                                    新增
-                                </div>
-                            </div>
-                                {refExpensesTags.value.map(tag =>
-                                    <div class={[s.tag, s.selected]}>
+                            <Tab name="支出">
+                                <div class={s.tags_wrapper}>
+                                    <div class={s.tag}>
                                         <div class={s.sign}>
-                                            {tag.sign}
+                                            <Icon name="add" class={s.createTag} />
                                         </div>
                                         <div class={s.name}>
-                                            {tag.name}
+                                            新增
                                         </div>
                                     </div>
-                                )}
+                                    {refExpensesTags.value.map(tag =>
+                                        <div class={[s.tag, s.selected]}>
+                                            <div class={s.sign}>
+                                                {tag.sign}
+                                            </div>
+                                            <div class={s.name}>
+                                                {tag.name}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                <div class={s.more}>
+                                    { refHasMore.value?
+                                        <Button class={s.loadMore}>加载更多</Button> :
+                                        <span class={s.noMore}>没有更多</span>
+                                    }
+                                </div>
                             </Tab>
-                            <Tab name="收入" class={s.tags_wrapper}>
-                                <div class={s.tag}>
-                                    <div class={s.sign}>
-                                        <Icon name="add" class={s.createTag} />
-                                    </div>
-                                    <div class={s.name}>
-                                        新增
-                                    </div>
-                                </div>
-                                {refIncomeTags.value.map(tag =>
-                                    <div class={[s.tag, s.selected]}>
+                            <Tab name="收入">
+                                <div class={s.tags_wrapper}>
+                                    <div class={s.tag}>
                                         <div class={s.sign}>
-                                            {tag.sign}
+                                            <Icon name="add" class={s.createTag} />
                                         </div>
                                         <div class={s.name}>
-                                            {tag.name}
+                                            新增
                                         </div>
                                     </div>
-                                )}
+                                    {refIncomeTags.value.map(tag =>
+                                        <div class={[s.tag, s.selected]}>
+                                            <div class={s.sign}>
+                                                {tag.sign}
+                                            </div>
+                                            <div class={s.name}>
+                                                {tag.name}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                <div class={s.more}>
+                                    { refHasMore.value?
+                                        <Button class={s.loadMore}>加载更多</Button> :
+                                        <span class={s.noMore}>没有更多</span>
+                                    }
+                                </div>
                             </Tab>
                         </Tabs>
                         {/* 用div为InputPad作定位 */}

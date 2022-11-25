@@ -1,5 +1,6 @@
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, onMounted, PropType, ref } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
+import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
 import { Tabs, Tab } from "../../shared/Tabs";
 import { InputPad } from "./InputPad";
@@ -11,109 +12,28 @@ export const ItemCreate = defineComponent({
         }
     },
     setup: (props, context) => {
-        //Tab的默认值是‘支出’
+        // Tab的默认值是‘支出’
         const refKind = ref('支出')
-        const refExpensesTags = ref([
-            //.type 在JS以外的语言里通常是API，尽可能不要用 type 做key。这里用 kind 或者 category 都可以。
-            { id: 1, name: '餐费', sign: '￥', kind: 'expenses'},
-            { id: 2, name: '打车', sign: '￥', kind: 'expenses'},
-            { id: 3, name: '聚餐', sign: '￥', kind: 'expenses'},
-            { id: 1, name: '餐费', sign: '￥', kind: 'expenses'},
-            { id: 2, name: '打车', sign: '￥', kind: 'expenses'},
-            { id: 3, name: '聚餐', sign: '￥', kind: 'expenses'},
-        ])
-        const refIncomeTags = ref([
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-            { id: 4, name: '投资', sign: '￥', kind: 'income'},
-            { id: 5, name: '利息', sign: '￥', kind: 'income'},
-            { id: 6, name: '工资', sign: '￥', kind: 'income'},
-        ])
+        // 发请求
+        onMounted(async () =>{
+            const response = await http.get<{resources: Tag[]}>('/tags', {
+                kind: 'expenses',
+                _mock: 'tagIndex'
+            })
+            // 由于代码异步执行，这里的 refExpensesTags 赋值必然晚于声明
+            refExpensesTags.value = response.data.resources
+        })
+        // 本页面的接口，即使后端做出来了也不会有数据，我们终究要 Mock 一波假数据
+        //.type 在JS以外的语言里通常是API，尽可能不要用 type 做key。最好用 kind 。 Tag 全局引用于 env.d.ts
+        const refExpensesTags = ref<Tag[]>([])
+        onMounted(async () =>{
+            const response = await http.get<{resources: Tag[]}>('/tags', {
+                kind: 'income',
+                _mock: 'tagIndex'
+            })
+            refIncomeTags.value = response.data.resources
+        })
+        const refIncomeTags = ref<Tag[]>([])
         return () => (
             //注意：<MainLayout> 和上下花括号之间不能有空格，否则花括号中的内容将会被视为数组，无法变成插槽。
             <MainLayout class={s.layout}>{{

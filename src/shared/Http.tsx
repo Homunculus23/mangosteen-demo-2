@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from "axios";
-import { mockSession } from "../mock/mock";
+import { mockTagIndex } from "../mock/mock";
 
 type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
@@ -51,8 +51,8 @@ const mock = (response: AxiosResponse) => {
         && location.hostname !== '192.168.3.57') { return false }
     // 检查请求参数中是否包含 _mock，包含则寻找对应函数，否则不处理
     switch (response.config?.params?._mock) {
-        // case 'tagIndex':
-        //     [response.status, response.data] = mockTagIndex(response.config)
+        case 'tagIndex':
+            [response.status, response.data] = mockTagIndex(response.config)
         //     return true
         // case 'itemCreate':
         //     [response.status, response.data] = mockItemCreate(response.config)
@@ -62,9 +62,9 @@ const mock = (response: AxiosResponse) => {
         //     return true
         // case 'tagCreate':
         //     [response.status, response.data] = mockTagCreate(response.config)
-        case 'session':
-            [response.status, response.data] = mockSession(response.config)
-            return true
+        // case 'session':
+        //     [response.status, response.data] = mockSession(response.config)
+        //     return true
     }
     return false
 }

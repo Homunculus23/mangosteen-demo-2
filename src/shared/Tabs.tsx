@@ -45,8 +45,9 @@ export const Tabs = defineComponent({
           }
         </ol>
         <div>
-          {/* find遍历，获取name与selected相同的item */}
-          {tabs.find(item => item.props?.name === props.selected)}
+          {tabs.map(item => 
+            <div v-show={item.props?.name === props.selected}>{item}</div>  
+          )}
         </div>
       </div>
     }

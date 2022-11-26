@@ -8,11 +8,11 @@ type Mock = (config: AxiosRequestConfig) => [number, any]
 faker.setLocale('zh_CN');
 
 // 根据 config 返回不同的假数据，这里针对 /sign_in 的登录请求直接返回200和假 jwt
-export const mockSession: Mock = (config) => {
-  return [200, {
-    jwt: faker.random.word()
-  }]
-}
+// export const mockSession: Mock = (config) => {
+//   return [200, {
+//     jwt: faker.random.word()
+//   }]
+// }
 
 // item/create 页面调试
 export const mockTagIndex: Mock = (config) => {

@@ -8,22 +8,22 @@ type Mock = (config: AxiosRequestConfig) => [number, any]
 faker.setLocale('zh_CN');
 
 // 根据 config 返回不同的假数据，这里针对 /sign_in 的登录请求直接返回200和假 jwt
-// export const mockSession: Mock = (config) => {
-//   return [200, {
-//     jwt: faker.random.word()
-//   }]
-// }
+export const mockSession: Mock = (config) => {
+  return [200, {
+    jwt: faker.random.word()
+  }]
+}
 
-// item/create 页面调试
+  // item/create 页面调试
+  let id = 0
+const createId = () => {
+  id += 1
+  return id
+}
 export const mockTagIndex: Mock = (config) => {
   const {kind, page} = config.params
   const per_page = 25
   const count = 26
-  let id = 0
-  const createId = () => {
-    id += 1
-    return id
-  }
   const createPager = (page = 1) => ({
     page, per_page, count
   })
@@ -64,13 +64,22 @@ export const mockTagIndex: Mock = (config) => {
 // }
 
 // export const mockItemCreate: Mock = (config) => {
+//   // 测试报错
+//   // return [422, {
+//   //   errors: {
+//   //     tags_id: ['必须选择标签'],
+//   //     amount: ['金额不能为0']
+//   //   }
+//   // }]
 //     return [200, {
 //         resource: {
 //             id: 1,
-//             kind: 'expenses',
+//             user_id: 1312,
 //             amount: 9900,
+//             note: null,
 //             tags_id: [1],
 //             happen_at: new Date().toISOString(),
+//             kind: 'expenses',
 //         }
 //     }]
 // }

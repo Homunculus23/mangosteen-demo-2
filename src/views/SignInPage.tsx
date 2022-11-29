@@ -44,7 +44,6 @@ export const SignInPage = defineComponent({
                 // 用 http 发送请求；获取 jwt
                 const response = await http.post<{jwt:string}>('/session', formData,)
                     .catch(onError)// 展示后端报错信息（如果有）
-                console.log(response)
                 // 将后端返回的 jwt 缓存
                 localStorage.setItem('jwt', response.data.jwt)
                 // 登陆时要注意一点，用户登录的场景可能有：初次登录；再次登录；正在操作过程中登录过期（需要返回原页面，原页面用 returnTo 存储）

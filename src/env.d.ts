@@ -18,6 +18,16 @@ type Tag = {
   kind: 'expenses' | 'income'
 }
 
+// Item 的类型可以看后端文档，或者直接问
+type Item = {
+  id: number;
+  user_id: number;
+  amount: number;
+  tags_id: number[];
+  happen_at: string;
+  kind: 'expenses' | 'income';
+}
+
 type Resources<T = any> = {
   resources: T[],
   pager: {
@@ -25,4 +35,12 @@ type Resources<T = any> = {
     per_page: number,
     count: number
   }
+}
+
+type Resource<T> = {
+  resource: T
+}
+
+type ResourceError = {
+  errors: Record<string, string[]>
 }

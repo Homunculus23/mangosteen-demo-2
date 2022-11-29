@@ -63,26 +63,26 @@ export const mockTagIndex: Mock = (config) => {
 //     }]
 // }
 
-// export const mockItemCreate: Mock = (config) => {
-//   // 测试报错
-//   // return [422, {
-//   //   errors: {
-//   //     tags_id: ['必须选择标签'],
-//   //     amount: ['金额不能为0']
-//   //   }
-//   // }]
-//     return [200, {
-//         resource: {
-//             id: 1,
-//             user_id: 1312,
-//             amount: 9900,
-//             note: null,
-//             tags_id: [1],
-//             happen_at: new Date().toISOString(),
-//             kind: 'expenses',
-//         }
-//     }]
-// }
+export const mockItemCreate: Mock = (config) => {
+  // 测试报错
+  // return [422, {
+  //   errors: {
+  //     tags_id: ['必须选择标签'],
+  //     amount: ['金额不能为0']
+  //   }
+  // }]
+    return [200, {
+        resource: {
+            id: 1,
+            user_id: 1312,
+            amount: 9900,
+            note: null,
+            tags_id: [1],
+            happen_at: new Date().toISOString(),
+            kind: 'expenses',
+        }
+    }]
+}
 
 // export const mockTagIndex: Mock = (config) => {
 //     const { kind, page } = config.params

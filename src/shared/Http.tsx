@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from "axios";
-import { mockTagIndex } from "../mock/mock";
+import { mockItemCreate, mockSession, mockTagIndex } from "../mock/mock";
 
 type GetConfig = Omit<AxiosRequestConfig, 'params' | 'url' | 'method'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
@@ -53,18 +53,18 @@ const mock = (response: AxiosResponse) => {
     switch (response.config?.params?._mock) {
         case 'tagIndex':
             [response.status, response.data] = mockTagIndex(response.config)
-        //     return true
-        // case 'itemCreate':
-        //     [response.status, response.data] = mockItemCreate(response.config)
-        //     return true
+            return [true, response]
+        case 'itemCreate':
+            [response.status, response.data] = mockItemCreate(response.config)
+            return [true, response]
         // case 'itemIndex':
         //     [response.status, response.data] = mockItemIndex(response.config)
         //     return true
         // case 'tagCreate':
         //     [response.status, response.data] = mockTagCreate(response.config)
-        // case 'session':
-        //     [response.status, response.data] = mockSession(response.config)
-        //     return true
+        case 'session':
+            [response.status, response.data] = mockSession(response.config)
+            return [true, response]
     }
     return false
 }
@@ -83,18 +83,19 @@ http.instance.interceptors.request.use(config => {
   return config
 })
 // mock拦截器，防止在非本地测试环境触发 _mock （最好还是上线前删除）
-http.instance.interceptors.response.use((response) => {
-    // 篡改 response ：若 response 运行成功，尝试用 mock 处理 response，无法处理直接返回 response
+http.instance.interceptors.response.use(response => {
     mock(response)
-    return response
+    if(response.status>=400){
+        throw { response }
+    }else{
+        return response
+    }
 }, (error) => {
-    // 若 response 失败，尝试用 mock 篡改 error.response
-    if (mock(error.response)) {
-        // 篡改成功返回 error.response，被篡改后的 response 是成功的
-        return error.response
-    } else {
-        // 篡改失败抛出 error
+    mock(error.response)
+    if (error.response.status >= 400) {
         throw error
+    } else {
+        return error.response
     }
 })
 http.instance.interceptors.response.use(response =>{

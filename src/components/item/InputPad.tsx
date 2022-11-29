@@ -7,9 +7,9 @@ export const InputPad = defineComponent({
   props: {
     happenAt: String,
     amount: Number, 
-    // onSubmit: {
-    //   type: Function as PropType<() =>void>
-    // }
+    onSubmit: {
+      type: Function as PropType<() =>void>
+    }
   },
   setup: (props, context) => {
     props.onSubmit

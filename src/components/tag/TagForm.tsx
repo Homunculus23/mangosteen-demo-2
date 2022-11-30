@@ -7,9 +7,12 @@ import { onFormError } from "../../shared/onFormError";
 import { hasError, Rules, validate } from "../../shared/validate";
 import s from "./Tag.module.scss";
 export const TagForm = defineComponent({
+  props: {
+    id: Number, // 编辑标签才需要传
+  },
   setup: (props, context) => {
     const route = useRoute();
-    // 不是自己的项目不要轻易手贱搞提示页面，非得要做UI设计外的提示就用弹框！
+    // 不是自己的项目不要手贱搞提示页面，
     if (!route.query.kind) {
       alert("路径错误");
     }

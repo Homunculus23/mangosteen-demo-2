@@ -5,6 +5,7 @@ import axios, {
   AxiosRequestHeaders,
   AxiosResponse,
 } from "axios";
+import { Dialog } from "vant";
 import {
   mockItemCreate,
   mockSession,
@@ -159,7 +160,10 @@ http.instance.interceptors.response.use(
       // 断言
       const axiosError = error as AxiosError;
       if (axiosError.response?.status === 429) {
-        alert("你太频繁了");
+        Dialog.alert({
+          title: "提示",
+          message: "操作过于频繁",
+        });
       }
     }
     // 抛出错误

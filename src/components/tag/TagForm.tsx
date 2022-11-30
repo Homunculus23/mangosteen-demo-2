@@ -1,3 +1,4 @@
+import { Dialog } from "vant";
 import { defineComponent, onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { Button } from "../../shared/Button";
@@ -15,7 +16,10 @@ export const TagForm = defineComponent({
     // 报错：没有 kind 不进入页面
     // UI设计外的信息和警告，尽量都用弹框！
     if (!route.query.kind) {
-      alert("路径错误");
+      Dialog.alert({
+        title: "提示",
+        message: "网页路径错误",
+      });
     }
     // reactive也可用ref取代，使 formData 的数据能随时更新
     const formData = reactive<Partial<Tag>>({

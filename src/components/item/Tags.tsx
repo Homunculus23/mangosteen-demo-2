@@ -4,6 +4,7 @@ import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
 import s from "./Tags.module.scss";
 import { useTags } from "../../shared/useTags";
+import { RouterLink } from "vue-router";
 export const Tags = defineComponent({
   props: {
     kind: {
@@ -28,12 +29,12 @@ export const Tags = defineComponent({
     return () => (
       <>
         <div class={s.tags_wrapper}>
-          <div class={s.tag}>
+          <RouterLink to={`/tags/create?kind=${props.kind}`} class={s.tag}>
             <div class={s.sign}>
               <Icon name="add" class={s.createTag} />
             </div>
             <div class={s.name}>新增</div>
-          </div>
+          </RouterLink>
           {tags.value.map((tag) => (
             // 利用 v-model 绑定被选中的点击事件
             <div

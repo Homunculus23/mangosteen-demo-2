@@ -1,7 +1,6 @@
 import { defineComponent, PropType, reactive } from "vue";
 import { MainLayout } from "../../layouts/MainLayout";
 import { http } from "../../shared/Http";
-import { Icon } from "../../shared/Icon";
 import { Tabs, Tab } from "../../shared/Tabs";
 import { Tags } from "./Tags";
 import { InputPad } from "./InputPad";

@@ -21,7 +21,8 @@ type Tag = {
   user_id: number;
   name: string;
   sign: string;
-  kind: "expenses" | "income";
+  // ！！！注意此处的 expenses 和 income 不能带引号
+  kind: expenses | income;
 };
 
 // Item 的类型可以看后端文档，或者直接问
@@ -31,7 +32,7 @@ type Item = {
   amount: number;
   tags_id: number[];
   happen_at: string;
-  kind: "expenses" | "income";
+  kind: expenses | income;
 };
 
 type Resources<T = any> = {

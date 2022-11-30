@@ -9,9 +9,9 @@ import s from "./Tag.module.scss";
 export const TagForm = defineComponent({
   setup: (props, context) => {
     const route = useRoute();
-    // 不是自己的项目不要手贱搞这个页面！
+    // 不是自己的项目不要轻易手贱搞提示页面，非得要做UI设计外的提示就用弹框！
     if (!route.query.kind) {
-      return () => <div style={{ color: "red" }}>路径错误</div>;
+      alert("路径错误");
     }
     // reactive也可用ref取代，使 formData 的数据能随时更新
     const formData = reactive({

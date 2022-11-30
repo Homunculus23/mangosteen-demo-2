@@ -4,7 +4,7 @@ import { http } from "../../shared/Http";
 import { Icon } from "../../shared/Icon";
 import s from "./Tags.module.scss";
 import { useTags } from "../../shared/useTags";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 export const Tags = defineComponent({
   props: {
     kind: {
@@ -26,16 +26,19 @@ export const Tags = defineComponent({
     const onSelect = (tag: Tag) => {
       context.emit("update:selected", tag.id);
     };
+    const router = useRouter();
     // 实现长按标签且未移开手指时，编辑该标签。监听手指移动的 onTouchMove 必须放在外面的 div 上，否则无法监听移动。
     const timer = ref<number>();
     const currentTag = ref<HTMLDivElement>();
-    const onLongPress = () => {
-      console.log("长按");
+    const onLongPress = (tagId: Tag["id"]) => {
+      router.push(
+        `/tags/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`
+      );
     };
-    const onTouchStart = (e: TouchEvent) => {
+    const onTouchStart = (e: TouchEvent, tag: Tag) => {
       currentTag.value = e.currentTarget as HTMLDivElement;
       timer.value = setTimeout(() => {
-        onLongPress();
+        onLongPress(tag.id);
       }, 500);
     };
     const onTouchEnd = (e: TouchEvent) => {
@@ -68,7 +71,7 @@ export const Tags = defineComponent({
               class={[s.tag, props.selected === tag.id ? s.selected : ""]}
               onClick={() => onSelect(tag)}
               // 长按编辑，监听长按时间
-              onTouchstart={onTouchStart}
+              onTouchstart={(e) => onTouchStart(e, tag)}
               onTouchend={onTouchEnd}
             >
               <div class={s.sign}>{tag.sign}</div>

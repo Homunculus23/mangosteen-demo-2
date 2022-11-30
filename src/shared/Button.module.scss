@@ -1,24 +1,25 @@
-.button{
-    //注意：button元素里的文字默认样式是居中的，所以不要担心。但a元素默认靠左，需要手动加居中。
-    //在少数业务场景里，button标签有可能被改成a标签，如保险起见， .button 里的样式需要加居中（这里就算了）
-    border: 1px solid var(--button-bg); //border的宽如果不与hover宽度一致，将会出现闪烁的问题，所以预留1px与bg颜色相同的border，以后加hover只改颜色就不会出问题
-    background: var(--button-bg);
-    padding: 8px 16px;
-    border-radius: var(--button-radius);
-    color: var(--button-text);
-    font-size: var(--button-font-size);
-    height: var(--button-height);   //设计稿里有需要与input对齐的情况（输验证码页面），height不得不写死
-    &[disabled]{
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    //display和margin属性需要随机应变，写在相应的页面CSS中即可
-    //&:hover{border: red;}
-    // &.normal{}
-    // &.important{}
-    &.danger{
-        background: var(--button-bg-danger);
-        border-color: var(--button-bg-danger);
-    }
+.button {
+  //注意：button元素里的文字默认样式是居中的，所以不要担心。但a元素默认靠左，需要手动加居中。
+  //在少数业务场景里，button标签有可能被改成a标签，如保险起见， .button 里的样式需要加居中（这里就算了）
+  border: 1px solid var(--button-bg); //border的宽如果不与hover宽度一致，将会出现闪烁的问题，所以预留1px与bg颜色相同的border，以后加hover只改颜色就不会出问题
+  background: var(--button-bg);
+  padding: 8px 16px;
+  border-radius: var(--button-radius);
+  color: var(--button-text);
+  font-size: var(--button-font-size);
+  height: var(
+    --button-height
+  ); //设计稿里有需要与input对齐的情况（输验证码页面），height不得不写死
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  //display和margin属性需要随机应变，写在相应的页面CSS中即可
+  //&:hover{border: red;}
+  // &.normal{}
+  // &.important{}
+  &.danger {
+    background: var(--button-bg-danger);
+    border-color: var(--button-bg-danger);
+  }
 }
-

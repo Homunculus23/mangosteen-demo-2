@@ -1,11 +1,11 @@
 //顺序排列，避免命名重复
 :root {
-  --amount-text: #53a867;//数字input字体颜色
-  --app-name-text: #7878FF;//登录页面标题color
-  --bg: white;//默认背景色：Overlay组件背景色/
-  --button-bg-danger:#E10505;
-  --button-bg: #5c33be;//Button组件背景色
-  --button-border-color: #ddd;//数字button边框
+  --amount-text: #53a867; //数字input字体颜色
+  --app-name-text: #7878ff; //登录页面标题color
+  --bg: white; //默认背景色：Overlay组件背景色/
+  --button-bg-danger: #e10505;
+  --button-bg: #5c33be; //Button组件背景色
+  --button-border-color: #ddd; //数字button边框
   --button-font-size: 18px;
   --button-height: 48px;
   --button-radius: 8px;
@@ -14,44 +14,51 @@
   --dialog-header-text: white;
   --emoji-nav-text-selected: #333;
   --emoji-nav-text: #999;
-  --error-color: #E10505;
-  --float-button-bg: var(--button-bg);//使浮动按钮与button的颜色一致，也可视情况单独设置
+  --error-color: #e10505;
+  --float-button-bg: var(
+    --button-bg
+  ); //使浮动按钮与button的颜色一致，也可视情况单独设置
   --float-button-text: white;
   --input-border-color: #5c33be;
   --input-min-height: 48px;
   --input-radius: var(--button-radius);
-  --input-shadow: rgba(0,0,0,0.25);
+  --input-shadow: rgba(0, 0, 0, 0.25);
   --list-amount-text: var(--amount-text);
-  --list-tag-text: #333;//ItemSummary 标签/金额/时间 color
+  --list-tag-text: #333; //ItemSummary 标签/金额/时间 color
   --list-time-text: var(--date-text);
-  --main: #5c33be;//记一笔 icon 和选中边框的颜色
+  --main: #5c33be; //记一笔 icon 和选中边框的颜色
   --navbar-bg-end: var(--welcome-bg-end);
   --navbar-bg-start: var(--welcome-bg-start);
   --navbar-text: white;
-  --number-button-bg-important: #5c33be;//数字键盘grid布局 提交按钮背景/背景/提交按钮文字颜色
+  --number-button-bg-important: #5c33be; //数字键盘grid布局 提交按钮背景/背景/提交按钮文字颜色
   --number-button-bg: white;
   --number-button-text-important: white;
   --overlay-bg: white;
-  --overlay-mask-bg: rgba(0, 0, 0, 0.5);//浮动菜单右边的半透明黑
+  --overlay-mask-bg: rgba(0, 0, 0, 0.5); //浮动菜单右边的半透明黑
   --overlay-user-bg: #5c33be;
   --overlay-user-text: white;
-  --tabs-indicator-bg: rgba(255, 255, 255, 0.5);//Tab被选中时，给一个半透明白的底边效果
-  --tag-bg: #EFEFEF;//记一笔 icon 背景色
-  --text: #333;//默认字颜色：Overlay组件字体色/
-  --top-safe-area-height: 24px;//手机留海预留高度
-  --total-bg: #252A43;//total 的 background/净收入/收入/支出 color
-  --total-expenses: #53A867;
-  --total-income: #FE7275;
+  --tabs-indicator-bg: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); //Tab被选中时，给一个半透明白的底边效果
+  --tag-bg: #efefef; //记一笔 icon 背景色
+  --text: #333; //默认字颜色：Overlay组件字体色/
+  --top-safe-area-height: 24px; //手机留海预留高度
+  --total-bg: #252a43; //total 的 background/净收入/收入/支出 color
+  --total-expenses: #53a867;
+  --total-income: #fe7275;
   --total-text: white;
   --transition-duration: 0.5s;
-  --van-overlay-z-index: 64;//弹出的时间选择框高度
+  --van-overlay-z-index: 64; //弹出的时间选择框高度
   --welcome-bg-end: #8f4cd7;
   --welcome-bg-start: #5d33be;
   --welcome-card-bg: white;
   --welcome-nav-gap: 8px;
   --welcome-nav-height: 64px;
   --welcome-text: white;
-  --z-index-bottom-nav: 8;//浮层分级采用八进制整数，留下拓展空间
+  --z-index-bottom-nav: 8; //浮层分级采用八进制整数，留下拓展空间
   --z-index-navbar: 32;
   --z-index-overlay: 16;
 }

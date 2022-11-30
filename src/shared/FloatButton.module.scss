@@ -10,8 +10,8 @@
   bottom: 16px;
   right: 16px;
   .icon {
-    width: 30px;  //此时svg里面的use标签宽高约为24px
+    width: 30px; //此时svg里面的use标签宽高约为24px
     height: 30px;
-    fill: var(--float-button-text);   //svg图片的颜色由fill控制
+    fill: var(--float-button-text); //svg图片的颜色由fill控制
   }
 }

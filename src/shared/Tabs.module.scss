@@ -1,35 +1,35 @@
 .tabs {
-    position: relative;
-    &_nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        text-align: center;
-        //以后可能要做黑暗模式，字体颜色统一
-        color: var(--navbar-text);
-        position: sticky;
-        z-index: 1;
-        top: 0;
-        background: var(--navbar-bg-end);
-        > li {
-            flex-grow: 1;
-            flex-shrink: 0;
-            padding: 12px 0;
-            &.selected {
-                //使class为selected的元素的::after绝对定位
-                position: relative;
-                //::after可以使Tab被选中时，给一个半透明白的底边效果
-                &::after {
-                    content: "";
-                    display: block;
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 4px;
-                    background: var(--tabs-indicator-bg);
-                }
-            }
+  position: relative;
+  &_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    //以后可能要做黑暗模式，字体颜色统一
+    color: var(--navbar-text);
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    background: var(--navbar-bg-end);
+    > li {
+      flex-grow: 1;
+      flex-shrink: 0;
+      padding: 12px 0;
+      &.selected {
+        //使class为selected的元素的::after绝对定位
+        position: relative;
+        //::after可以使Tab被选中时，给一个半透明白的底边效果
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 4px;
+          background: var(--tabs-indicator-bg);
         }
+      }
     }
+  }
 }

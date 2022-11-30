@@ -2,7 +2,11 @@
   height: calc(100vh - var(--welcome-nav-height));
   display: flex;
   flex-direction: column;
-  background-image: linear-gradient(to bottom, var(--welcome-bg-start) 0%, var(--welcome-bg-end) 100%);
+  background-image: linear-gradient(
+    to bottom,
+    var(--welcome-bg-start) 0%,
+    var(--welcome-bg-end) 100%
+  );
   margin-bottom: var(--welcome-nav-height);
   > header {
     flex-shrink: 0;
@@ -11,7 +15,7 @@
     justify-content: center;
     align-items: center;
     padding-top: 66px;
-    color: #D4D4EE;
+    color: #d4d4ee;
     > svg {
       width: 64px;
       height: 69px;
@@ -48,10 +52,10 @@
 
 //为进入/离开的动画设置不同的方向
 .slide_fade_enter_from {
-  transform: translateX(100vw);  //从屏幕右边100vw进入
+  transform: translateX(100vw); //从屏幕右边100vw进入
 }
 .slide_fade_leave_to {
-  transform: translateX(-100vw);  //从屏幕左边100vw进入（负号为左）
+  transform: translateX(-100vw); //从屏幕左边100vw进入（负号为左）
 }
 // .slide-fade-enter-from, //enter from 进入；leave to 离开
 // .slide-fade-leave-to {  //进入/离开的动画方向

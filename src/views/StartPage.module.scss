@@ -1,13 +1,14 @@
 .button {
-    width: 100%;//当 width: 100%; 和 margin同时存在时，元素将会直接超出屏幕右侧。解决办法：加上一个容器，并将原本button拥有的外边距，改为该容器的内边距
-    &_wrapper { // & 在此处代表 .button ，在需要统一修改前半段相同的class时非常方便
-      padding: 16px 16px;
-    }
+  width: 100%; //当 width: 100%; 和 margin同时存在时，元素将会直接超出屏幕右侧。解决办法：加上一个容器，并将原本button拥有的外边距，改为该容器的内边距
+  &_wrapper {
+    // & 在此处代表 .button ，在需要统一修改前半段相同的class时非常方便
+    padding: 16px 16px;
+  }
 }
-.pig{
+.pig {
   width: 128px;
   height: 128px;
-  &_wrapper{
+  &_wrapper {
     //由于左右是居中的，因此Center的padding只需要加上下高度
     //注：有时间想办法在StartPage最下面再加一个Center组件，并取消这个padding，使Button组件能灵活居中
     padding: 120px 0;

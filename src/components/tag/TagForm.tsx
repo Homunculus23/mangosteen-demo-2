@@ -1,4 +1,4 @@
-import { defineComponent, reactive } from "vue";
+import { defineComponent, onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { Button } from "../../shared/Button";
 import { Form, FormItem } from "../../shared/Form";
@@ -8,20 +8,22 @@ import { hasError, Rules, validate } from "../../shared/validate";
 import s from "./Tag.module.scss";
 export const TagForm = defineComponent({
   props: {
-    id: Number, // 编辑标签才需要传
+    id: Number, // 可选，只有 TagEdit 需要传
   },
   setup: (props, context) => {
     const route = useRoute();
-    // 不是自己的项目不要手贱搞提示页面，
+    // 报错：没有 kind 不进入页面
+    // UI设计外的信息和警告，尽量都用弹框！
     if (!route.query.kind) {
       alert("路径错误");
     }
     // reactive也可用ref取代，使 formData 的数据能随时更新
-    const formData = reactive({
-      // 报错：在没有 kind 时下进入页面
-      kind: route.query.kind?.toString(),
-      name: "", //给空字符串（''）或者空（undefined）都可，优先前者
+    const formData = reactive<Partial<Tag>>({
+      id: undefined,
+      //给空字符串（''）或者空（undefined）都可，优先前者
+      name: "",
       sign: "",
+      kind: route.query.kind?.toString(),
     });
     //声明errors类型，使用 reactive 以便于展示，使 k 的类型为 formData 的 key 的子集或者为空
     const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({});
@@ -55,16 +57,29 @@ export const TagForm = defineComponent({
       Object.assign(errors, validate(formData, rules));
       // 发送请求
       if (!hasError(errors)) {
-        const response = await http
-          .post("/tags", formData, {
-            params: { _mock: "tagCreate" },
-          })
-          .catch((error) =>
-            onFormError(error, (data) => Object.assign(errors, data.errors))
-          );
+        const promise = (await formData.id)
+          ? http.patch(`/tags/${formData.id}`, formData, {
+              params: { _mock: "tagEdit" },
+            })
+          : http.post("/tags", formData, {
+              params: { _mock: "tagCreate" },
+            });
+        await promise.catch((error) =>
+          onFormError(error, (data) => Object.assign(errors, data.errors))
+        );
         router.back();
       }
     };
+    onMounted(async () => {
+      if (!props.id) return;
+      // 测试阶段所有的 response 务必加入 mock
+      const response = await http.get<Resource<Tag>>(`/tags/${props.id}`, {
+        _mock: "tagShow",
+      });
+      console.log(response);
+      Object.assign(formData, response.data.resource);
+      // Object.assign(formData, response.data.resource);
+    });
     return () => (
       <Form onSubmit={onSubmit}>
         <FormItem

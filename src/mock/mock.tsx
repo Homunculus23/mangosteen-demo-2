@@ -56,18 +56,30 @@ export const mockTagIndex: Mock = (config) => {
   }
 };
 
-// export const mockTagCreate: Mock = (config) => {
-//     const json = JSON.parse(config.data)
-//     console.log('session2')
-//     return [200,{
-//         resource: {
-//             id: 1,
-//             name: json.name,
-//             sign: json.sign,
-//             kind: json.kind
-//         }
-//     }]
-// }
+export const mockTagShow: Mock = (config) => {
+  const createTag = (attrs?: any) => ({
+    id: createId(),
+    name: faker.lorem.word(),
+    sign: faker.internet.emoji(),
+    kind: "expenses",
+    ...attrs,
+  });
+  return [200, { resource: createTag() }];
+};
+export const mockTagCreate: Mock = (config) => {
+  const json = JSON.parse(config.data);
+  return [
+    200,
+    {
+      resource: {
+        id: 1,
+        name: json.name,
+        sign: json.sign,
+        kind: json.kind,
+      },
+    },
+  ];
+};
 
 export const mockItemCreate: Mock = (config) => {
   // 测试报错

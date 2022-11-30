@@ -5,8 +5,10 @@ import { Icon } from "../../shared/Icon";
 import { TagForm } from "./TagForm";
 import s from "./Tag.module.scss";
 import { BackIcon } from "../../shared/BackIcon";
+import { useRoute } from "vue-router";
 export const TagEdit = defineComponent({
   setup: (props, context) => {
+    const route = useRoute();
     return () => (
       <MainLayout>
         {{
@@ -14,7 +16,7 @@ export const TagEdit = defineComponent({
           icon: () => <BackIcon />,
           default: () => (
             <>
-              <TagForm />
+              <TagForm id={parseInt(route.params.id.toString())} />
               <div class={s.actions}>
                 <Button level="danger" class={s.removeTags} onClick={() => {}}>
                   删除标签

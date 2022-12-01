@@ -13,12 +13,15 @@ export const TagForm = defineComponent({
   },
   setup: (props, context) => {
     const route = useRoute();
-    // 报错：没有 kind 不进入页面
+    const router = useRouter();
+    // 报错：没有 kind 禁止提交/编辑。通常出现在编辑到一半时，登录过期且页面刷新，重新登录后查询参数丢失导致。
     // UI设计外的信息和警告，尽量都用弹框！
     if (!route.query.kind) {
       Dialog.alert({
         title: "提示",
-        message: "网页路径错误",
+        message: "参数错误，请重新选择标签",
+      }).then(() => {
+        router.push("/items/create");
       });
     }
     // reactive也可用ref取代，使 formData 的数据能随时更新
@@ -31,7 +34,6 @@ export const TagForm = defineComponent({
     });
     //声明errors类型，使用 reactive 以便于展示，使 k 的类型为 formData 的 key 的子集或者为空
     const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({});
-    const router = useRouter();
     //声明e的类型。这里不能声明为 SubmitEvent ，与onSubmit类型不符
     const onSubmit = async (e: Event) => {
       e.preventDefault();

@@ -8,6 +8,7 @@ import axios, {
 import { Dialog } from "vant";
 import {
   mockItemCreate,
+  mockItemIndex,
   mockSession,
   mockTagCreate,
   mockTagEdit,
@@ -101,9 +102,9 @@ const mock = (response: AxiosResponse) => {
     case "itemCreate":
       [response.status, response.data] = mockItemCreate(response.config);
       return [true, response];
-    // case 'itemIndex':
-    //     [response.status, response.data] = mockItemIndex(response.config)
-    //     return true
+    case "itemIndex":
+      [response.status, response.data] = mockItemIndex(response.config);
+      return true;
     case "tagCreate":
       [response.status, response.data] = mockTagCreate(response.config);
       return [true, response];

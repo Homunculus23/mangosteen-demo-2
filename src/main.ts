@@ -29,10 +29,10 @@ router.beforeEach((to, from) => {
   for (const key in openList) {
     const value = openList[key];
     // 若 路由 === ('exact'的 key) ，或以 ('startsWith' 的 key) 开头，返回 true
-    if (
-      (value === "exact" && to.path === key) ||
-      (value === "startsWith" && to.path.startsWith(key))
-    ) {
+    if (value === "exact" && to.path === key) {
+      return true;
+    }
+    if (value === "startsWith" && to.path.startsWith(key)) {
       return true;
     }
   }

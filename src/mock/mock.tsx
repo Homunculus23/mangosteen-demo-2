@@ -66,6 +66,8 @@ export const mockTagShow: Mock = (config) => {
   });
   return [200, { resource: createTag() }];
 };
+// ？老师为什么要加个一模一样的？
+export const mockTagEdit: Mock = mockTagShow;
 export const mockTagCreate: Mock = (config) => {
   const json = JSON.parse(config.data);
   return [

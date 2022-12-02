@@ -1,4 +1,5 @@
 import { defineComponent, onMounted, PropType, reactive, ref } from "vue";
+import { RouterLink } from "vue-router";
 import { Button } from "../../shared/Button";
 import { FloatButton } from "../../shared/FloatButton";
 import { http } from "../../shared/Http";
@@ -112,7 +113,9 @@ export const ItemSummary = defineComponent({
         ) : (
           <div>记录为空</div>
         )}
-        <FloatButton iconName="add" />
+        <RouterLink to="/items/create">
+          <FloatButton iconName="add" />
+        </RouterLink>
       </div>
     );
   },

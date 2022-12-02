@@ -1,4 +1,11 @@
-import { defineComponent, onMounted, PropType, reactive, ref } from "vue";
+import {
+  defineComponent,
+  onMounted,
+  PropType,
+  reactive,
+  ref,
+  watch,
+} from "vue";
 import { RouterLink } from "vue-router";
 import { Button } from "../../shared/Button";
 import { FloatButton } from "../../shared/FloatButton";
@@ -41,11 +48,11 @@ export const ItemSummary = defineComponent({
         (pager.page - 1) * pager.per_page + resources.length < pager.count;
       page.value += 1;
     };
-    // 用函数对输入的 time 进行类型限制
+    // 对 time 进行类型检查，返回适合展示的时间格式
     const DateTimeToString = (time: string | Date) => {
       return new Time(time).format("YYYY-MM-DD HH:mm:ss");
     };
-    // 加载后先获取第一页数据
+    // 加载同时请求第一页数据
     onMounted(fetchItems);
     // 支出、收入、净收入
     const itemsBalance = reactive({
@@ -53,8 +60,8 @@ export const ItemSummary = defineComponent({
       income: 0,
       balance: 0,
     });
-    // 请求收、支、净收入统计
-    onMounted(async () => {
+    // 收、支、净收入统计请求
+    const fetchItemsBalance = async () => {
       if (!props.startDate || !props.endDate) {
         return;
       }
@@ -64,8 +71,27 @@ export const ItemSummary = defineComponent({
         page: page.value + 1,
         _mock: "itemIndexBalance",
       });
+      // 将 response.data 写入 itemsBalance
       Object.assign(itemsBalance, response.data);
-    });
+    };
+    // 自动执行的统计请求
+    onMounted(fetchItemsBalance);
+    // 自定义时间的items 和 统计请求
+    watch(
+      () => [props.startDate, props.endDate],
+      () => {
+        items.value = [];
+        hasMore.value = false;
+        page.value = 0;
+        Object.assign(itemsBalance, {
+          expenses: 0,
+          income: 0,
+          balance: 0,
+        });
+        fetchItems();
+        fetchItemsBalance();
+      }
+    );
     return () => (
       <div class={s.wrapper}>
         {items.value ? (

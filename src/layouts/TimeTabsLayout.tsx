@@ -26,11 +26,11 @@ export const TimeTabsLayout = defineComponent({
   setup: (props, context) => {
     const refSelected = ref("本月");
     const time = new Time();
-    //自定义
-    // const customTime = reactive({
-    // start: new Time().format(),
-    // end: new Time().format(),
-    // });
+    // 自定义时间中间变量
+    const tempTime = reactive({
+      start: new Time().format(),
+      end: new Time().format(),
+    });
     const customTime = reactive<{
       start?: string;
       end?: string;
@@ -51,6 +51,8 @@ export const TimeTabsLayout = defineComponent({
       //阻止默认动作必须写在最前面，否则可能出bug
       e.preventDefault();
       refOverlayVisible.value = false;
+      // 触发 onSubmit 时，将 tempTime 写入 customTime
+      Object.assign(customTime, tempTime);
     };
     const onSelect = (value: string) => {
       if (value === "自定义时间") {
@@ -101,12 +103,12 @@ export const TimeTabsLayout = defineComponent({
                     <Form onSubmit={onSubmitCustomTime}>
                       <FormItem
                         label="开始时间"
-                        v-model={customTime.start}
+                        v-model={tempTime.start}
                         type="date"
                       />
                       <FormItem
                         label="结束时间"
-                        v-model={customTime.end}
+                        v-model={tempTime.end}
                         type="date"
                       />
                       <FormItem>

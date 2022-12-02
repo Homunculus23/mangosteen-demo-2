@@ -36,6 +36,12 @@ type Item = {
   kind: expenses | income;
 };
 
+// 用户登录信息
+type User = {
+  id: number;
+  email: string;
+};
+
 type Resources<T = any> = {
   resources: T[];
   pager: {

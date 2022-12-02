@@ -3,6 +3,7 @@ import { Button } from "../../shared/Button";
 import { FloatButton } from "../../shared/FloatButton";
 import { http } from "../../shared/Http";
 import { MoneyToString } from "../../shared/MoneyToString";
+import { Time } from "../../shared/time";
 import s from "./ItemSummary.module.scss";
 export const ItemSummary = defineComponent({
   props: {
@@ -39,6 +40,10 @@ export const ItemSummary = defineComponent({
         (pager.page - 1) * pager.per_page + resources.length < pager.count;
       page.value += 1;
     };
+    // 用函数对输入的 time 进行类型限制
+    const DateTimeToString = (time: string | Date) => {
+      return new Time(time).format("YYYY-MM-DD HH:mm:ss");
+    };
     // 加载后先获取第一页数据
     onMounted(fetchItems);
     return () => (
@@ -72,7 +77,7 @@ export const ItemSummary = defineComponent({
                         ￥<MoneyToString value={item.amount} />
                       </span>
                     </div>
-                    <div class={s.time}>{item.happen_at}</div>
+                    <div class={s.time}>{DateTimeToString(item.happen_at)}</div>
                   </div>
                 </li>
               ))}

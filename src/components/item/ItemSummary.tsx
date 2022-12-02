@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, PropType, ref } from "vue";
+import { defineComponent, onMounted, PropType, reactive, ref } from "vue";
 import { Button } from "../../shared/Button";
 import { FloatButton } from "../../shared/FloatButton";
 import { http } from "../../shared/Http";
@@ -46,6 +46,25 @@ export const ItemSummary = defineComponent({
     };
     // 加载后先获取第一页数据
     onMounted(fetchItems);
+    // 支出、收入、净收入
+    const itemsBalance = reactive({
+      expenses: 0,
+      income: 0,
+      balance: 0,
+    });
+    // 请求收、支、净收入统计
+    onMounted(async () => {
+      if (!props.startDate || !props.endDate) {
+        return;
+      }
+      const response = await http.get("/items/balance", {
+        happen_after: props.startDate,
+        happen_before: props.endDate,
+        page: page.value + 1,
+        _mock: "itemIndexBalance",
+      });
+      Object.assign(itemsBalance, response.data);
+    });
     return () => (
       <div class={s.wrapper}>
         {items.value ? (
@@ -53,15 +72,15 @@ export const ItemSummary = defineComponent({
             <ul class={s.total}>
               <li>
                 <span>收入</span>
-                <span>128</span>
+                <MoneyToString value={itemsBalance.income} />
               </li>
               <li>
                 <span>支出</span>
-                <span>99</span>
+                <MoneyToString value={itemsBalance.expenses} />
               </li>
               <li>
                 <span>净收入</span>
-                <span>39</span>
+                <MoneyToString value={itemsBalance.balance} />
               </li>
             </ul>
             <ol class={s.list}>

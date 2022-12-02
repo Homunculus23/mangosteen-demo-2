@@ -55,7 +55,6 @@ export const mockTagIndex: Mock = (config) => {
     return [200, createBody(1)];
   }
 };
-
 export const mockTagShow: Mock = (config) => {
   const createTag = (attrs?: any) => ({
     id: createId(),
@@ -116,6 +115,13 @@ export const mockItemIndex: Mock = (config) => {
     per_page,
     count,
   });
+  const createTag = (attrs?: any) => ({
+    id: createId(),
+    name: faker.lorem.word(),
+    sign: faker.internet.emoji(),
+    kind: "expenses",
+    ...attrs,
+  });
   const createItem = (n = 1, attrs?: any) =>
     Array.from({ length: n }).map(() => ({
       id: createId(),
@@ -128,6 +134,12 @@ export const mockItemIndex: Mock = (config) => {
   const createBody = (n = 1, attrs?: any) => ({
     resources: createItem(n),
     pager: createPaper(page),
+    // 收入/支出/净收入
+    summary: {
+      income: 9900,
+      expenses: 10800,
+      balance: -900,
+    },
   });
   if (!page || page === 1) {
     return [200, createBody(25)];
@@ -136,4 +148,15 @@ export const mockItemIndex: Mock = (config) => {
   } else {
     return [200, {}];
   }
+};
+// mock收、支、净收入统计
+export const mockItemIndexBalance: Mock = (config) => {
+  return [
+    200,
+    {
+      income: 9900,
+      expenses: 10800,
+      balance: -900,
+    },
+  ];
 };

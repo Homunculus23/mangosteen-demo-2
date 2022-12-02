@@ -9,6 +9,7 @@ import { Dialog } from "vant";
 import {
   mockItemCreate,
   mockItemIndex,
+  mockItemIndexBalance,
   mockSession,
   mockTagCreate,
   mockTagEdit,
@@ -116,6 +117,9 @@ const mock = (response: AxiosResponse) => {
       return [true, response];
     case "tagEdit":
       [response.status, response.data] = mockTagEdit(response.config);
+      return [true, response];
+    case "itemIndexBalance":
+      [response.status, response.data] = mockItemIndexBalance(response.config);
       return [true, response];
   }
   return false;

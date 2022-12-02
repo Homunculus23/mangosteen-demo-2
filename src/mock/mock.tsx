@@ -128,6 +128,7 @@ export const mockItemIndex: Mock = (config) => {
       user_id: createId(),
       amount: Math.floor(Math.random() * 10000),
       tags_id: [createId()],
+      tags: [createTag()],
       happen_at: faker.date.past().toISOString(),
       kind: config.params.kind,
     }));

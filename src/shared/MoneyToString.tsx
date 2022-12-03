@@ -1,4 +1,15 @@
 import { defineComponent, PropType } from "vue";
+const addZero = (n: number) => {
+  const nString = n.toString();
+  const dotIndex = nString.indexOf(".");
+  if (dotIndex < 0) {
+    return nString + ".00";
+  } else if (nString.substring(dotIndex).length === 2) {
+    return nString + "0";
+  } else {
+    return nString;
+  }
+};
 export const MoneyToString = defineComponent({
   props: {
     value: {
@@ -9,17 +20,9 @@ export const MoneyToString = defineComponent({
   },
   setup: (props, context) => {
     // 函数首先接受一个数字 n ，然后将其 toString() 转化字符串
-    const addZero = (n: number) => {
-      const nString = n.toString();
-      const dotIndex = nString.indexOf(".");
-      if (dotIndex < 0) {
-        return nString + ".00";
-      } else if (nString.substring(dotIndex).length === 2) {
-        return nString + "0";
-      } else {
-        return nString;
-      }
-    };
     return () => <span>{addZero(props.value / 100)}</span>;
   },
 });
+export const getMoney = (n: number) => {
+  return addZero(n / 100)
+}

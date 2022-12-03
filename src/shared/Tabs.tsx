@@ -8,7 +8,10 @@ export const Tabs = defineComponent({
     },
     selected: {
       type: String as PropType<string>,
-      required: false,
+    },
+    rerenderOnSelect: {
+      type: Boolean as PropType<boolean>,
+      default: true,
     },
   },
   emits: ["update:selected"],
@@ -50,11 +53,19 @@ export const Tabs = defineComponent({
               ))
             }
           </ol>
-          <div>
-            {tabs.map((item) => (
-              <div v-show={item.props?.name === props.selected}>{item}</div>
-            ))}
-          </div>
+          {props.rerenderOnSelect ? (
+            // 默认用 map + v-show
+            <div>
+              {tabs.map((item) => (
+                <div v-show={item.props?.name === props.selected}>{item}</div>
+              ))}
+            </div>
+          ) : (
+            // rerenderOnSelect 为 false 时用 key + find
+            <div key={props.selected}>
+              {tabs.find((item) => item.props?.name === props.selected)}
+            </div>
+          )}
         </div>
       );
     };

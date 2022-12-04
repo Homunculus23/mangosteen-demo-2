@@ -10,6 +10,7 @@ import {
   mockItemCreate,
   mockItemIndex,
   mockItemIndexBalance,
+  mockItemSummary,
   mockSession,
   mockTagCreate,
   mockTagEdit,
@@ -120,6 +121,9 @@ const mock = (response: AxiosResponse) => {
       return [true, response];
     case "itemIndexBalance":
       [response.status, response.data] = mockItemIndexBalance(response.config);
+      return [true, response];
+    case "itemSummary":
+      [response.status, response.data] = mockItemSummary(response.config);
       return [true, response];
   }
   return false;

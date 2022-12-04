@@ -31,9 +31,7 @@ export const Tags = defineComponent({
     const timer = ref<number>();
     const currentTag = ref<HTMLDivElement>();
     const onLongPress = (tagId: Tag["id"]) => {
-      router.push(
-        `/tags/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`
-      );
+      router.push(`/tags/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`);
     };
     const onTouchStart = (e: TouchEvent, tag: Tag) => {
       currentTag.value = e.currentTarget as HTMLDivElement;
@@ -45,14 +43,8 @@ export const Tags = defineComponent({
       clearTimeout(timer.value);
     };
     const onTouchMove = (e: TouchEvent) => {
-      const pointedElement = document.elementFromPoint(
-        e.touches[0].clientX,
-        e.touches[0].clientY
-      );
-      if (
-        !currentTag.value?.contains(pointedElement) &&
-        currentTag.value !== pointedElement
-      ) {
+      const pointedElement = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+      if (!currentTag.value?.contains(pointedElement) && currentTag.value !== pointedElement) {
         clearTimeout(timer.value);
       }
     };

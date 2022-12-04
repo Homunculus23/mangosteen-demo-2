@@ -15,9 +15,7 @@
   --emoji-nav-text-selected: #333;
   --emoji-nav-text: #999;
   --error-color: #e10505;
-  --float-button-bg: var(
-    --button-bg
-  ); //使浮动按钮与button的颜色一致，也可视情况单独设置
+  --float-button-bg: var(--button-bg); //使浮动按钮与button的颜色一致，也可视情况单独设置
   --float-button-text: white;
   --input-border-color: #5c33be;
   --input-min-height: 48px;
@@ -37,12 +35,7 @@
   --overlay-mask-bg: rgba(0, 0, 0, 0.5); //浮动菜单右边的半透明黑
   --overlay-user-bg: #5c33be;
   --overlay-user-text: white;
-  --tabs-indicator-bg: rgba(
-    255,
-    255,
-    255,
-    0.5
-  ); //Tab被选中时，给一个半透明白的底边效果
+  --tabs-indicator-bg: rgba(255, 255, 255, 0.5); //Tab被选中时，给一个半透明白的底边效果
   --tag-bg: #efefef; //记一笔 icon 背景色
   --text: #333; //默认字颜色：Overlay组件字体色/
   --top-safe-area-height: 24px; //手机留海预留高度

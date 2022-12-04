@@ -1,11 +1,4 @@
-import {
-  defineComponent,
-  onMounted,
-  PropType,
-  reactive,
-  ref,
-  watch,
-} from "vue";
+import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import { Button } from "../../shared/Button";
 import { FloatButton } from "../../shared/FloatButton";
@@ -44,8 +37,7 @@ export const ItemSummary = defineComponent({
       // 将 resources 放到 item 里
       items.value?.push(...resources);
       // 根据 pager 计算是否有下一页，有则展示加载按钮，否则展示提醒
-      hasMore.value =
-        (pager.page - 1) * pager.per_page + resources.length < pager.count;
+      hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count;
       page.value += 1;
     };
     // 对 time 进行类型检查，返回适合展示的时间格式
@@ -129,11 +121,7 @@ export const ItemSummary = defineComponent({
               ))}
             </ol>
             <div class={s.more}>
-              {hasMore.value ? (
-                <Button onClick={fetchItems}>加载更多</Button>
-              ) : (
-                <span>没有更多</span>
-              )}
+              {hasMore.value ? <Button onClick={fetchItems}>加载更多</Button> : <span>没有更多</span>}
             </div>
           </>
         ) : (

@@ -7,9 +7,7 @@
   border-radius: var(--button-radius);
   color: var(--button-text);
   font-size: var(--button-font-size);
-  height: var(
-    --button-height
-  ); //设计稿里有需要与input对齐的情况（输验证码页面），height不得不写死
+  height: var(--button-height); //设计稿里有需要与input对齐的情况（输验证码页面），height不得不写死
   &[disabled] {
     opacity: 0.5;
     cursor: not-allowed;

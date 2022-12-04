@@ -72,17 +72,7 @@ export const EmojiSelect = defineComponent({
       ],
       ["植物", ["plant-flower", "plant-other"]],
       ["自然", ["sky & weather", "science"]],
-      [
-        "食物",
-        [
-          "food-fruit",
-          "food-vegetable",
-          "food-prepared",
-          "food-asian",
-          "food-marine",
-          "food-sweet",
-        ],
-      ],
+      ["食物", ["food-fruit", "food-vegetable", "food-prepared", "food-asian", "food-marine", "food-sweet"]],
       ["运动", ["sport", "game"]],
     ];
     const onClickTab = (index: number) => {
@@ -108,10 +98,7 @@ export const EmojiSelect = defineComponent({
           .map((item) => (
             //到这里，最终返回的就是我们需要的 li 元素列表
             //将现在显示的 emoji 添加 class='selectedEmoji'，其他 emoji 均为 ''
-            <li
-              class={item === props.modelValue ? s.selectedEmoji : ""}
-              onClick={() => onClickEmoji(item)}
-            >
+            <li class={item === props.modelValue ? s.selectedEmoji : ""} onClick={() => onClickEmoji(item)}>
               {item}
             </li>
           ))

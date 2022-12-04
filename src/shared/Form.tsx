@@ -30,9 +30,7 @@ export const FormItem = defineComponent({
       type: [String, Number],
     },
     type: {
-      type: String as PropType<
-        "text" | "emojiSelect" | "date" | "validationCode" | "select"
-      >,
+      type: String as PropType<"text" | "emojiSelect" | "date" | "validationCode" | "select">,
     },
     error: {
       type: String,
@@ -77,9 +75,7 @@ export const FormItem = defineComponent({
             <input
               value={props.modelValue}
               placeholder={props.placeholder}
-              onInput={(e: any) =>
-                context.emit("update:modelValue", e.target.value)
-              }
+              onInput={(e: any) => context.emit("update:modelValue", e.target.value)}
               class={[s.formItem, s.input]}
             />
           );
@@ -87,9 +83,7 @@ export const FormItem = defineComponent({
           return (
             <EmojiSelect
               modelValue={props.modelValue?.toString()}
-              onUpdateModelValue={(value) =>
-                context.emit("update:modelValue", value)
-              }
+              onUpdateModelValue={(value) => context.emit("update:modelValue", value)}
               class={[s.formItem, s.emojiList, s.error]}
             />
           );
@@ -125,9 +119,7 @@ export const FormItem = defineComponent({
               <input
                 class={[s.formItem, s.input, s.validationCodeInput]}
                 value={props.modelValue}
-                onInput={(e: any) =>
-                  context.emit("update:modelValue", e.target.value)
-                }
+                onInput={(e: any) => context.emit("update:modelValue", e.target.value)}
                 placeholder={props.placeholder}
               />
               <Button
@@ -168,9 +160,7 @@ export const FormItem = defineComponent({
             {props.label && <span class={s.formItem_name}>{props.label}</span>}
             <div class={s.formItem_value}>{content.value}</div>
             <div class={s.formItem_errorHint}>
-              <span>
-                {props.error ? getFriendlyError(props.error) : "\u3000"}
-              </span>
+              <span>{props.error ? getFriendlyError(props.error) : "\u3000"}</span>
             </div>
           </label>
         </div>

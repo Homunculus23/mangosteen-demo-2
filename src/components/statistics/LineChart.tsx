@@ -10,9 +10,7 @@ const echartsOption = {
     formatter: ([item]: any) => {
       const [x, y] = item.data;
       // getMoney 是在 MoneyToString 里额外抽离的一个函数。由于 eCharts 只能接收 js，只有这样才能让折线图的点显示详细金额。
-      return `${new Time(new Date(x)).format("YYYY年MM月DD日")} ￥${getMoney(
-        y
-      )}`;
+      return `${new Time(new Date(x)).format("YYYY年MM月DD日")} ￥${getMoney(y)}`;
     },
   },
   grid: [{ left: 16, top: 20, right: 16, bottom: 20 }],

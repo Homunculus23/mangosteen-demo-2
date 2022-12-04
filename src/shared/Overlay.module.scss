@@ -5,9 +5,7 @@
   top: var(--top-safe-area-height);
   left: 0;
   width: 100%;
-  height: calc(
-    100% - var(--top-safe-area-height)
-  ); //由于top不为0，height为100%就会超出顶部，下同
+  height: calc(100% - var(--top-safe-area-height)); //由于top不为0，height为100%就会超出顶部，下同
 }
 .email {
   width: 100%;

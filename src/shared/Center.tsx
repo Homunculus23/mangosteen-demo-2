@@ -16,8 +16,6 @@ export const Center = defineComponent({
   },
   setup: (props, context) => {
     const extraClass = directionMap[props.direction];
-    return () => (
-      <div class={[s.center, extraClass]}>{context.slots.default?.()}</div>
-    );
+    return () => <div class={[s.center, extraClass]}>{context.slots.default?.()}</div>;
   },
 });

@@ -38,15 +38,11 @@ export const Tabs = defineComponent({
               tabs.map((item) => (
                 <li //获取item的name，如果与selected相同，使class为s.selected，否则为空
                   class={[
-                    item.props?.name === props.selected
-                      ? [s.selected, cp + "_selected"]
-                      : "",
+                    item.props?.name === props.selected ? [s.selected, cp + "_selected"] : "",
                     cp + "_tabs_nav_item",
                   ]}
                   //声明onClick事件，事件触发时将自身的name作为回调参数
-                  onClick={() =>
-                    context.emit("update:selected", item.props?.name)
-                  }
+                  onClick={() => context.emit("update:selected", item.props?.name)}
                 >
                   {item.props?.name}
                 </li>
@@ -62,9 +58,7 @@ export const Tabs = defineComponent({
             </div>
           ) : (
             // rerenderOnSelect 为 false 时用 key + find
-            <div key={props.selected}>
-              {tabs.find((item) => item.props?.name === props.selected)}
-            </div>
+            <div key={props.selected}>{tabs.find((item) => item.props?.name === props.selected)}</div>
           )}
         </div>
       );

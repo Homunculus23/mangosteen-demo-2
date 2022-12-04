@@ -59,12 +59,7 @@ export const Button = defineComponent({
     };
     return () => (
       //props.level有'important'、'normal'、'danger'三个变量
-      <button
-        disabled={_disabled.value}
-        type={props.type}
-        class={[s.button, s[props.level]]}
-        onClick={onClick}
-      >
+      <button disabled={_disabled.value} type={props.type} class={[s.button, s[props.level]]} onClick={onClick}>
         {context.slots.default?.()}
       </button>
     );

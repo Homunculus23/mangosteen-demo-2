@@ -24,5 +24,5 @@ export const MoneyToString = defineComponent({
   },
 });
 export const getMoney = (n: number) => {
-  return addZero(n / 100)
-}
+  return addZero(n / 100);
+};

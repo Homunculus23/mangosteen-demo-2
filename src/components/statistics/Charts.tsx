@@ -29,15 +29,12 @@ export const Charts = defineComponent({
       );
     });
     onMounted(async () => {
-      const response = await http.get<{ groups: Data1; summary: number }>(
-        "/items/summary",
-        {
-          happen_after: props.startDate,
-          happen_before: props.endDate,
-          kind: kind.value,
-          _mock: "itemSummary",
-        }
-      );
+      const response = await http.get<{ groups: Data1; summary: number }>("/items/summary", {
+        happen_after: props.startDate,
+        happen_before: props.endDate,
+        kind: kind.value,
+        _mock: "itemSummary",
+      });
       data1.value = response.data.groups;
     });
     return () => (

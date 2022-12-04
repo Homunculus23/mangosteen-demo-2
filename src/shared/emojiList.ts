@@ -22,28 +22,9 @@ export const emojiList: EmojiList = [
   ],
   [
     "face-affection",
-    [
-      "\u{1F970}",
-      "\u{1F60D}",
-      "\u{1F929}",
-      "\u{1F618}",
-      "\u{1F617}",
-      "\u{263A}",
-      "\u{1F61A}",
-      "\u{1F619}",
-    ],
+    ["\u{1F970}", "\u{1F60D}", "\u{1F929}", "\u{1F618}", "\u{1F617}", "\u{263A}", "\u{1F61A}", "\u{1F619}"],
   ],
-  [
-    "face-tongue",
-    [
-      "\u{1F60B}",
-      "\u{1F61B}",
-      "\u{1F61C}",
-      "\u{1F92A}",
-      "\u{1F61D}",
-      "\u{1F911}",
-    ],
-  ],
+  ["face-tongue", ["\u{1F60B}", "\u{1F61B}", "\u{1F61C}", "\u{1F92A}", "\u{1F61D}", "\u{1F911}"]],
   ["face-hand", ["\u{1F917}", "\u{1F92D}", "\u{1F92B}", "\u{1F914}"]],
   [
     "face-neutral-skeptical",
@@ -60,10 +41,7 @@ export const emojiList: EmojiList = [
       "\u{1F925}",
     ],
   ],
-  [
-    "face-sleepy",
-    ["\u{1F60C}", "\u{1F614}", "\u{1F62A}", "\u{1F924}", "\u{1F634}"],
-  ],
+  ["face-sleepy", ["\u{1F60C}", "\u{1F614}", "\u{1F62A}", "\u{1F924}", "\u{1F634}"]],
   [
     "face-unwell",
     [
@@ -113,29 +91,11 @@ export const emojiList: EmojiList = [
   ],
   [
     "face-negative",
-    [
-      "\u{1F624}",
-      "\u{1F621}",
-      "\u{1F620}",
-      "\u{1F92C}",
-      "\u{1F608}",
-      "\u{1F47F}",
-      "\u{1F480}",
-      "\u{2620}",
-    ],
+    ["\u{1F624}", "\u{1F621}", "\u{1F620}", "\u{1F92C}", "\u{1F608}", "\u{1F47F}", "\u{1F480}", "\u{2620}"],
   ],
   [
     "face-costume",
-    [
-      "\u{1F4A9}",
-      "\u{1F921}",
-      "\u{1F479}",
-      "\u{1F47A}",
-      "\u{1F47B}",
-      "\u{1F47D}",
-      "\u{1F47E}",
-      "\u{1F916}",
-    ],
+    ["\u{1F4A9}", "\u{1F921}", "\u{1F479}", "\u{1F47A}", "\u{1F47B}", "\u{1F47D}", "\u{1F47E}", "\u{1F916}"],
   ],
   [
     "cat-face",
@@ -192,55 +152,11 @@ export const emojiList: EmojiList = [
       "\u{1F4A4}",
     ],
   ],
-  [
-    "hand-fingers-open",
-    ["\u{1F44B}", "\u{1F91A}", "\u{1F590}", "\u{270B}", "\u{1F596}"],
-  ],
-  [
-    "hand-fingers-partial",
-    [
-      "\u{1F44C}",
-      "\u{1F90F}",
-      "\u{270C}",
-      "\u{1F91E}",
-      "\u{1F91F}",
-      "\u{1F918}",
-      "\u{1F919}",
-    ],
-  ],
-  [
-    "hand-single-finger",
-    [
-      "\u{1F448}",
-      "\u{1F449}",
-      "\u{1F446}",
-      "\u{1F595}",
-      "\u{1F447}",
-      "\u{261D}",
-    ],
-  ],
-  [
-    "hand-fingers-closed",
-    [
-      "\u{1F44D}",
-      "\u{1F44E}",
-      "\u{270A}",
-      "\u{1F44A}",
-      "\u{1F91B}",
-      "\u{1F91C}",
-    ],
-  ],
-  [
-    "hands",
-    [
-      "\u{1F44F}",
-      "\u{1F64C}",
-      "\u{1F450}",
-      "\u{1F932}",
-      "\u{1F91D}",
-      "\u{1F64F}",
-    ],
-  ],
+  ["hand-fingers-open", ["\u{1F44B}", "\u{1F91A}", "\u{1F590}", "\u{270B}", "\u{1F596}"]],
+  ["hand-fingers-partial", ["\u{1F44C}", "\u{1F90F}", "\u{270C}", "\u{1F91E}", "\u{1F91F}", "\u{1F918}", "\u{1F919}"]],
+  ["hand-single-finger", ["\u{1F448}", "\u{1F449}", "\u{1F446}", "\u{1F595}", "\u{1F447}", "\u{261D}"]],
+  ["hand-fingers-closed", ["\u{1F44D}", "\u{1F44E}", "\u{270A}", "\u{1F44A}", "\u{1F91B}", "\u{1F91C}"]],
+  ["hands", ["\u{1F44F}", "\u{1F64C}", "\u{1F450}", "\u{1F932}", "\u{1F91D}", "\u{1F64F}"]],
   ["hand-prop", ["\u{270D}", "\u{1F485}", "\u{1F933}"]],
   [
     "body-parts",
@@ -533,13 +449,7 @@ export const emojiList: EmojiList = [
   ],
   [
     "person-resting",
-    [
-      "\u{1F9D8}",
-      "\u{1F9D8}\u{200D}\u{2642}\u{FE0F}",
-      "\u{1F9D8}\u{200D}\u{2640}\u{FE0F}",
-      "\u{1F6C0}",
-      "\u{1F6CC}",
-    ],
+    ["\u{1F9D8}", "\u{1F9D8}\u{200D}\u{2642}\u{FE0F}", "\u{1F9D8}\u{200D}\u{2640}\u{FE0F}", "\u{1F6C0}", "\u{1F6CC}"],
   ],
   [
     "family",
@@ -674,16 +584,7 @@ export const emojiList: EmojiList = [
   ["animal-amphibian", ["\u{1F438}"]],
   [
     "animal-reptile",
-    [
-      "\u{1F40A}",
-      "\u{1F422}",
-      "\u{1F98E}",
-      "\u{1F40D}",
-      "\u{1F432}",
-      "\u{1F409}",
-      "\u{1F995}",
-      "\u{1F996}",
-    ],
+    ["\u{1F40A}", "\u{1F422}", "\u{1F98E}", "\u{1F40D}", "\u{1F432}", "\u{1F409}", "\u{1F995}", "\u{1F996}"],
   ],
   [
     "animal-marine",
@@ -848,10 +749,7 @@ export const emojiList: EmojiList = [
       "\u{1F961}",
     ],
   ],
-  [
-    "food-marine",
-    ["\u{1F980}", "\u{1F99E}", "\u{1F990}", "\u{1F991}", "\u{1F9AA}"],
-  ],
+  ["food-marine", ["\u{1F980}", "\u{1F99E}", "\u{1F990}", "\u{1F991}", "\u{1F9AA}"]],
   [
     "food-sweet",
     [
@@ -894,29 +792,8 @@ export const emojiList: EmojiList = [
       "\u{1F9CA}",
     ],
   ],
-  [
-    "dishware",
-    [
-      "\u{1F962}",
-      "\u{1F37D}",
-      "\u{1F374}",
-      "\u{1F944}",
-      "\u{1F52A}",
-      "\u{1F3FA}",
-    ],
-  ],
-  [
-    "place-map",
-    [
-      "\u{1F30D}",
-      "\u{1F30E}",
-      "\u{1F30F}",
-      "\u{1F310}",
-      "\u{1F5FA}",
-      "\u{1F5FE}",
-      "\u{1F9ED}",
-    ],
-  ],
+  ["dishware", ["\u{1F962}", "\u{1F37D}", "\u{1F374}", "\u{1F944}", "\u{1F52A}", "\u{1F3FA}"]],
+  ["place-map", ["\u{1F30D}", "\u{1F30E}", "\u{1F30F}", "\u{1F310}", "\u{1F5FA}", "\u{1F5FE}", "\u{1F9ED}"]],
   [
     "place-geographic",
     [
@@ -961,17 +838,7 @@ export const emojiList: EmojiList = [
       "\u{1F5FD}",
     ],
   ],
-  [
-    "place-religious",
-    [
-      "\u{26EA}",
-      "\u{1F54C}",
-      "\u{1F6D5}",
-      "\u{1F54D}",
-      "\u{26E9}",
-      "\u{1F54B}",
-    ],
-  ],
+  ["place-religious", ["\u{26EA}", "\u{1F54C}", "\u{1F6D5}", "\u{1F54D}", "\u{26E9}", "\u{1F54B}"]],
   [
     "place-other",
     [
@@ -1048,16 +915,7 @@ export const emojiList: EmojiList = [
   ],
   [
     "transport-water",
-    [
-      "\u{2693}",
-      "\u{26F5}",
-      "\u{1F6F6}",
-      "\u{1F6A4}",
-      "\u{1F6F3}",
-      "\u{26F4}",
-      "\u{1F6E5}",
-      "\u{1F6A2}",
-    ],
+    ["\u{2693}", "\u{26F5}", "\u{1F6F6}", "\u{1F6A4}", "\u{1F6F3}", "\u{26F4}", "\u{1F6E5}", "\u{1F6A2}"],
   ],
   [
     "transport-air",
@@ -1192,17 +1050,7 @@ export const emojiList: EmojiList = [
       "\u{1F3AB}",
     ],
   ],
-  [
-    "award-medal",
-    [
-      "\u{1F396}",
-      "\u{1F3C6}",
-      "\u{1F3C5}",
-      "\u{1F947}",
-      "\u{1F948}",
-      "\u{1F949}",
-    ],
-  ],
+  ["award-medal", ["\u{1F396}", "\u{1F3C6}", "\u{1F3C5}", "\u{1F947}", "\u{1F948}", "\u{1F949}"]],
   [
     "sport",
     [
@@ -1260,17 +1108,7 @@ export const emojiList: EmojiList = [
       "\u{1F3B4}",
     ],
   ],
-  [
-    "arts & crafts",
-    [
-      "\u{1F3AD}",
-      "\u{1F5BC}",
-      "\u{1F3A8}",
-      "\u{1F9F5}",
-      "\u{1F9F6}",
-      "\u{1FAA2}",
-    ],
-  ],
+  ["arts & crafts", ["\u{1F3AD}", "\u{1F5BC}", "\u{1F3A8}", "\u{1F9F5}", "\u{1F9F6}", "\u{1FAA2}"]],
   [
     "clothing",
     [
@@ -1347,29 +1185,8 @@ export const emojiList: EmojiList = [
       "\u{1F4FB}",
     ],
   ],
-  [
-    "musical-instrument",
-    [
-      "\u{1F3B7}",
-      "\u{1F3B8}",
-      "\u{1F3B9}",
-      "\u{1F3BA}",
-      "\u{1F3BB}",
-      "\u{1FA95}",
-      "\u{1F941}",
-    ],
-  ],
-  [
-    "phone",
-    [
-      "\u{1F4F1}",
-      "\u{1F4F2}",
-      "\u{260E}",
-      "\u{1F4DE}",
-      "\u{1F4DF}",
-      "\u{1F4E0}",
-    ],
-  ],
+  ["musical-instrument", ["\u{1F3B7}", "\u{1F3B8}", "\u{1F3B9}", "\u{1F3BA}", "\u{1F3BB}", "\u{1FA95}", "\u{1F941}"]],
+  ["phone", ["\u{1F4F1}", "\u{1F4F2}", "\u{260E}", "\u{1F4DE}", "\u{1F4DF}", "\u{1F4E0}"]],
   [
     "computer",
     [
@@ -1463,18 +1280,7 @@ export const emojiList: EmojiList = [
       "\u{1F5F3}",
     ],
   ],
-  [
-    "writing",
-    [
-      "\u{270F}",
-      "\u{2712}",
-      "\u{1F58B}",
-      "\u{1F58A}",
-      "\u{1F58C}",
-      "\u{1F58D}",
-      "\u{1F4DD}",
-    ],
-  ],
+  ["writing", ["\u{270F}", "\u{2712}", "\u{1F58B}", "\u{1F58A}", "\u{1F58C}", "\u{1F58D}", "\u{1F4DD}"]],
   [
     "office",
     [
@@ -1503,17 +1309,7 @@ export const emojiList: EmojiList = [
       "\u{1F5D1}",
     ],
   ],
-  [
-    "lock",
-    [
-      "\u{1F512}",
-      "\u{1F513}",
-      "\u{1F50F}",
-      "\u{1F510}",
-      "\u{1F511}",
-      "\u{1F5DD}",
-    ],
-  ],
+  ["lock", ["\u{1F512}", "\u{1F513}", "\u{1F50F}", "\u{1F510}", "\u{1F511}", "\u{1F5DD}"]],
   [
     "tool",
     [
@@ -1539,22 +1335,8 @@ export const emojiList: EmojiList = [
       "\u{1F9F2}",
     ],
   ],
-  [
-    "science",
-    [
-      "\u{2697}",
-      "\u{1F9EA}",
-      "\u{1F9EB}",
-      "\u{1F9EC}",
-      "\u{1F52C}",
-      "\u{1F52D}",
-      "\u{1F4E1}",
-    ],
-  ],
-  [
-    "medical",
-    ["\u{1F489}", "\u{1FA78}", "\u{1F48A}", "\u{1FA79}", "\u{1FA7A}"],
-  ],
+  ["science", ["\u{2697}", "\u{1F9EA}", "\u{1F9EB}", "\u{1F9EC}", "\u{1F52C}", "\u{1F52D}", "\u{1F4E1}"]],
+  ["medical", ["\u{1F489}", "\u{1FA78}", "\u{1F48A}", "\u{1FA79}", "\u{1FA7A}"]],
   [
     "household",
     [
@@ -1708,18 +1490,7 @@ export const emojiList: EmojiList = [
   ],
   ["gender", ["\u{2640}", "\u{2642}", "\u{26A7}"]],
   ["math", ["\u{2716}", "\u{2795}", "\u{2796}", "\u{2797}", "\u{267E}"]],
-  [
-    "punctuation",
-    [
-      "\u{203C}",
-      "\u{2049}",
-      "\u{2753}",
-      "\u{2754}",
-      "\u{2755}",
-      "\u{2757}",
-      "\u{3030}",
-    ],
-  ],
+  ["punctuation", ["\u{203C}", "\u{2049}", "\u{2753}", "\u{2754}", "\u{2755}", "\u{2757}", "\u{3030}"]],
   ["currency", ["\u{1F4B1}", "\u{1F4B2}"]],
   [
     "other-symbol",

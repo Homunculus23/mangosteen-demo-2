@@ -16,10 +16,7 @@ interface Options {
 }
 
 //下行的undefined判断必须加上，否则被引用的useSwipe无法接受undefined
-export const useSwipe = (
-  element: Ref<HTMLElement | undefined>,
-  options: Options
-) => {
+export const useSwipe = (element: Ref<HTMLElement | undefined>, options: Options) => {
   const start = ref<Point>(); //用start和end记录坐标
   const end = ref<Point>();
   const swiping = ref(false); //swiping用于判断是否发生移动。这里的ref初始值写false，就能自动推断bool类型，省去<>。

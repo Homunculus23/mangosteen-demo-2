@@ -16,8 +16,7 @@ export const useTags = (fetcher: Fetcher) => {
     const { resources, pager } = response.data;
     tags.value.push(...resources);
     // 所有前页 + 当前请求页
-    hasMore.value =
-      (pager.page - 1) * pager.per_page + resources.length < pager.count;
+    hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count;
     page.value += 1;
   };
   // 发请求

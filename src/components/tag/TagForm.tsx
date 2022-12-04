@@ -70,9 +70,7 @@ export const TagForm = defineComponent({
           : http.post("/tags", formData, {
               params: { _mock: "tagCreate" },
             });
-        await promise.catch((error) =>
-          onFormError(error, (data) => Object.assign(errors, data.errors))
-        );
+        await promise.catch((error) => onFormError(error, (data) => Object.assign(errors, data.errors)));
         router.back();
       }
     };
@@ -87,12 +85,7 @@ export const TagForm = defineComponent({
     });
     return () => (
       <Form onSubmit={onSubmit}>
-        <FormItem
-          label="标签名(最多4个字符)"
-          type="text"
-          v-model={formData.name}
-          error={errors["name"]?.[0]}
-        />
+        <FormItem label="标签名(最多4个字符)" type="text" v-model={formData.name} error={errors["name"]?.[0]} />
         <FormItem
           label={"符号" + formData.sign}
           type="emojiSelect"

@@ -1,10 +1,4 @@
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosRequestHeaders,
-  AxiosResponse,
-} from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from "axios";
 import { Dialog } from "vant";
 import {
   mockItemCreate,
@@ -38,11 +32,7 @@ export class Http {
   // get 一般有 url，查询字符串 query（对象），其他配置 config（可不传的属性均加?），以及 method 为 post。
   // 添加泛型<R = unknown>，在使用 get 时表示 result 类型，若不传默认 unknown
   // JSONValue 的全局引用声明在 env.d.ts
-  get<R = unknown>(
-    url: string,
-    query?: Record<string, JSONValue>,
-    config?: Omit<AxiosRequestConfig, "params">
-  ) {
+  get<R = unknown>(url: string, query?: Record<string, JSONValue>, config?: Omit<AxiosRequestConfig, "params">) {
     // 业务里request比get更通用，可以点进源码查看参数和功能。request() 只接受一个 config
     // 为避免 config 再传入一个 params 将前面的覆盖，可将 ...config 写在最前面，也可用 Omit 取消 params 类型的方法。这里的get两种都用了
     return this.instance.request<R>({
@@ -54,29 +44,17 @@ export class Http {
   }
   // create
   // 支持参数比 get 少一个 params，实在要用可通过 config 传递
-  post<R = unknown>(
-    url: string,
-    data?: Record<string, JSONValue>,
-    config?: PostConfig
-  ) {
+  post<R = unknown>(url: string, data?: Record<string, JSONValue>, config?: PostConfig) {
     return this.instance.request<R>({ ...config, url, data, method: "post" });
   }
   // update
   // 同理，比 get 少一个 params。method 改为 patch
-  patch<R = unknown>(
-    url: string,
-    data?: Record<string, JSONValue>,
-    config?: PatchConfig
-  ) {
+  patch<R = unknown>(url: string, data?: Record<string, JSONValue>, config?: PatchConfig) {
     return this.instance.request<R>({ ...config, url, data, method: "patch" });
   }
   // destroy
   // 比起 get，只是method 改为 delete
-  delete<R = unknown>(
-    url: string,
-    query?: Record<string, string>,
-    config?: DeleteConfig
-  ) {
+  delete<R = unknown>(url: string, query?: Record<string, string>, config?: DeleteConfig) {
     return this.instance.request<R>({
       ...config,
       url: url,
@@ -89,11 +67,7 @@ export class Http {
 // mock 用于篡改 response
 const mock = (response: AxiosResponse) => {
   // 如果属于这三个地址（开发中地址）之一，进行下一步（篡改），否则不处理（直接返回 false），防止非测试环境触发 _mock
-  if (
-    location.hostname !== "localhost" &&
-    location.hostname !== "127.0.0.1" &&
-    location.hostname !== "192.168.3.57"
-  ) {
+  if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.hostname !== "192.168.3.57") {
     return false;
   }
   // 检查请求参数中是否包含 _mock，包含则寻找对应函数，否则不处理

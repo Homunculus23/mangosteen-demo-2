@@ -55,16 +55,10 @@ export const ItemCreate = defineComponent({
                 <Tabs v-model:selected={formData.kind} class={s.tabs}>
                   {/* Tab 内组件名均为Tags，Vue 在此时会出现切换不刷新的问题（动画也有类似问题），此处解决办法是用 v-show 展示所有 Tab 并控制显示/隐藏。该逻辑在 Tabs 组件 */}
                   <Tab name="支出">
-                    <Tags
-                      kind="expenses"
-                      v-model:selected={formData.tags_id[0]}
-                    />
+                    <Tags kind="expenses" v-model:selected={formData.tags_id[0]} />
                   </Tab>
                   <Tab name="收入">
-                    <Tags
-                      kind="income"
-                      v-model:selected={formData.tags_id[0]}
-                    />
+                    <Tags kind="income" v-model:selected={formData.tags_id[0]} />
                   </Tab>
                 </Tabs>
                 {/* 用div为InputPad作定位 */}

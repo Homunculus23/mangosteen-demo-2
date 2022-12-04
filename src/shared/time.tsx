@@ -41,9 +41,7 @@ export class Time {
   //当月的第一天
   firstDayOfMonth() {
     //new Date(年,月,日,时,分,秒)
-    return new Time(
-      new Date(this.date.getFullYear(), this.date.getMonth(), 1, 0, 0, 0)
-    );
+    return new Time(new Date(this.date.getFullYear(), this.date.getMonth(), 1, 0, 0, 0));
   }
   //当年的第一天
   firstDayOfYear() {
@@ -52,9 +50,7 @@ export class Time {
   //当月的最后一天
   lastDayOfMonth() {
     //下个月的0号，也就是当月的最后一天
-    return new Time(
-      new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0, 0, 0, 0)
-    );
+    return new Time(new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0, 0, 0, 0));
   }
   //今年的最后一天
   lastDayOfYear() {
@@ -64,17 +60,7 @@ export class Time {
     return this.date;
   }
   //减法用负数加法解决
-  add(
-    amount: number,
-    unit:
-      | "year"
-      | "month"
-      | "day"
-      | "hour"
-      | "minute"
-      | "second"
-      | "millisecond"
-  ) {
+  add(amount: number, unit: "year" | "month" | "day" | "hour" | "minute" | "second" | "millisecond") {
     // return new Time but not change this.date
     let date = new Date(this.date.getTime());
     switch (unit) {
@@ -82,14 +68,7 @@ export class Time {
         const currentDate = date.getDate();
         date.setDate(1);
         date.setFullYear(date.getFullYear() + amount);
-        const targetDate = new Date(
-          date.getFullYear(),
-          date.getMonth() + 1,
-          0,
-          0,
-          0,
-          0
-        ).getDate();
+        const targetDate = new Date(date.getFullYear(), date.getMonth() + 1, 0, 0, 0, 0).getDate();
         date.setDate(Math.min(currentDate, targetDate));
         break;
       //尽量符合大众对自然月的认知
@@ -98,14 +77,7 @@ export class Time {
         const d = date.getDate(); //d = 31
         date.setDate(1); //将date 日期改为1日
         date.setMonth(date.getMonth() + amount); //将 date 月份改为2月
-        const d2 = new Date(
-          date.getFullYear(),
-          date.getMonth() + 1,
-          0,
-          0,
-          0,
-          0
-        ).getDate(); //基于2月1日，创建一个3月0日的新Date，也就是2月29日，d2 = 29
+        const d2 = new Date(date.getFullYear(), date.getMonth() + 1, 0, 0, 0, 0).getDate(); //基于2月1日，创建一个3月0日的新Date，也就是2月29日，d2 = 29
         date.setDate(Math.min(d, d2)); //将 date 日期设定为 d/d2 中较小的值，这里就改为了 2月29日
         break;
       case "day":

@@ -28,24 +28,21 @@ export const svgstore = (options = {}) => {
           sprites.add(svgid, code);
         }
         //optimize优化svg文件
-        const { data: code } = optimize(
-          sprites.toString({ inline: options.inline }),
-          {
-            plugins: [
-              "cleanupAttrs",
-              "removeDoctype",
-              "removeComments",
-              "removeTitle",
-              "removeDesc",
-              "removeEmptyAttrs",
-              //removeAttrs删掉svg文件中无用的属性
-              {
-                name: "removeAttrs",
-                params: { attrs: "(data-name|data-xxx)" },
-              },
-            ],
-          }
-        );
+        const { data: code } = optimize(sprites.toString({ inline: options.inline }), {
+          plugins: [
+            "cleanupAttrs",
+            "removeDoctype",
+            "removeComments",
+            "removeTitle",
+            "removeDesc",
+            "removeEmptyAttrs",
+            //removeAttrs删掉svg文件中无用的属性
+            {
+              name: "removeAttrs",
+              params: { attrs: "(data-name|data-xxx)" },
+            },
+          ],
+        });
         //最后一步是将code变成js文件，因为我们最后需要生成svg_bundle.js的内容
         return `const div = document.createElement('div')
 div.innerHTML = \`${code}\`

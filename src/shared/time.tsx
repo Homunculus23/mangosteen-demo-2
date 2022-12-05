@@ -59,6 +59,10 @@ export class Time {
   getRaw() {
     return this.date;
   }
+  //当天时间戳
+  getTimestamp() {
+    return this.date.getTime();
+  }
   //减法用负数加法解决
   add(amount: number, unit: "year" | "month" | "day" | "hour" | "minute" | "second" | "millisecond") {
     // return new Time but not change this.date

@@ -163,19 +163,29 @@ export const mockItemIndexBalance: Mock = (config) => {
 };
 // 折线、饼、条形三图
 export const mockItemSummary: Mock = (config) => {
-  return [
-    200,
-    {
-      groups: [
-        // { happen_at: "2018-06-18T00:00:00.000+0800", amount: 100 },
-        // { happen_at: "2018-06-22T00:00:00.000+0800", amount: 300 },
-        // { happen_at: "2018-06-29T00:00:00.000+0800", amount: 200 },
-        // 如果第一个数据不在检查时间里，后面的数据也会全部略过
-        { happen_at: "2022-12-18T00:00:00.000+0800", amount: 100 },
-        { happen_at: "2022-12-22T00:00:00.000+0800", amount: 300 },
-        { happen_at: "2022-12-29T00:00:00.000+0800", amount: 200 },
-      ],
-      summary: 600,
-    },
-  ];
+  if (config.params.group_by === "happen_at") {
+    return [
+      200,
+      {
+        groups: [
+          { happen_at: "2022-07-18T00:00:00.000+0800", amount: 100 },
+          { happen_at: "2022-07-22T00:00:00.000+0800", amount: 300 },
+          { happen_at: "2022-07-29T00:00:00.000+0800", amount: 200 },
+        ],
+        summary: 600,
+      },
+    ];
+  } else {
+    return [
+      200,
+      {
+        groups: [
+          { tag_id: 1, tag: { id: 1, name: "交通" }, amount: 100 },
+          { tag_id: 2, tag: { id: 2, name: "吃饭" }, amount: 300 },
+          { tag_id: 3, tag: { id: 3, name: "购物" }, amount: 200 },
+        ],
+        summary: 600,
+      },
+    ];
+  }
 };

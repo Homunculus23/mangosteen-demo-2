@@ -1,4 +1,4 @@
-import { computed, defineComponent, onMounted, PropType, ref } from "vue";
+import { computed, defineComponent, onMounted, PropType, ref, watch } from "vue";
 import { FormItem } from "../../shared/Form";
 import s from "./Charts.module.scss";
 import { LineChart } from "./LineChart";
@@ -51,7 +51,7 @@ export const Charts = defineComponent({
         return [new Date(time).toISOString(), amount];
       });
     });
-    onMounted(async () => {
+    const fetchData1 = async () => {
       const response = await http.get<{ groups: Data1; summary: number }>("/items/summary", {
         happen_after: props.startDate,
         happen_before: props.endDate,
@@ -60,7 +60,9 @@ export const Charts = defineComponent({
         _mock: "itemSummary",
       });
       data1.value = response.data.groups;
-    });
+    };
+    onMounted(fetchData1);
+    watch(() => kind.value, fetchData1);
     // data2
     const data2 = ref<Data2>([]);
     // 饼图
@@ -80,7 +82,7 @@ export const Charts = defineComponent({
         percent: Math.round((item.amount / total) * 100),
       }));
     });
-    onMounted(async () => {
+    const fetchData2 = async () => {
       const response = await http.get<{ groups: Data2; summary: number }>("/items/summary", {
         happen_after: props.startDate,
         happen_before: props.endDate,
@@ -89,7 +91,9 @@ export const Charts = defineComponent({
         _mock: "itemSummary",
       });
       data2.value = response.data.groups;
-    });
+    };
+    onMounted(fetchData2);
+    watch(() => kind.value, fetchData2);
     return () => (
       <div class={s.wrapper}>
         <FormItem

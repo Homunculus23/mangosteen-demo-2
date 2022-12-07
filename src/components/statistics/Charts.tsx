@@ -61,14 +61,25 @@ export const Charts = defineComponent({
       });
       data1.value = response.data.groups;
     });
-    // data2 饼图
+    // data2
     const data2 = ref<Data2>([]);
+    // 饼图
     const betterData2 = computed<{ name: string; value: number }[]>(() =>
       data2.value.map((item) => ({
         name: item.tag.name,
         value: item.amount,
       }))
     );
+    // 条形图
+    //betterData3求取各个 amount 占总收/支的百分比，并添加到percent属性中
+    const betterData3 = computed<{ tag: Tag; amount: number; percent: number }[]>(() => {
+      const total = data2.value.reduce((sum, item) => sum + item.amount, 0);
+      return data2.value.map((item) => ({
+        ...item,
+        //显示的百分比不需要小数，Math.round四舍五入
+        percent: Math.round((item.amount / total) * 100),
+      }));
+    });
     onMounted(async () => {
       const response = await http.get<{ groups: Data2; summary: number }>("/items/summary", {
         happen_after: props.startDate,
@@ -92,7 +103,7 @@ export const Charts = defineComponent({
         />
         <LineChart data={betterData1.value} />
         <PieChart data={betterData2.value} />
-        <Bars />
+        <Bars data={betterData3.value} />
       </div>
     );
   },

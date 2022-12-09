@@ -100,8 +100,15 @@ export const SignInPage = defineComponent({
           { key: "code", type: "required", message: "必填" },
         ])
       );
-      const response = await http
-        .post("/validation_codes", { email: formData.email })
+      await http
+        .post(
+          "/validation_codes",
+          { email: formData.email },
+          {
+            //
+            _autoLoading: true,
+          }
+        )
         // 401：检查路径是否错误；429：请求过于频繁；暂时将email语法错误归并到请求频繁
         .catch(onError)
         // 请求结束时，无论成败，将 disable 改为 false

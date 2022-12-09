@@ -35,7 +35,7 @@ export const ItemCreate = defineComponent({
     const onSubmit = async () => {
       const response = await http
         .post<Resource<Item>>("/items", formData, {
-          params: { _mock: "itemCreate" },
+          _mock: "itemCreate",
         })
         .catch(onError);
       router.push("/items");

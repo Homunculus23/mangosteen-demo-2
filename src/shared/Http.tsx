@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from "axios";
-import { Dialog } from "vant";
+import { Dialog, Toast } from "vant";
 import {
   mockItemCreate,
   mockItemIndex,
@@ -71,7 +71,7 @@ const mock = (response: AxiosResponse) => {
     return false;
   }
   // 检查请求参数中是否包含 _mock，包含则寻找对应函数，否则不处理
-  switch (response.config?.params?._mock) {
+  switch (response.config?._mock) {
     case "tagIndex":
       [response.status, response.data] = mockTagIndex(response.config);
       return [true, response];
@@ -114,8 +114,33 @@ http.instance.interceptors.request.use((config) => {
     // 这里报错，可以告知类型： (config.headers as AxiosRequestHeaders) ；也可以在 config.headers 后面加 ! 断言，加 ! 是告诉ts语法检测，它一定不会为空。
     (config.headers as AxiosRequestHeaders).Authorization = `Bearer ${jwt}`;
   }
+  // 加载中配置
+  if (config._autoLoading === true) {
+    Toast.loading({
+      message: "加载中...",
+      forbidClick: true,
+      duration: 0,
+    });
+  }
   return config;
 });
+
+// 加载中clear()
+http.instance.interceptors.response.use(
+  (response) => {
+    if (response.config._autoLoading === true) {
+      Toast.clear();
+    }
+    return response;
+  },
+  (error: AxiosError) => {
+    if (error.response?.config._autoLoading === true) {
+      Toast.clear();
+    }
+    throw error;
+  }
+);
+
 // mock拦截器，防止在非本地测试环境触发 _mock （最好还是上线前删除）
 http.instance.interceptors.response.use(
   (response) => {

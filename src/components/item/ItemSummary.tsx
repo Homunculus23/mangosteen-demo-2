@@ -25,14 +25,19 @@ export const ItemSummary = defineComponent({
       if (!props.startDate || !props.endDate) {
         return;
       }
-      const response = await http.get<Resources<Item>>("/items", {
-        // 起始时间
-        happen_after: props.startDate,
-        // 结束时间
-        happen_before: props.endDate,
-        page: page.value + 1,
-        _mock: "itemIndex",
-      });
+      const response = await http.get<Resources<Item>>(
+        "/items",
+        {
+          // 起始时间
+          happen_after: props.startDate,
+          // 结束时间
+          happen_before: props.endDate,
+          page: page.value + 1,
+        },
+        {
+          _mock: "itemIndex",
+        }
+      );
       const { resources, pager } = response.data;
       // 将 resources 放到 item 里
       items.value?.push(...resources);
@@ -57,12 +62,17 @@ export const ItemSummary = defineComponent({
       if (!props.startDate || !props.endDate) {
         return;
       }
-      const response = await http.get("/items/balance", {
-        happen_after: props.startDate,
-        happen_before: props.endDate,
-        page: page.value + 1,
-        _mock: "itemIndexBalance",
-      });
+      const response = await http.get(
+        "/items/balance",
+        {
+          happen_after: props.startDate,
+          happen_before: props.endDate,
+          page: page.value + 1,
+        },
+        {
+          _mock: "itemIndexBalance",
+        }
+      );
       // 将 response.data 写入 itemsBalance
       Object.assign(itemsBalance, response.data);
     };

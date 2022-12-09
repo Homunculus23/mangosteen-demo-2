@@ -64,8 +64,8 @@ export const TagForm = defineComponent({
       // 发送请求
       if (!hasError(errors)) {
         const promise = (await formData.id)
-          ? http.patch(`/tags/${formData.id}`, formData, { _mock: "tagEdit" })
-          : http.post("/tags", formData, { _mock: "tagCreate" });
+          ? http.patch(`/tags/${formData.id}`, formData, { _mock: "tagEdit", _autoLoading: true })
+          : http.post("/tags", formData, { _mock: "tagCreate", _autoLoading: true });
         await promise.catch((error) => onFormError(error, (data) => Object.assign(errors, data.errors)));
         router.back();
       }
@@ -73,7 +73,7 @@ export const TagForm = defineComponent({
     onMounted(async () => {
       if (!props.id) return;
       // 测试阶段所有的 response 务必加入 mock
-      const response = await http.get<Resource<Tag>>(`/tags/${props.id}`, {}, { _mock: "tagShow" });
+      const response = await http.get<Resource<Tag>>(`/tags/${props.id}`, {}, { _mock: "tagShow", _autoLoading: true });
       Object.assign(formData, response.data.resource);
       // Object.assign(formData, response.data.resource);
     });

@@ -23,9 +23,13 @@ export const TagEdit = defineComponent({
       });
       // 发送删除请求
       await http
-        .delete(`/tags/${numberId}`, {
-          withItems: options?.withItems ? "true" : "false",
-        })
+        .delete(
+          `/tags/${numberId}`,
+          {
+            withItems: options?.withItems ? "true" : "false",
+          },
+          { _autoLoading: true }
+        )
         .catch(onError);
       router.back();
     };

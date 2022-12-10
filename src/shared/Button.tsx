@@ -48,8 +48,8 @@ export const Button = defineComponent({
       }
     });
     // 用自己的 onClick 取代 props.onClick
-    const onClick = () => {
-      props.onClick?.();
+    const onClick = (e: MouseEvent) => {
+      props.onClick?.(e);
       // 激活自我沉默
       selfDisabled.value = true;
       // 0.3毫秒后自我沉默取消。测试时可调长时间

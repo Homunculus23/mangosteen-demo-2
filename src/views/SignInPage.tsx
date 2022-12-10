@@ -124,8 +124,8 @@ export const SignInPage = defineComponent({
           default: () => (
             <div class={s.wrapper}>
               <div class={s.logo}>
-                <Icon class={s.icon} name="mangosteen" />
-                <h1 class={s.appName}>山竹记账</h1>
+                <Icon class={s.icon} name="cat" />
+                <h1 class={s.appName}>猫咪记账</h1>
               </div>
               <Form onSubmit={onSubmit}>
                 <FormItem

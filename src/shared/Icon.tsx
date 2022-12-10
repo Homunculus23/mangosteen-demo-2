@@ -7,7 +7,7 @@ export type IconName =
   | "chart"
   | "clock"
   | "cloud"
-  | "mangosteen"
+  | "cat"
   | "pig"
   | "menu"
   | "charts"

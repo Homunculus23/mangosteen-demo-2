@@ -15,13 +15,13 @@ export const StartPage = defineComponent({
       //由于Navbar的公用样式无法让icon图标合理填充，只能给StartPage的icon直接添加样式
       <MainLayout>
         {{
-          title: () => "山竹记账",
+          title: () => "猫咪记账",
           icon: () => <OverlayIcon />,
           //注意default里的Center等标签需要用 <></> 包裹
           default: () => (
             <>
               <Center class={s.pig_wrapper}>
-                <Icon name="pig" class={s.pig} />
+                <Icon name="cat" class={s.pig} />
               </Center>
               <div class={s.button_wrapper}>
                 <RouterLink to="/items/create">

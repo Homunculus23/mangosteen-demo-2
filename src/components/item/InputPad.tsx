@@ -149,8 +149,9 @@ export const InputPad = defineComponent({
               {/* Popup浮层，用于包裹DatetimePicker */}
               <Popup position="bottom" v-model:show={refDatePickerVisible.value}>
                 {/* refDate.value用于将用户选择的时间传给span。当用户点击确认时，触发onConfirm，保存同时关闭Popup浮层；用户点击取消时，触发onCancel，不保存直接关闭Popup */}
+
                 <DatetimePicker
-                  value={props.happenAt}
+                  modelValue={props.happenAt ? new Date(props.happenAt) : new Date()}
                   type="date"
                   title="选择年月日"
                   onConfirm={setDate}

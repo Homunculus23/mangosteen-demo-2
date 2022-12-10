@@ -70,7 +70,7 @@ export const TimeTabsLayout = defineComponent({
     return () => (
       <MainLayout>
         {{
-          title: () => "猫咪记账",
+          title: () => "蓝猫记账",
           icon: () => <OverlayIcon />,
           default: () => (
             <>

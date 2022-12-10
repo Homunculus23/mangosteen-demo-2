@@ -15,7 +15,7 @@ export const StartPage = defineComponent({
       //由于Navbar的公用样式无法让icon图标合理填充，只能给StartPage的icon直接添加样式
       <MainLayout>
         {{
-          title: () => "猫咪记账",
+          title: () => "蓝猫记账",
           icon: () => <OverlayIcon />,
           //注意default里的Center等标签需要用 <></> 包裹
           default: () => (

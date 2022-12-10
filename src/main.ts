@@ -5,7 +5,6 @@ import { createRouter } from "vue-router";
 import { history } from "./shared/history";
 //由于VSCode等编辑器不支持直接import svgstore.js 文件，因此需要在该js中用 @svgstore return 一次函数名
 import "@svgstore";
-import { http } from "./shared/Http";
 import { meFetch, mePromise } from "./shared/me";
 
 const router = createRouter({ history, routes });
@@ -14,7 +13,7 @@ meFetch();
 
 const openList: Record<string, "exact" | "startsWith"> = {
   "/": "exact", // key有斜杠必须加''
-  "/start": "exact",
+  "/items": "exact",
   "/welcome": "startsWith",
   "/sign_in": "startsWith",
 };

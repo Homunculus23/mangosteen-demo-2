@@ -6,6 +6,7 @@ import { PieChart } from "./PieChart";
 import { Bars } from "./Bars";
 import { http } from "../../shared/Http";
 import { Time } from "../../shared/time";
+import { NoData } from "../../shared/NoData";
 
 const DAY = 24 * 3600 * 1000;
 // 折线图数据
@@ -27,6 +28,8 @@ export const Charts = defineComponent({
   setup: (props, context) => {
     const kind = ref("expenses");
     const data1 = ref<Data1>([]);
+    // 确认所有数据是否为空，是则用"开始记账"替代
+    const hasData = ref(false);
     // 将对象数组转化为二维数组，以便复制给 echarts
     const betterData1 = computed<[string, number][]>(() => {
       // 在 startDate 或 endDate 其一为空时直接 return 空数据
@@ -65,6 +68,7 @@ export const Charts = defineComponent({
         }
       );
       data1.value = response.data.groups;
+      if (data1.value.length !== 0) hasData.value = true;
     };
     onMounted(fetchData1);
     watch(() => kind.value, fetchData1);
@@ -102,24 +106,33 @@ export const Charts = defineComponent({
         }
       );
       data2.value = response.data.groups;
+      if (data2.value.length !== 0) hasData.value = true;
     };
     onMounted(fetchData2);
     watch(() => kind.value, fetchData2);
     return () => (
-      <div class={s.wrapper}>
-        <FormItem
-          label="类型"
-          type="select"
-          options={[
-            { value: "expenses", text: "支出" },
-            { value: "income", text: "收入" },
-          ]}
-          v-model={kind.value}
-        />
-        <LineChart data={betterData1.value} />
-        <PieChart data={betterData2.value} />
-        <Bars data={betterData3.value} />
-      </div>
+      <>
+        {hasData.value ? (
+          <>
+            <div class={s.wrapper}>
+              <FormItem
+                label="类型"
+                type="select"
+                options={[
+                  { value: "expenses", text: "支出" },
+                  { value: "income", text: "收入" },
+                ]}
+                v-model={kind.value}
+              />
+              <LineChart data={betterData1.value} />
+              <PieChart data={betterData2.value} />
+              <Bars data={betterData3.value} />
+            </div>
+          </>
+        ) : (
+          <NoData />
+        )}
+      </>
     );
   },
 });

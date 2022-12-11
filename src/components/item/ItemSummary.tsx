@@ -1,11 +1,10 @@
 import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import { Button } from "../../shared/Button";
-import { Center } from "../../shared/Center";
 import { FloatButton } from "../../shared/FloatButton";
 import { http } from "../../shared/Http";
-import { Icon } from "../../shared/Icon";
 import { MoneyToString } from "../../shared/MoneyToString";
+import { NoData } from "../../shared/NoData";
 import { Time } from "../../shared/time";
 import s from "./ItemSummary.module.scss";
 export const ItemSummary = defineComponent({
@@ -138,16 +137,7 @@ export const ItemSummary = defineComponent({
             </div>
           </>
         ) : (
-          <>
-            <Center class={s.cat_wrapper}>
-              <Icon name="cat" class={s.cat} />
-            </Center>
-            <div class={s.button_wrapper}>
-              <RouterLink to="/items/create">
-                <Button class={s.button}>开始记账</Button>
-              </RouterLink>
-            </div>
-          </>
+          <NoData />
         )}
         <RouterLink to="/items/create">
           <FloatButton iconName="add" />

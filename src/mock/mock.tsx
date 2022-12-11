@@ -86,7 +86,7 @@ export const mockItemCreate: Mock = (config) => {
   // 测试报错
   // return [422, {
   //   errors: {
-  //     tags_id: ['必须选择标签'],
+  //     tag_ids: ['必须选择标签'],
   //     amount: ['金额不能为0']
   //   }
   // }]
@@ -98,7 +98,7 @@ export const mockItemCreate: Mock = (config) => {
         user_id: 1312,
         amount: 9900,
         note: null,
-        tags_id: [1],
+        tag_ids: [1],
         happen_at: new Date().toISOString(),
         kind: "expenses",
       },
@@ -127,7 +127,7 @@ export const mockItemIndex: Mock = (config) => {
       id: createId(),
       user_id: createId(),
       amount: Math.floor(Math.random() * 10000),
-      tags_id: [createId()],
+      tag_ids: [createId()],
       tags: [createTag()],
       happen_at: faker.date.past().toISOString(),
       kind: config.params.kind,

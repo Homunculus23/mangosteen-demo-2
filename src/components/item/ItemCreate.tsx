@@ -9,6 +9,7 @@ import { useRouter } from "vue-router";
 import { Dialog } from "vant";
 import { AxiosError } from "axios";
 import { BackIcon } from "../../shared/BackIcon";
+import { hasError, validate } from "../../shared/validate";
 export const ItemCreate = defineComponent({
   props: {
     name: {
@@ -16,12 +17,13 @@ export const ItemCreate = defineComponent({
     },
   },
   setup: (props, context) => {
-    const formData = reactive({
-      kind: "支出", // Tab的默认值是‘支出’
-      tags_id: [], // 用户点击的标签id
+    const formData = reactive<Partial<Item>>({
+      kind: "expenses", // Tab的默认值是‘支出’
+      tag_ids: [], // 用户点击的标签id
       amount: 0, // 金额
       happen_at: new Date().toISOString(), // 日期
     });
+    const errors = reactive<FormErrors<typeof formData>>({ kind: [], tag_ids: [], amount: [], happen_at: [] });
     const router = useRouter();
     const onError = (error: AxiosError<ResourceError>) => {
       if (error.response?.status === 422) {
@@ -33,12 +35,28 @@ export const ItemCreate = defineComponent({
       throw error;
     };
     const onSubmit = async () => {
-      const response = await http
-        .post<Resource<Item>>("/items", formData, {
-          _mock: "itemCreate",
-          _autoLoading: true,
-        })
-        .catch(onError);
+      Object.assign(errors, { kind: [], tag_ids: [], amount: [], happen_at: [] });
+      console.log(formData.amount);
+      Object.assign(
+        errors,
+        validate(formData, [
+          { key: "kind", type: "required", message: "类型必填" },
+          { key: "tag_ids", type: "required", message: "标签必填" },
+          { key: "amount", type: "required", message: "金额必填" },
+          { key: "amount", type: "notEqual", value: 0, message: "金额不能为零" },
+          { key: "happen_at", type: "required", message: "时间必填" },
+        ])
+      );
+      if (hasError(errors)) {
+        Dialog.alert({
+          title: "出错",
+          message: Object.values(errors)
+            .filter((i) => i.length > 0)
+            .join("\n"),
+        });
+        return;
+      }
+      await http.post<Resource<Item>>("/items", formData, { _mock: "itemCreate", _autoLoading: true }).catch(onError);
       router.push("/items");
     };
     // 本页面的接口，即使后端做出来了也不会马上有数据，我们终究要 Mock 一波假数据
@@ -55,11 +73,11 @@ export const ItemCreate = defineComponent({
                   双向绑定事件，当回调参数与refKind.value不同时，将获取的回调参数赋予refKind.value，并将refKind.value赋予 update: 的 selected，该行为将使Tabs重新渲染。 */}
                 <Tabs v-model:selected={formData.kind} class={s.tabs}>
                   {/* Tab 内组件名均为Tags，Vue 在此时会出现切换不刷新的问题（动画也有类似问题），此处解决办法是用 v-show 展示所有 Tab 并控制显示/隐藏。该逻辑在 Tabs 组件 */}
-                  <Tab name="支出">
-                    <Tags kind="expenses" v-model:selected={formData.tags_id[0]} />
+                  <Tab value="expenses" name="支出">
+                    <Tags kind="expenses" v-model:selected={formData.tag_ids![0]} />
                   </Tab>
-                  <Tab name="收入">
-                    <Tags kind="income" v-model:selected={formData.tags_id[0]} />
+                  <Tab value="income" name="收入">
+                    <Tags kind="income" v-model:selected={formData.tag_ids![0]} />
                   </Tab>
                 </Tabs>
                 {/* 用div为InputPad作定位 */}

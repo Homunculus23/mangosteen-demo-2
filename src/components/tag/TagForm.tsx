@@ -30,10 +30,10 @@ export const TagForm = defineComponent({
       //给空字符串（''）或者空（undefined）都可，优先前者
       name: "",
       sign: "",
-      kind: route.query.kind?.toString(),
+      kind: route.query.kind!.toString() as "expenses" | "income",
     });
-    //声明errors类型，使用 reactive 以便于展示，使 k 的类型为 formData 的 key 的子集或者为空
-    const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({});
+    //声明errors类型，使用 reactive 以便于展示
+    const errors = reactive<FormErrors<typeof formData>>({});
     //声明e的类型。这里不能声明为 SubmitEvent ，与onSubmit类型不符
     const onSubmit = async (e: Event) => {
       e.preventDefault();

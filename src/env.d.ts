@@ -16,7 +16,7 @@ type Tag = {
   name: string;
   sign: string;
   // ！！！注意此处的 expenses 和 income 不能带引号
-  kind: expenses | income;
+  kind: 'expenses' | 'income';
 };
 
 // Item 的类型可以看后端文档，或者直接问
@@ -24,10 +24,10 @@ type Item = {
   id: number;
   user_id: number;
   amount: number;
-  tags_id: number[];
+  tag_ids: number[];
   tags?: Tag[];
   happen_at: string;
-  kind: expenses | income;
+  kind: 'expenses' | 'income';
 };
 
 // 用户登录信息
@@ -52,3 +52,5 @@ type Resource<T> = {
 type ResourceError = {
   errors: Record<string, string[]>;
 };
+
+type FormErrors<T> = { [K in keyof typeof T]: string[] };

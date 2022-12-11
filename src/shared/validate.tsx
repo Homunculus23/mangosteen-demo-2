@@ -1,11 +1,12 @@
 //声明formData的类型FData，Record可以视为普通对象。FData需要循环引用自身，因此用interface来声明
 interface FData {
-  [k: string]: string | number | null | undefined | FData;
+  // [k: string]: string | number | null | undefined | FData;
+  [k: string]: JSONValue;
 }
 type Rule<T> = {
   key: keyof T;
   message: string;
-} & ({ type: "required" } | { type: "pattern"; regex: RegExp });
+} & ({ type: "required" } | { type: "pattern"; regex: RegExp } | { type: "notEqual"; value: JSONValue });
 type Rules<T> = Rule<T>[];
 //为了保证rules的key属于formData的子集，使用泛型<T>来指代FData，并依次将 T 传递给 type Rules -> type Rule -> key
 export type { Rules, Rule, FData };
@@ -29,6 +30,12 @@ export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
         break;
       case "pattern":
         if (value && !rule.regex.test(value.toString())) {
+          errors[key] = errors[key] ?? [];
+          errors[key]?.push(message);
+        }
+        break;
+      case "notEqual":
+        if (!isEmpty(value) && value === rule.value) {
           errors[key] = errors[key] ?? [];
           errors[key]?.push(message);
         }

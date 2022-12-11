@@ -67,7 +67,10 @@ export class Http {
 // mock 用于篡改 response
 const mock = (response: AxiosResponse) => {
   // 如果属于这三个地址（开发中地址）之一，进行下一步（篡改），否则不处理（直接返回 false），防止非测试环境触发 _mock
-  if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.hostname !== "192.168.3.57") {
+  if (
+    true ||
+    (location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.hostname !== "192.168.3.57")
+  ) {
     return false;
   }
   // 检查请求参数中是否包含 _mock，包含则寻找对应函数，否则不处理

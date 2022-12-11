@@ -1,9 +1,9 @@
 import { defineComponent, PropType } from "vue";
 import { MainLayout } from "../layouts/MainLayout";
+import { BackIcon } from "./BackIcon";
 import { Center } from "./Center";
 import s from "./ComingSoon.module.scss";
 import { Icon } from "./Icon";
-import { OverlayIcon } from "./Overlay";
 export const ComingSoon = defineComponent({
   props: {
     name: {
@@ -15,11 +15,11 @@ export const ComingSoon = defineComponent({
       <MainLayout>
         {{
           title: () => "蓝猫记账",
-          icon: () => <OverlayIcon />,
+          icon: () => <BackIcon />,
           default: () => (
             <div>
-              <Center class={s.pig_wrapper}>
-                <Icon name="cat" class={s.pig} />
+              <Center class={s.cat_wrapper}>
+                <Icon name="cat" class={s.cat} />
               </Center>
               <p class={s.text}>敬请期待</p>
             </div>

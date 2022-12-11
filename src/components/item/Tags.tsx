@@ -61,7 +61,7 @@ export const Tags = defineComponent({
             <div class={s.sign}>
               <Icon name="add" class={s.createTag} />
             </div>
-            <div class={s.name}>新增</div>
+            <div class={s.name}>新增类别</div>
           </RouterLink>
           {tags.value.map((tag) => (
             // 利用 v-model 绑定被选中的点击事件

@@ -1,8 +1,8 @@
 import { Dialog } from "vant";
 import { defineComponent, onMounted, PropType, ref } from "vue";
 import { RouterLink, useRoute } from "vue-router";
+import { useMeStore } from "../stores/useMeStore";
 import { Icon } from "./Icon";
-import { mePromise } from "./me";
 import s from "./Overlay.module.scss";
 export const Overlay = defineComponent({
   props: {
@@ -12,6 +12,7 @@ export const Overlay = defineComponent({
     },
   },
   setup: (props, context) => {
+    const meStore = useMeStore();
     const close = () => {
       props.onClose?.();
       //也可以用context传输emit的close（详见eDiary笔记）
@@ -20,7 +21,7 @@ export const Overlay = defineComponent({
     const me = ref<User>();
     // 请求用户信息
     onMounted(async () => {
-      const response = await mePromise;
+      const response = await meStore.mePromise;
       me.value = response?.data.resource;
     });
     // 退出登录

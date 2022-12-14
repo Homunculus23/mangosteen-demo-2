@@ -5,11 +5,22 @@ import { createRouter } from "vue-router";
 import { history } from "./shared/history";
 //由于VSCode等编辑器不支持直接import svgstore.js 文件，因此需要在该js中用 @svgstore return 一次函数名
 import "@svgstore";
-import { meFetch, mePromise } from "./shared/me";
+import { createPinia } from "pinia";
+import { useMeStore } from "./stores/useMeStore";
 
-const router = createRouter({ history, routes });
+const router = createRouter({ history, routes })
+// 为了避免在 ssr 里的 跨请求状态污染， ssr 里的每一个 app 都要有自己的 pinia
+// 配置 app 步骤：① create 一个 pinia，② 把 pinia 传给 app
+const pinia = createPinia()
+const app = createApp(App)
+app.use(router)
+app.use(pinia)
+app.mount('#app')
 
-meFetch();
+// 拿到 useMeStore
+const meStore = useMeStore()
+// 调用 fetchMe
+meStore.fetchMe()
 
 const openList: Record<string, "exact" | "startsWith"> = {
   "/": "exact", // key有斜杠必须加''
@@ -36,12 +47,8 @@ router.beforeEach((to, from) => {
     }
   }
   // 请求当前用户信息，如果成功就进入 ItemList/ItemCreate，否则进入登录页面
-  return mePromise!.then(
+  return meStore.mePromise!.then(
     () => true, // 成功
     () => "/sign_in?return_to=" + to.path // 失败
   );
 });
-
-const app = createApp(App);
-app.use(router);
-app.mount("#app");

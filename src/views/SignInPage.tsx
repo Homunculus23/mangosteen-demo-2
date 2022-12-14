@@ -9,11 +9,12 @@ import { Form, FormItem } from "../shared/Form";
 import { history } from "../shared/history";
 import { http } from "../shared/Http";
 import { Icon } from "../shared/Icon";
-import { meRefresh } from "../shared/me";
 import { hasError, validate } from "../shared/validate";
+import { useMeStore } from "../stores/useMeStore";
 import s from "./SignInPage.module.scss";
 export const SignInPage = defineComponent({
   setup: (props, context) => {
+    const meStore = useMeStore();
     const formData = reactive({
       email: "",
       code: "",
@@ -60,7 +61,7 @@ export const SignInPage = defineComponent({
         // router.push('/sign_in?return_to=' + encodeURIComponent(route.fullPath))
         const returnTo = route.query.return_to?.toString();
         // 更新登录状态，跳转操作必须在请求结束后
-        meRefresh();
+        meStore.refreshMe();
         // 登录请求成功优先跳转原页面，原页面为空则跳转到首页 '/'
         router.push(returnTo || "/");
       }

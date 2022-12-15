@@ -26,25 +26,28 @@ export const ItemCreate = defineComponent({
     const errors = reactive<FormErrors<typeof formData>>({ kind: [], tag_ids: [], amount: [], happen_at: [] });
     const router = useRouter();
     const onError = (error: AxiosError<ResourceError>) => {
+      let message = "";
       if (error.response?.status === 422) {
+        Object.values(error.response.data.errors).join("\n") === "必填"
+          ? (message = "请选择标签")
+          : (message = Object.values(error.response.data.errors).join("\n"));
         Dialog.alert({
           title: "出错",
-          message: Object.values(error.response.data.errors).join("\n"),
+          message: message,
         });
       }
       throw error;
     };
     const onSubmit = async () => {
       Object.assign(errors, { kind: [], tag_ids: [], amount: [], happen_at: [] });
-      console.log(formData.amount);
       Object.assign(
         errors,
         validate(formData, [
-          { key: "kind", type: "required", message: "类型必填" },
-          { key: "tag_ids", type: "required", message: "标签必填" },
-          { key: "amount", type: "required", message: "金额必填" },
+          { key: "kind", type: "required", message: "支出/收入类型未指定" },
+          { key: "tag_ids", type: "required", message: "请选择标签" },
+          { key: "amount", type: "required", message: "请填写金额" },
           { key: "amount", type: "notEqual", value: 0, message: "金额不能为零" },
-          { key: "happen_at", type: "required", message: "时间必填" },
+          { key: "happen_at", type: "required", message: "请选择时间" },
         ])
       );
       if (hasError(errors)) {

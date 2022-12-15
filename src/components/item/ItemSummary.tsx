@@ -7,6 +7,7 @@ import { http } from "../../shared/Http";
 import { MoneyToString } from "../../shared/MoneyToString";
 import { NoData } from "../../shared/NoData";
 import { Time } from "../../shared/time";
+import { useItemStore } from "../../stores/useItemStore";
 import s from "./ItemSummary.module.scss";
 export const ItemSummary = defineComponent({
   props: {
@@ -20,40 +21,23 @@ export const ItemSummary = defineComponent({
   },
   setup: (props, context) => {
     // 部分代码与 useTags 高度相似
-    const items = ref<Item[]>([]);
-    const hasMore = ref(false);
-    const page = ref(0);
-    const fetchItems = async () => {
-      if (!props.startDate || !props.endDate) {
-        return;
-      }
-      const response = await http.get<Resources<Item>>(
-        "/items",
-        {
-          // 起始时间
-          happen_after: props.startDate,
-          // 结束时间
-          happen_before: props.endDate,
-          page: page.value + 1,
-        },
-        {
-          // _mock: "itemIndex",
-          _autoLoading: true,
-        }
-      );
-      const { resources, pager } = response.data;
-      // 将 resources 放到 item 里
-      items.value?.push(...resources);
-      // 根据 pager 计算是否有下一页，有则展示加载按钮，否则展示提醒
-      hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count;
-      page.value += 1;
-    };
+    if (!props.startDate || !props.endDate) {
+      return;
+    }
     // 对 time 进行类型检查，返回适合展示的时间格式
     const DateTimeToString = (time: string | Date) => {
       return new Time(time).format("YYYY-MM-DD HH:mm:ss");
     };
+    const itemStore = useItemStore(["items", props.startDate, props.endDate]);
     // 加载同时请求第一页数据
-    useAfterMe(fetchItems);
+    useAfterMe(() => itemStore.fetchItems(props.startDate, props.endDate));
+    watch(
+      () => [props.startDate, props.endDate],
+      () => {
+        itemStore.reset();
+        itemStore.fetchItems();
+      }
+    );
     // 支出、收入、净收入
     const itemsBalance = reactive({
       expenses: 0,
@@ -70,7 +54,6 @@ export const ItemSummary = defineComponent({
         {
           happen_after: props.startDate,
           happen_before: props.endDate,
-          page: page.value + 1,
         },
         {
           _mock: "itemIndexBalance",
@@ -85,21 +68,13 @@ export const ItemSummary = defineComponent({
     watch(
       () => [props.startDate, props.endDate],
       () => {
-        items.value = [];
-        hasMore.value = false;
-        page.value = 0;
-        Object.assign(itemsBalance, {
-          expenses: 0,
-          income: 0,
-          balance: 0,
-        });
-        fetchItems();
-        fetchItemsBalance();
+        itemStore.reset();
+        itemStore.fetchItems();
       }
     );
     return () => (
       <div class={s.wrapper}>
-        {items.value && items.value.length > 0 ? (
+        {itemStore.items && itemStore.items.length > 0 ? (
           <>
             <ul class={s.total}>
               <li>
@@ -116,7 +91,7 @@ export const ItemSummary = defineComponent({
               </li>
             </ul>
             <ol class={s.list}>
-              {items.value.map((item) => (
+              {itemStore.items.map((item) => (
                 <li>
                   <div class={s.sign}>
                     <span>{item.tags && item.tags.length > 0 ? item.tags[0].sign : "💰"}</span>
@@ -134,7 +109,11 @@ export const ItemSummary = defineComponent({
               ))}
             </ol>
             <div class={s.more}>
-              {hasMore.value ? <Button onClick={fetchItems}>加载更多</Button> : <span>没有更多</span>}
+              {itemStore.hasMore ? (
+                <Button onClick={() => itemStore.fetchItems(props.startDate, props.endDate)}>加载更多</Button>
+              ) : (
+                <span>没有更多</span>
+              )}
             </div>
           </>
         ) : (

@@ -5,7 +5,7 @@ import { createRouter } from "vue-router";
 import { history } from "./shared/history";
 //由于VSCode等编辑器不支持直接import svgstore.js 文件，因此需要在该js中用 @svgstore return 一次函数名
 import "@svgstore";
-import { createPinia } from "pinia";
+import { createPinia, storeToRefs } from "pinia";
 import { useMeStore } from "./stores/useMeStore";
 
 const router = createRouter({ history, routes })
@@ -19,6 +19,7 @@ app.mount('#app')
 
 // 拿到 useMeStore
 const meStore = useMeStore()
+const {mePromise} = storeToRefs(meStore)
 // 调用 fetchMe
 meStore.fetchMe()
 
@@ -47,7 +48,7 @@ router.beforeEach((to, from) => {
     }
   }
   // 请求当前用户信息，如果成功就进入 ItemList/ItemCreate，否则进入登录页面
-  return meStore.mePromise!.then(
+  return mePromise!.value!.then(
     () => true, // 成功
     () => "/sign_in?return_to=" + to.path // 失败
   );

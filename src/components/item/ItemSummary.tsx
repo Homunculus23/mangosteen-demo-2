@@ -1,5 +1,6 @@
 import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
 import { RouterLink } from "vue-router";
+import { useAfterMe } from "../../hooks/useAfterMe";
 import { Button } from "../../shared/Button";
 import { FloatButton } from "../../shared/FloatButton";
 import { http } from "../../shared/Http";
@@ -52,7 +53,7 @@ export const ItemSummary = defineComponent({
       return new Time(time).format("YYYY-MM-DD HH:mm:ss");
     };
     // 加载同时请求第一页数据
-    onMounted(fetchItems);
+    useAfterMe(fetchItems);
     // 支出、收入、净收入
     const itemsBalance = reactive({
       expenses: 0,
@@ -79,7 +80,7 @@ export const ItemSummary = defineComponent({
       Object.assign(itemsBalance, response.data);
     };
     // 自动执行的统计请求
-    onMounted(fetchItemsBalance);
+    useAfterMe(fetchItemsBalance);
     // 自定义时间的items 和 统计请求
     watch(
       () => [props.startDate, props.endDate],

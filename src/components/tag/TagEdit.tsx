@@ -42,16 +42,13 @@ export const TagEdit = defineComponent({
             <>
               <TagForm id={numberId} />
               <div class={s.actions}>
-                <Button level="danger" class={s.removeTags} onClick={() => onDelete()}>
-                  删除标签
-                </Button>
                 <Button
                   level="danger"
                   class={s.removeTagsAndItems}
                   // 绝对不要在参数里直接使用布尔值！如果需要时，设计成对象
                   onClick={() => onDelete({ withItems: true })}
                 >
-                  删除标签和记账
+                  删除标签和对应类型记账
                 </Button>
               </div>
             </>

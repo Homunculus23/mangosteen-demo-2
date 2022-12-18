@@ -8,20 +8,20 @@ import "@svgstore";
 import { createPinia, storeToRefs } from "pinia";
 import { useMeStore } from "./stores/useMeStore";
 
-const router = createRouter({ history, routes })
+const router = createRouter({ history, routes });
 // 为了避免在 ssr 里的 跨请求状态污染， ssr 里的每一个 app 都要有自己的 pinia
 // 配置 app 步骤：① create 一个 pinia，② 把 pinia 传给 app
-const pinia = createPinia()
-const app = createApp(App)
-app.use(router)
-app.use(pinia)
-app.mount('#app')
+const pinia = createPinia();
+const app = createApp(App);
+app.use(router);
+app.use(pinia);
+app.mount("#app");
 
 // 拿到 useMeStore
-const meStore = useMeStore()
-const {mePromise} = storeToRefs(meStore)
+const meStore = useMeStore();
+const { mePromise } = storeToRefs(meStore);
 // 调用 fetchMe
-meStore.fetchMe()
+meStore.fetchMe();
 
 const openList: Record<string, "exact" | "startsWith"> = {
   "/": "exact", // key有斜杠必须加''
@@ -47,9 +47,10 @@ router.beforeEach((to, from) => {
       return true;
     }
   }
-  // 请求当前用户信息，如果成功就进入 ItemList/ItemCreate，否则进入登录页面
+  // 请求当前用户信息，如果成功就进入 /items/create，否则进入登录页面
+  // 将 to.path 改为 from.path
   return mePromise!.value!.then(
     () => true, // 成功
-    () => "/sign_in?return_to=" + to.path // 失败
+    () => "/sign_in?return_to=" + from.path // 失败
   );
 });

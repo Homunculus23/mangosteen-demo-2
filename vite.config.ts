@@ -7,6 +7,7 @@ import styleImport, {VantResolve} from 'vite-plugin-style-import';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base:'http://blue-cat-expense-pro.oss-cn-heyuan.aliyuncs.com',
   plugins: [
     vue(),
     vueJsx({
@@ -25,7 +26,6 @@ export default defineConfig({
       }]
     }),
   ],
-  base: "./",
   server: {
     proxy: {
       '/api/v1': {

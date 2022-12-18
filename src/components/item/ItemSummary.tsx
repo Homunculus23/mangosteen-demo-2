@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, PropType, reactive, ref, watch } from "vue";
+import { defineComponent, PropType, reactive, ref, watch } from "vue";
 import { RouterLink } from "vue-router";
 import { useAfterMe } from "../../hooks/useAfterMe";
 import { Button } from "../../shared/Button";
@@ -22,7 +22,7 @@ export const ItemSummary = defineComponent({
   setup: (props, context) => {
     // 部分代码与 useTags 高度相似
     if (!props.startDate || !props.endDate) {
-      return;
+      return () => <div>无法读取时间范围</div>;
     }
     // 对 time 进行类型检查，返回适合展示的时间格式
     const DateTimeToString = (time: string | Date) => {

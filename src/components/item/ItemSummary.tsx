@@ -76,6 +76,13 @@ export const ItemSummary = defineComponent({
         fetchItemsBalance();
       }
     );
+    // 为支出添加负号
+    const expenses = (kind: "expenses" | "income") => {
+      if (kind === "expenses") {
+        return "-";
+      }
+      return;
+    };
     return () => (
       <div class={s.wrapper}>
         {itemStore.items && itemStore.items.length > 0 ? (
@@ -104,7 +111,8 @@ export const ItemSummary = defineComponent({
                     <div class={s.tagAndAmount}>
                       <span class={s.tag}>{item.tags && item.tags.length > 0 ? item.tags[0].name : "未分类"}</span>
                       <span class={s.amount}>
-                        ￥<MoneyToString value={item.amount} />
+                        ￥{expenses(item.kind)}
+                        <MoneyToString value={item.amount} />
                       </span>
                     </div>
                     <div class={s.time}>{DateTimeToString(item.happen_at)}</div>

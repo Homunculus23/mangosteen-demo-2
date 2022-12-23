@@ -26,7 +26,7 @@ export const ItemSummary = defineComponent({
     }
     // 对 time 进行类型检查，返回适合展示的时间格式
     const DateTimeToString = (time: string | Date) => {
-      return new Time(time).format("YYYY-MM-DD HH:mm:ss");
+      return new Time(time).format("YYYY-MM-DD");
     };
     const itemStore = useItemStore(["items", props.startDate, props.endDate]);
     // 加载同时请求第一页数据
@@ -76,13 +76,6 @@ export const ItemSummary = defineComponent({
         fetchItemsBalance();
       }
     );
-    // 为支出添加负号
-    const expenses = (kind: "expenses" | "income") => {
-      if (kind === "expenses") {
-        return "-";
-      }
-      return;
-    };
     return () => (
       <div class={s.wrapper}>
         {itemStore.items && itemStore.items.length > 0 ? (
@@ -94,11 +87,15 @@ export const ItemSummary = defineComponent({
               </li>
               <li>
                 <span>支出</span>
-                <MoneyToString value={itemsBalance.expenses} />
+                <div>
+                  <MoneyToString value={itemsBalance.expenses} />
+                </div>
               </li>
               <li>
                 <span>净收入</span>
-                <MoneyToString value={itemsBalance.balance} />
+                <div style={BalanceColor(itemsBalance.balance)}>
+                  <MoneyToString value={itemsBalance.balance} />
+                </div>
               </li>
             </ul>
             <ol class={s.list}>
@@ -110,8 +107,8 @@ export const ItemSummary = defineComponent({
                   <div class={s.text}>
                     <div class={s.tagAndAmount}>
                       <span class={s.tag}>{item.tags && item.tags.length > 0 ? item.tags[0].name : "未分类"}</span>
-                      <span class={s.amount}>
-                        ￥{expenses(item.kind)}
+                      <span class={s.amount} style={MoneyColor(item.kind)}>
+                        {MinusSign(item.kind)}
                         <MoneyToString value={item.amount} />
                       </span>
                     </div>
@@ -138,3 +135,18 @@ export const ItemSummary = defineComponent({
     );
   },
 });
+// 根据收支决定金额和净收入的显示颜色，并为支出金额添加负号
+const MoneyColor = (kind: "expenses" | "income") => {
+  if (kind === "expenses") {
+    return { color: "var(--total-expenses)" };
+  }
+  return { color: "var(--total-income)" };
+};
+const MinusSign = (kind: "expenses" | "income") => {
+  if (kind === "expenses") {
+    return "-";
+  }
+  return;
+};
+const BalanceColor = (balance: number) =>
+  balance > 0 ? { color: "var(--total-income)" } : { color: "var(--total-expenses)" };

@@ -34,13 +34,10 @@ export const Charts = defineComponent({
     const betterData1 = computed<[string, number][]>(() => {
       // 在 startDate 或 endDate 其一为空时直接 return 空数据
       if (!props.startDate || !props.endDate) return [];
-      const array = [];
       // 获取 startDate 和 endDate 的时间戳差值
       const diff = new Date(props.endDate).getTime() - new Date(props.startDate).getTime();
       // Day 为一天总秒数，n 为  startDate 和 endDate 的相差天数
       const n = diff / DAY + 1;
-      // 用于记录后端数据下标
-      let data1Index = 0;
       // 如果不确定是 i<n 还是 i<=n：let i=0时，i<n 循环 n 次，i <= n 循环 n+1 次
       return Array.from({ length: n }).map((_, i) => {
         // 获取当天的时间戳，同时以 T00:00:00.000+0800 纠正为北京时区（若以默认的格林威治时间为准，不符合我们的用户需求）
@@ -50,7 +47,9 @@ export const Charts = defineComponent({
         // 添加后端数据
         // 后端数据下标后移一位
         const item = data1.value[0];
-        const amount = item && new Date(item.happen_at).getTime() === time ? data1.value.shift()!.amount : 0;
+        const amount =
+          // 将 item.happen_at 的时区同样纠正为北京时区，否则 getTime() 的结果将永远不与 time 相等
+          item && new Date(item.happen_at + "T00:00:00.000+0800").getTime() === time ? data1.value.shift()!.amount : 0;
         return [new Date(time).toISOString(), amount];
       });
     });

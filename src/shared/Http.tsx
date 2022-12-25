@@ -106,8 +106,16 @@ const mock = (response: AxiosResponse) => {
   return false;
 };
 
+// 判断是否开发环境
+function isDev() {
+  if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.hostname !== "192.168.3.57") {
+    return false;
+  }
+  return true;
+}
+
 // 导出的默认实例
-export const http = new Http("/api/v1");
+export const http = new Http(isDev() ? "api/v1" : "http://121.196.236.94:3000/api/v1");
 
 // interceptors：拦截器，相关文档搜文章 Axios作弊表 。
 // 将获取的 jwt 放进请求头，这里的 jwt 就是 token

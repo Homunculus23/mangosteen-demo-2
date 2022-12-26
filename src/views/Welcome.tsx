@@ -1,5 +1,5 @@
 import { defineComponent, ref, Transition, VNode, watchEffect } from "vue";
-import { RouteLocationNormalizedLoaded, RouterView, useRoute, useRouter } from "vue-router";
+import { RouteLocationNormalizedLoaded, RouteRecordName, RouterView, useRoute, useRouter } from "vue-router";
 import { useSwipe } from "../hooks/useSwipe";
 import { throttle } from "../shared/throttle";
 import s from "./Welcome.module.scss";
@@ -25,10 +25,17 @@ export const Welcome = defineComponent({
       const name = (route.name || "Welcome1").toString();
       router.replace(pushMap[name]); //将push改为replace，可以防止页面回退
     }, 500);
+    // 若 Welcome4 成功触发滑动事件，在 localStorage 存入信息
+    const skipFeaturesWelcome = (name: RouteRecordName | null | undefined) => {
+      if (name?.toString() === "Welcome4") {
+        localStorage.setItem("skipFeatures", "yes");
+      }
+    };
     watchEffect(() => {
       if (swiping.value && direction.value === "left") {
         replace(); //将push改为replace，可以防止页面回退
       }
+      skipFeaturesWelcome(route.name);
     }); //功能等同于React里的useEffect，当所在作用域任何变量发生变化时（此处为ref变化），执行watchEffect中的函数
     return () => (
       <div class={s.wrapper}>

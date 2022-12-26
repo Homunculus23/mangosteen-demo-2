@@ -20,10 +20,6 @@ export const ItemSummary = defineComponent({
     },
   },
   setup: (props, context) => {
-    // 部分代码与 useTags 高度相似
-    if (!props.startDate || !props.endDate) {
-      return () => <div>无法读取时间范围</div>;
-    }
     // 对 time 进行类型检查，返回适合展示的时间格式
     const DateTimeToString = (time: string | Date) => {
       return new Time(time).format("YYYY-MM-DD");
@@ -35,7 +31,8 @@ export const ItemSummary = defineComponent({
       () => [props.startDate, props.endDate],
       () => {
         itemStore.$reset();
-        itemStore.fetchItems();
+        // 传参
+        itemStore.fetchItems(props.startDate, props.endDate);
       }
     );
     // 支出、收入、净收入
@@ -76,63 +73,66 @@ export const ItemSummary = defineComponent({
         fetchItemsBalance();
       }
     );
-    return () => (
-      <div class={s.wrapper}>
-        {itemStore.items && itemStore.items.length > 0 ? (
-          <>
-            <ul class={s.total}>
-              <li>
-                <span>收入</span>
-                <MoneyToString value={itemsBalance.income} />
-              </li>
-              <li>
-                <span>支出</span>
-                <div>
-                  <MoneyToString value={itemsBalance.expenses} />
-                </div>
-              </li>
-              <li>
-                <span>净收入</span>
-                <div style={BalanceColor(itemsBalance.balance)}>
-                  <MoneyToString value={itemsBalance.balance} />
-                </div>
-              </li>
-            </ul>
-            <ol class={s.list}>
-              {itemStore.items.map((item) => (
+    return () =>
+      !props.startDate || !props.endDate ? (
+        <div>请先选择时间范围</div>
+      ) : (
+        <div class={s.wrapper}>
+          {itemStore.items && itemStore.items.length > 0 ? (
+            <>
+              <ul class={s.total}>
                 <li>
-                  <div class={s.sign}>
-                    <span>{item.tags && item.tags.length > 0 ? item.tags[0].sign : "💰"}</span>
-                  </div>
-                  <div class={s.text}>
-                    <div class={s.tagAndAmount}>
-                      <span class={s.tag}>{item.tags && item.tags.length > 0 ? item.tags[0].name : "未分类"}</span>
-                      <span class={s.amount} style={MoneyColor(item.kind)}>
-                        {MinusSign(item.kind)}
-                        <MoneyToString value={item.amount} />
-                      </span>
-                    </div>
-                    <div class={s.time}>{DateTimeToString(item.happen_at)}</div>
+                  <span>收入</span>
+                  <MoneyToString value={itemsBalance.income} />
+                </li>
+                <li>
+                  <span>支出</span>
+                  <div>
+                    <MoneyToString value={itemsBalance.expenses} />
                   </div>
                 </li>
-              ))}
-            </ol>
-            <div class={s.more}>
-              {itemStore.hasMore ? (
-                <Button onClick={() => itemStore.fetchNextPage(props.startDate, props.endDate)}>加载更多</Button>
-              ) : (
-                <span>没有更多</span>
-              )}
-            </div>
-          </>
-        ) : (
-          <NoData />
-        )}
-        <RouterLink to="/items/create">
-          <FloatButton iconName="add" />
-        </RouterLink>
-      </div>
-    );
+                <li>
+                  <span>净收入</span>
+                  <div style={BalanceColor(itemsBalance.balance)}>
+                    <MoneyToString value={itemsBalance.balance} />
+                  </div>
+                </li>
+              </ul>
+              <ol class={s.list}>
+                {itemStore.items.map((item) => (
+                  <li>
+                    <div class={s.sign}>
+                      <span>{item.tags && item.tags.length > 0 ? item.tags[0].sign : "💰"}</span>
+                    </div>
+                    <div class={s.text}>
+                      <div class={s.tagAndAmount}>
+                        <span class={s.tag}>{item.tags && item.tags.length > 0 ? item.tags[0].name : "未分类"}</span>
+                        <span class={s.amount} style={MoneyColor(item.kind)}>
+                          {MinusSign(item.kind)}
+                          <MoneyToString value={item.amount} />
+                        </span>
+                      </div>
+                      <div class={s.time}>{DateTimeToString(item.happen_at)}</div>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <div class={s.more}>
+                {itemStore.hasMore ? (
+                  <Button onClick={() => itemStore.fetchNextPage(props.startDate, props.endDate)}>加载更多</Button>
+                ) : (
+                  <span>没有更多</span>
+                )}
+              </div>
+            </>
+          ) : (
+            <NoData />
+          )}
+          <RouterLink to="/items/create">
+            <FloatButton iconName="add" />
+          </RouterLink>
+        </div>
+      );
   },
 });
 // 根据收支决定金额和净收入的显示颜色，并为支出金额添加负号

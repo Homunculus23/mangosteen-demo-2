@@ -23,7 +23,7 @@ export const routes: RouteRecordRaw[] = [
   { path: "/", redirect: "/welcome" },
   {
     path: "/welcome",
-    component: Welcome,
+    component: () => import("../views/Welcome"),
     // 进入任意welcome前，检查localStorage中是否已经有 ('skipFeatures', 'yes')，有则直接跳转 start
     // 实际开发中，最好把每一次看广告的时间记下来，保证每次新广告用户都能看到；如果付费会员可以不看广告，则每次进入在这里发一个请求，询问是否有会员权限
     // 面试题：如何去做页面的权限控制/路由守卫？回答：使用 beforeEnter。
@@ -57,7 +57,7 @@ export const routes: RouteRecordRaw[] = [
   // { path: "/start", component: StartPage },
   {
     path: "/items",
-    component: ItemPage,
+    component: () => import("../views/ItemPage"),
     children: [
       { path: "", component: ItemList },
       { path: "create", component: ItemCreate },
@@ -65,23 +65,23 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     path: "/tags",
-    component: TagPage,
+    component: () => import("../views/TagPage"),
     children: [
-      { path: "create", component: TagCreate },
-      { path: ":id/edit", component: TagEdit }, //':id'代表任意标签数字
+      { path: "create", component: () => import("../components/tag/TagCreate") },
+      { path: ":id/edit", component: () => import("../components/tag/TagEdit") }, //':id'代表任意标签数字
     ],
   },
   {
     path: "/sign_in",
-    component: SignInPage,
+    component: () => import("../views/SignInPage"),
   },
   {
     path: "/statistics",
-    component: StatisticsPage,
+    component: () => import("../views/StatisticsPage"),
   },
   {
     path: "/export",
-    component: ComingSoon,
+    component: () => import("../shared/ComingSoon"),
   },
   {
     path: "/notify",

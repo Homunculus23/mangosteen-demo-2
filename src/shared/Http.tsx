@@ -64,58 +64,8 @@ export class Http {
   }
 }
 
-// mock 用于篡改 response
-const mock = (response: AxiosResponse) => {
-  // 如果属于这三个地址（开发中地址）之一，进行下一步（篡改），否则不处理（直接返回 false），防止非测试环境触发 _mock
-  if (
-    true ||
-    (location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.hostname !== "192.168.3.57")
-  ) {
-    return false;
-  }
-  // 检查请求参数中是否包含 _mock，包含则寻找对应函数，否则不处理
-  switch (response.config?._mock) {
-    case "tagIndex":
-      [response.status, response.data] = mockTagIndex(response.config);
-      return [true, response];
-    case "itemCreate":
-      [response.status, response.data] = mockItemCreate(response.config);
-      return [true, response];
-    case "itemIndex":
-      [response.status, response.data] = mockItemIndex(response.config);
-      return true;
-    case "tagCreate":
-      [response.status, response.data] = mockTagCreate(response.config);
-      return [true, response];
-    case "session":
-      [response.status, response.data] = mockSession(response.config);
-      return [true, response];
-    case "tagShow":
-      [response.status, response.data] = mockTagShow(response.config);
-      return [true, response];
-    case "tagEdit":
-      [response.status, response.data] = mockTagEdit(response.config);
-      return [true, response];
-    case "itemIndexBalance":
-      [response.status, response.data] = mockItemIndexBalance(response.config);
-      return [true, response];
-    case "itemSummary":
-      [response.status, response.data] = mockItemSummary(response.config);
-      return [true, response];
-  }
-  return false;
-};
-
-// 判断是否开发环境
-function isDev() {
-  if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1" && location.hostname !== "192.168.3.57") {
-    return false;
-  }
-  return true;
-}
-
 // 导出的默认实例
-export const http = new Http(isDev() ? "api/v1" : "http://121.196.236.94:3000/api/v1");
+export const http = new Http(DEBUG ? "api/v1" : "http://121.196.236.94:3000/api/v1");
 
 // interceptors：拦截器，相关文档搜文章 Axios作弊表 。
 // 将获取的 jwt 放进请求头，这里的 jwt 就是 token
@@ -151,26 +101,68 @@ http.instance.interceptors.response.use(
     throw error;
   }
 );
-
-// mock拦截器，防止在非本地测试环境触发 _mock （最好还是上线前删除）
-http.instance.interceptors.response.use(
-  (response) => {
-    mock(response);
-    if (response.status >= 400) {
-      throw { response };
-    } else {
-      return response;
+if (DEBUG) {
+  import("../mock/mock").then(
+    ({
+      mockItemCreate,
+      mockItemIndex,
+      mockItemIndexBalance,
+      mockItemSummary,
+      mockSession,
+      mockTagEdit,
+      mockTagIndex,
+      mockTagShow,
+    }) => {
+      const mock = (response: AxiosResponse) => {
+        switch (response.config?._mock) {
+          case "tagIndex":
+            [response.status, response.data] = mockTagIndex(response.config);
+            return true;
+          case "session":
+            [response.status, response.data] = mockSession(response.config);
+            return true;
+          case "itemCreate":
+            [response.status, response.data] = mockItemCreate(response.config);
+            return true;
+          case "tagShow":
+            [response.status, response.data] = mockTagShow(response.config);
+            return true;
+          case "tagEdit":
+            [response.status, response.data] = mockTagEdit(response.config);
+            return true;
+          case "itemIndex":
+            [response.status, response.data] = mockItemIndex(response.config);
+            return true;
+          case "itemIndexBalance":
+            [response.status, response.data] = mockItemIndexBalance(response.config);
+            return true;
+          case "itemSummary":
+            [response.status, response.data] = mockItemSummary(response.config);
+            return true;
+        }
+        return false;
+      };
+      http.instance.interceptors.response.use(
+        (response) => {
+          mock(response);
+          if (response.status >= 400) {
+            throw { response };
+          } else {
+            return response;
+          }
+        },
+        (error) => {
+          mock(error.response);
+          if (error.response.status >= 400) {
+            throw error;
+          } else {
+            return error.response;
+          }
+        }
+      );
     }
-  },
-  (error) => {
-    mock(error.response);
-    if (error.response.status >= 400) {
-      throw error;
-    } else {
-      return error.response;
-    }
-  }
-);
+  );
+}
 http.instance.interceptors.response.use(
   (response) => {
     // 成功返回 response

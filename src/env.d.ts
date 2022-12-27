@@ -7,6 +7,8 @@ declare module "*.vue" {
   export default component;
 }
 
+declare let DEBUG: boolean;
+
 // 全局引用声明
 type JSONValue = null | boolean | string | number | JSONValue[] | Record<string, JSONValue>;
 
@@ -16,7 +18,7 @@ type Tag = {
   name: string;
   sign: string;
   // ！！！注意此处的 expenses 和 income 不能带引号
-  kind: 'expenses' | 'income';
+  kind: "expenses" | "income";
 };
 
 // Item 的类型可以看后端文档，或者直接问
@@ -27,7 +29,7 @@ type Item = {
   tag_ids: number[];
   tags?: Tag[];
   happen_at: string;
-  kind: 'expenses' | 'income';
+  kind: "expenses" | "income";
 };
 
 // 用户登录信息

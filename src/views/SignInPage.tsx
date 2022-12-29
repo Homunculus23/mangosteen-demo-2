@@ -137,7 +137,7 @@ export const SignInPage = defineComponent({
                   placeholder="请输入邮箱，然后点击发送验证码"
                 />
                 <FormItem
-                  countFrom={3}
+                  countFrom={30}
                   ref={refValidationCode}
                   label="验证码"
                   type="validationCode"
@@ -159,4 +159,4 @@ export const SignInPage = defineComponent({
   },
 });
 
-export default SignInPage
+export default SignInPage;
